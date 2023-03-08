@@ -21,10 +21,6 @@ The web page in this repository supports running a model hosted on Roboflow by:
 2. Selecting from a predefined image to run inference.
 3. Uploading an image to run inference.
 
-## Project Screenshot
-
-![Roboflow Homepage Demo screenshot showing inference on an image of a baseball scene](screenshot.png)
-
 ## Use This Project
 
 This repository is a template, which means you can directly copy this code into your own repository from GitHub.
@@ -40,8 +36,6 @@ Once you clone this repository into your own environment, you'll need to add you
 By default, this project runs a model called `microsoft-coco` that was trained using the Microsoft COCO dateset. You can change the model that is used by changing the `model_name` variable in the `script.js` file and the `version` version number variable.
 
 To find your model name and version number, go to the Deploy tab associated with your model in Roboflow. The model name is the string that appears under the "Training Results" section of the application. The version number is the number that appears next to the string.
-
-![Model Name and Version Number](model-name-version.png)
 
 ### Deploy to GitHub Pages
 
