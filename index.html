@@ -1,70 +1,107 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Roboflow Homepage Demo</title>
-        <link href="./style.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.roboflow.com/0.2.25/roboflow.js"></script>
-    </head>
+<head>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
 
-    <body>
-        <h1>Roboflow Homepage Demo</h1>
-        <p>
-            Experiment with the code we use to power the inference widget on the
-            Roboflow Homepage.
-        </p>
-        <img
-            src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/63d3f236a6f0dae14cdf0063_drag-image-here.png"
-            id="picture"
-            style="display: none"
-        />
-        <div id="example_demo">
-            <video muted autoplay loop id="video">
-            <source
-                src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/63d15cb160518f7f9c59a892_Sequence 01-transcode.mp4"
-                type="video/mp4"
-                id="video_source"
-            />
-            </video>
-        </div>
-        <canvas width="640" height="480" id="picture_canvas"></canvas>
-        <canvas width="640" height="480" id="video_canvas"></canvas>
+<body>
+	<form id="inputForm">
+		<div class="header">
+			<div class="header__grid">
+				<img class="header__logo" src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/6143750f1177056d60fc52d9_roboflow_logomark_inference.png" alt="Roboflow Inference">
+				<div>
+					<label class="header__label" for="model">Model Name</label>
+					<input class="input" type="text" id="model" />
+				</div>
+				<div>
+					<label class="header__label" for="access_token">Access Token</label>
+					<input class="input" type="text" id="access_token" />
+				</div>
+			</div>	
+		</div>
+      
+		<div class="content">
+			<div class="content__grid">
+				<div class="col-12-s6-m4" id="method">
+					<label class="input__label">Upload Method</label>
+					<div>
+						<button data-value="upload" id="computerButton" class="bttn left fill active">Upload</button>
+						<button data-value="url" id="urlButton" class="bttn right fill">URL</button>
+					</div>
+				</div>
 
-        <div id="prechosen_images_parent">
-            <div id="prechosen_images">
-            <img
-                src="https://media.roboflow.com/homepage/000000000544_jpg.rf.f588881eb2c2829187797d304e3a941d.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1675241561128"
-                id="picture_1"
-                onclick="imageInference(this)"
-            />
-            <img
-                src="https://media.roboflow.com/homepage/000000000064_jpg.rf.654457cc709530d859531d38bb990ec8.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1675241561271"
-                id="picture_2"
-                onclick="imageInference(this)"
-            />
-            <img
-                src="https://media.roboflow.com/homepage/000000000321_jpg.rf.c38501b6894584ac21c859cd4390e75e.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1675241561164"
-                id="picture_3"
-                onclick="imageInference(this)"
-            />
-            <img
-                src="https://media.roboflow.com/homepage/000000000250_jpg.rf.47b3fb8b6ed29e369cc361720b5f21f5.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1675241560704"
-                id="picture_4"
-                onclick="imageInference(this)"
-            />
-            </div>
-        </div>
+				<div class="col-12-m8" id="fileSelectionContainer">
+					<label class="input__label" for="file">Select File</label>
+					<div class="flex">
+						<input class="input input--left flex-1" type="text" id="fileName" disabled />							
+						<button id="fileMock" class="bttn right active">Browse</button>
+					</div>
+					<input style="display: none;" type="file" id="file" />
+				</div>
 
-        <a href="#" id="webcam-predict" class="hero_button_secondary"
-            >Predict Using Webcam</a
-        >
-        <a href="#" id="image-predict" class="hero_button_secondary"
-            >Predict Using Image</a
-        >
+				<div class="col-12-m8" id="urlContainer">
+					<label class="input__label" for="file">Enter Image URL</label>
+					<div class="flex">
+						<input type="text" id="url" placeholder="https://path.to/your.jpg" class="input"/><br>
+					</div>
+				</div>
+        
+				<div class="col-12-m6">
+					<label class="input__label" for="classes">Filter Classes</label>
+					<input type="text" id="classes" placeholder="Enter class names" class="input"/><br>
+					<span class="text--small">Separate names with commas</span>
+				</div>
 
-        <select id="model-select">
-        </select>
-        <script src="script.js"></script>
-    </body>
-</html>
+				<div class="col-6-m3 relative">
+					<label class="input__label" for="confidence">Min Confidence</label>
+					<div>
+						<i class="fas fa-crown"></i>
+						<span class="icon">%</span>
+						<input type="number" id="confidence" value="50" max="100" accuracy="2" min="0" class="input input__icon"/></div>
+					</div>
+				<div class="col-6-m3 relative">
+					<label class="input__label" for="overlap">Max Overlap</label>
+					<div>
+						<i class="fas fa-object-ungroup"></i>
+						<span class="icon">%</span>
+						<input type="number" id="overlap" value="50" max="100" accuracy="2" min="0" class="input input__icon"/></div>
+				</div>
+				<div class="col-6-m3" id="format">
+					<label class="input__label">Inference Result</label>
+					<div>
+						<button id="imageButton" data-value="image" class="bttn left fill active">Image</button>
+						<button id="jsonButton" data-value="json" class="bttn right fill">JSON</button>
+					</div>
+				</div>
+				<div class="col-12 content__grid" id="imageOptions">
+					<div class="col-12-s6-m4" id="labels">
+						<label class="input__label">Labels</label>
+						<div>
+							<button class="bttn left active">Off</button>
+							<button data-value="on" class="bttn right">On</button>
+						</div>
+					</div>
+					<div class="col-12-s6-m4" id="stroke">
+						<label class="input__label">Stroke Width</label>
+						<div>
+							<button data-value="1" class="bttn left active">1px</button>
+							<button data-value="2" class="bttn">2px</button>
+							<button data-value="5" class="bttn">5px</button>
+							<button data-value="10" class="bttn right">10px</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<button type="submit" value="Run Inference" class="bttn__primary">Run Inference</button>
+				</div>
+			</div>
+			<div class="result" id="resultContainer">
+				<div class="divider"></div>
+				<div class="result__header">
+					<h3 class="headline">Result</h3>
+					<a href="#">Copy Code</a>
+				</div>
+				<pre id="output" class="codeblock"/> here is your json </pre>
+			</div>
+		</div>
+	</form>
+</body>
