@@ -12,15 +12,15 @@
 				<img class="header__logo" src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/6143750f1177056d60fc52d9_roboflow_logomark_inference.png" alt="Roboflow Inference">
 				<div>
 					<label class="header__label" for="model">Model Name</label>
-					<input class="input" type="text" id="model" />
+					<input class="input" type="text" id="model" value="trail-camera-animal-detection"/>
 				</div>
 				<div>
 					<label class="header__label" for="version">Version</label>
-					<input class="input" type="text" id="version" />
+					<input class="input" type="text" id="version" value="3"/>
 				</div>
 				<div>
 					<label class="header__label" for="access_token">Access Token</label>
-					<input class="input" type="text" id="access_token" />
+					<input class="input" type="text" id="access_token" value="K5BwZ8klaouCeUYV0RXV"/>
 				</div>
 			</div>	
 		</div>
@@ -38,8 +38,9 @@
 				<div class="col-12-m8" id="fileSelectionContainer">
 					<label class="input__label" for="file">Select File</label>
 					<div class="flex">
-						<input class="input input--left flex-1" type="text" id="fileName" disabled />							
-						<button id="fileMock" class="bttn right active">Browse</button>
+						<input class="input input--left flex-1" type="text" /> 
+						<input type="file" type="text" id="fileName" hidden/>
+						<input type="button" onclick="document.getElementById('fileName').click()" button id="fileMock" class="bttn right active">Browse</button>
 					</div>
 					<input style="display: none;" type="file" id="file" />
 				</div>
