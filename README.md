@@ -52,7 +52,7 @@ To do so:
 Your project will now be hosted at `https://<your-github-username>.github.io/<your-repository-name>/index.html`.
 
 ## Technology Stack
-
+- Python
 - JavaScript
 - [roboflow.js](https://docs.roboflow.com/inference/web-browser)
 
