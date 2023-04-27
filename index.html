@@ -8,14 +8,21 @@
 </head>
 
 <body bgcolor="#DDE5B6">
+  <script src="script.js"></script>
+
   <div class="container">
     <div id="Step1">
       <div id="big_circle">
         <div id="small_circle">
           <img src="image.png" class="download">
-          <button type="submit">
-            <img src="play.png" class="play" />
-          </button>
+          <div class="button" id="button">
+            <button type="submit">
+              <img src="play.png" class="play" />
+            </button>
+          </div>
+          <div class="file-search-button">
+            <input type="file" id="folder" webkitdirectory multiple/>
+          </div>
         </div>
       </div>
     </div>
@@ -24,26 +31,42 @@
       <div id="big_circle">
         <div id="small_circle">
           <img src="out.png" class="out">
+          <div class="button" id="button">
+            <button type="submit">
+              <img src="play.png" class="play" />
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
     <div id="line"></div>
     <div id="Step3">
       <div id="big_circle">
         <div id="small_circle">
           <img src="scan.png" class="scan">
+          <div class="button" id="button">
+            <button type="submit">
+              <img src="play.png" class="play" />
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
     <div id="line"></div>
     <div id="Step4">
       <div id="big_circle">
         <div id="small_circle">
           <img src="download.png" class="download">
+          <div class="button" id="button">
+            <button type="submit">
+              <img src="play.png" class="play" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
   </div>
+
 </body>
 
 </html>
