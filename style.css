@@ -48,6 +48,7 @@ html {
   line-height: 80%;
 }
 
+
 button {
   aspect-ratio: 1;
   background-color: #DDE5B6;
@@ -57,6 +58,10 @@ button {
   margin-top: 100%;
 }
 
+/*button.move {
+  margin-left: 50px;
+}*/
+
 button {
   transition: transform 0.7s ease-in-out;
 }
@@ -64,7 +69,8 @@ button {
 button:hover {
   background: #ADC178;
   cursor: pointer;
-  transform: rotate(360deg);
+  /*margin-left: 50px;*/
+  /*transform: rotate(360deg);*/
 }
 
 .download{
