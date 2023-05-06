@@ -6,12 +6,15 @@ import scan_logo from "./images/logo/scan.png"
 import download_logo from "./images/logo/download.png"
 import React, { useState } from 'react';
 
+import ReactDOM from "react-dom";
+import ImageUploading from "react-images-uploading";
+
 
 function PlayButton({ buttonFunction }) {
   return (
     <>
       <button className='button'>
-        <img src={button_logo} class="play" onClick={buttonFunction}/>
+        <img src={button_logo} className="play" alt="button-logo" onClick={buttonFunction}/>
       </button>
     </>
     );
@@ -22,7 +25,7 @@ function Logos({image, imageName}) {
     <>
       <div className='big_circle'>
         <div className='small_circle'>
-          <img src={image} class={imageName}>
+          <img src={image} alt="logo-logo" className={imageName}>
           </img>
         </div>
       </div>
@@ -31,14 +34,40 @@ function Logos({image, imageName}) {
 }
 
 
-export default function Index(){
+export default function App(){
+
+  console.log("Get in App");
+
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 100; 
+  //maximum image input
+
+  const onChange = (imageList, addUpdateIndex) => {
+    //data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
   return (
     <>
       <div className='container' >
         {/*  */}
         <div className='Step1'>
           <Logos image={image_logo} imageName="image"/>
-          <PlayButton/>
+          <ImageUploading
+            multiple
+            value={images}
+            onChange={onChange}
+            // maxNumber={maxNumber}
+            dataURLKey="data_url"
+          >
+            {({
+              imageList,
+              onImageUpload,
+              onImageRemoveAll
+            }) => (
+          <PlayButton buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)}
+          </ImageUploading>
         </div>
         <div className='line'></div>
         {/*  */}
@@ -62,3 +91,6 @@ export default function Index(){
     </>
   );
 }
+
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<App />, rootElement);
