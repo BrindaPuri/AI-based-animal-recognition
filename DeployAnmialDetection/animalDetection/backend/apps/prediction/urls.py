@@ -6,7 +6,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 # router.register('detect', DetectionView.as_view({'get': 'ifdetectAnimal'}), basename='detect')
-router.register('', DetectionView)
+router.register('detect', DetectionView)
 
 urlpatterns = [
     path('', include(router.urls)),

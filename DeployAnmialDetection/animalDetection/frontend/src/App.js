@@ -57,7 +57,10 @@ export default function App(){
   // }
 
   const uploadImage = () => {
-    [ ...images.values()].forEach(function (item, index) {
+    let counter = 0;
+    let imagearr = [ ...images.values()];
+    let all = imagearr.length;
+    imagearr.forEach(function (item, index) {
       let form_data = new FormData();
       console.log(item)
       let image = item['file']
@@ -69,15 +72,23 @@ export default function App(){
             console.log(res.data);
           })
           .catch(err => console.log(err))
+
+      counter = counter + 1;
     });
+    if(counter >= all) {
+      return true
+    } else {
+      return false
+    }
   }
 
   const detectAnimals = () => {
-    console.log("finished upload image, start detecting")
-    let url = 'http://localhost:8000/prediction/';
+    let url = 'http://localhost:8000/prediction/detect/';
     // let data;
-    uploadImage()
-
+    while(!uploadImage()){
+      console.log("waiting for images to upload")
+    }
+    console.log("finished upload image, start detecting")
     axios.get(url)
       .then(res => {
         console.log(res.data);
