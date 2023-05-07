@@ -1,0 +1,8 @@
+May 07
+
+todo:
+- understand the result of yolov8 prediction and form a JSON item in Prediction Model
+- Add Resnet and Vit model
+- output CSV file
+- better documentation and guide for user to use it
+- tool to parse images after classification based on output result files 

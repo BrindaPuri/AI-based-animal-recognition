@@ -67,12 +67,11 @@ export default function App(){
       form_data.append('images', image, image.name)
       console.log(form_data);
       let url = 'http://localhost:8000/djimagelist/';
-      axios.post(url, form_data, )
+      axios.post(url, form_data,)
           .then(res => {
             console.log(res.data);
           })
           .catch(err => console.log(err))
-
       counter = counter + 1;
     });
     if(counter >= all) {
@@ -92,6 +91,9 @@ export default function App(){
 
   const detectAnimals = () => {
     let url = 'http://localhost:8000/prediction/detect/';
+    console.log("starting to cleanup old media")
+    removeAllImage();
+    console.log("starting to upload images")
     while(!uploadImage()){
       console.log("waiting for images to upload")
     }
@@ -129,7 +131,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           <Logos image={out_logo} imageName="out"/>
-          <PlayButton buttonFunction={()=>{removeAllImage();detectAnimals();}}/>
+          <PlayButton buttonFunction={()=>{detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}
