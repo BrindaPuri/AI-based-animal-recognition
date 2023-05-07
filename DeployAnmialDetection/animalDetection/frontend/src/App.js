@@ -56,11 +56,10 @@ export default function App(){
   // }
 
   const uploadImage = () => {
-    let allImages = [ ...images.values() ];
-    allImages.forEach(function (item, index) {
+    [ ...images.values()].forEach(function (item, index) {
       let form_data = new FormData();
+      console.log(item)
       let image = item['file']
-      console.log(image)
       form_data.append('images', image, image.name)
       console.log(form_data);
       let url = 'http://localhost:8000/djimagelist/';

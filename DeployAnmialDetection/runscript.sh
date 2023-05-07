@@ -27,6 +27,9 @@ printf ' - %s\n' "${process_ids[@]}"
 
 echo 'kill this script will kill all bg processes it created'
 
+echo 'django: http://127.0.0.1:8000/'
+echo 'react: http://127.0.0.1:3000/'
+
 __cleanup ()
 {
     echo 'start killing background processes'
@@ -34,6 +37,11 @@ __cleanup ()
         echo 'killing process' ${pid}
         kill $pid
     done
+
+    rm animalDetection/db.sqlite3
+    echo 'removed db.sqlite3'
+    rm animalDetection/media/*
+    echo 'removed all items in /media'
     echo 'done cleaning up'
 }
 

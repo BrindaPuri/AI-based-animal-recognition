@@ -25,22 +25,14 @@ from rest_framework.response import Response
     # return render(request, 'index.html', {'images': images})
 
 class ImageListView(viewsets.ModelViewSet):
-    serializer_class = ImageListSerializer
     queryset = ImageList.objects.all()
-
-    # def post(self, request):
-    #     data = json.loads(request.data)
-    #     images = data['list']
-    #     for image in images:
-    #         ImageList.objects.create(images=image)
-    #     images = ImageList.objects.all()
-    #     return HttpResponse({'message': 'image stored'}, status=200)
+    serializer_class = ImageListSerializer
 
     def create(self, request):
         serializer = ImageListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return HttpResponse({'message': 'image stored'}, status=200)
+            return HttpResponse(request.data['images'], content_type='multipart/form-data', status=200)
         else:
             print('error', serializer.errors)
-            return HttpResponse({'message': 'image doesnt exist'}, status=400)
+            return HttpResponse(request.data['images'], content_type='imultipart/form-data', status=400)
