@@ -28,11 +28,19 @@ class ImageListView(viewsets.ModelViewSet):
     queryset = ImageList.objects.all()
     serializer_class = ImageListSerializer
 
+    def removeAll(self):
+        for item in ImageList.objects.all():
+            if item.images:
+                item.images.delete()
+            item.delete()
+            print("deleted\n")
+
     def create(self, request):
+        self.removeAll()
         serializer = ImageListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return HttpResponse(request.data['images'], content_type='multipart/form-data', status=200)
+            return HttpResponse("image in", status=200)
         else:
             print('error', serializer.errors)
-            return HttpResponse(request.data['images'], content_type='imultipart/form-data', status=400)
+            return HttpResponse("serializer failed", status=400)

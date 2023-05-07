@@ -2,7 +2,361 @@ Watching for file changes with StatReloader
 Performing system checks...
 
 System check identified no issues (0 silenced).
-May 07, 2023 - 19:17:01
+May 07, 2023 - 19:43:13
+Django version 4.2, using settings 'animalDetection.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+[07/May/2023 19:43:21] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:43:21] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:43:21] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:43:21] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:43:21] "POST /djimagelist/ HTTP/1.1" 200 8
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+Internal Server Error: /djimagelist/
+Traceback (most recent call last):
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ztpc/.local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 40, in create
+    self.removeAll()
+  File "/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py", line 33, in removeAll
+    if item.image:
+AttributeError: 'ImageList' object has no attribute 'image'
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+[07/May/2023 19:43:33] "POST /djimagelist/ HTTP/1.1" 500 97446
+/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 07, 2023 - 19:43:47
+Django version 4.2, using settings 'animalDetection.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:43:49] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:44:03] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+[07/May/2023 19:44:03] "POST /djimagelist/ HTTP/1.1" 200 8
+[07/May/2023 19:44:03] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:44:03] "POST /djimagelist/ HTTP/1.1" 200 8
+deleted
+
+deleted
+
+deleted
+
+deleted
+
+[07/May/2023 19:44:03] "POST /djimagelist/ HTTP/1.1" 200 8
+/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 07, 2023 - 19:44:11
+Django version 4.2, using settings 'animalDetection.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 07, 2023 - 19:44:38
+Django version 4.2, using settings 'animalDetection.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/faster/SeniorProject/AI-based-animal-recognition/DeployAnmialDetection/animalDetection/backend/apps/utils/views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 07, 2023 - 19:44:40
 Django version 4.2, using settings 'animalDetection.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.

@@ -8,6 +8,8 @@ process_ids=()
 
 append() { process_ids+=( "$1" ); }
 
+echo 'all functions in this script tested working in linux'
+
 python ${managePath} makemigrations
 echo 'backend finished makemigrations'
 
@@ -29,6 +31,8 @@ echo 'kill this script will kill all bg processes it created'
 
 echo 'django: http://127.0.0.1:8000/'
 echo 'react: http://127.0.0.1:3000/'
+
+echo 'opening up http://localhost:3000/'
 
 __cleanup ()
 {
