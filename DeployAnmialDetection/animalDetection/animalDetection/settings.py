@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "backend.apps.utils",
+    "backend.apps.prediction",
     'corsheaders',
     'rest_framework',
 ]

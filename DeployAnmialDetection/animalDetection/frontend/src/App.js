@@ -40,6 +40,7 @@ export default function App(){
   console.log("Get in App");
 
   const [images, setImages] = React.useState([]);
+  // const [detectiondata, setDetectiondata] = React.useState([])
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -71,6 +72,20 @@ export default function App(){
     });
   }
 
+  const detectAnimals = () => {
+    console.log("finished upload image, start detecting")
+    let url = 'http://localhost:8000/prediction/';
+    // let data;
+    uploadImage()
+
+    axios.get(url)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err))
+    
+  }
+
   return (
     <>
       <div className='container' >
@@ -96,7 +111,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           <Logos image={out_logo} imageName="out"/>
-          <PlayButton buttonFunction={()=>{uploadImage();}}/>
+          <PlayButton buttonFunction={()=>{detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}

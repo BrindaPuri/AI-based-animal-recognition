@@ -6,23 +6,9 @@ from rest_framework import viewsets
 from .serializers import ImageListSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+# import pandas as pd
 # Create your views here.
-
-# def (request):
-#     if request.method == "POST":
-#         images = request.FILES.getlist('images')
-#         for image in images:
-#             ImageList.objects.create(images=image)
-#     images = ImageList.objects.all()
-#     return render(request, 'main.html', {'images': images})
-
-
-    # if request.method == "POST":
-    #     images = request.FILES.getlist('images')
-    #     for image in images:
-    #         MultipleImage.objects.create(images=image)
-    # images = MultipleImage.objects.all()
-    # return render(request, 'index.html', {'images': images})
 
 class ImageListView(viewsets.ModelViewSet):
     queryset = ImageList.objects.all()
@@ -36,7 +22,7 @@ class ImageListView(viewsets.ModelViewSet):
             print("deleted\n")
 
     def create(self, request):
-        self.removeAll()
+        # self.removeAll()
         serializer = ImageListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
