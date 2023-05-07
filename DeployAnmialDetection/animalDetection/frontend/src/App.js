@@ -82,9 +82,16 @@ export default function App(){
     }
   }
 
+  const removeAllImage = () => {
+    let url = 'http://localhost:8000/djimagelist/';
+    axios.get(url).then(res => {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err))
+  }
+
   const detectAnimals = () => {
     let url = 'http://localhost:8000/prediction/detect/';
-    // let data;
     while(!uploadImage()){
       console.log("waiting for images to upload")
     }
@@ -122,7 +129,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           <Logos image={out_logo} imageName="out"/>
-          <PlayButton buttonFunction={()=>{detectAnimals();}}/>
+          <PlayButton buttonFunction={()=>{removeAllImage();detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}

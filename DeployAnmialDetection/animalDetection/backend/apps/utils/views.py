@@ -14,12 +14,14 @@ class ImageListView(viewsets.ModelViewSet):
     queryset = ImageList.objects.all()
     serializer_class = ImageListSerializer
 
-    def removeAll(self):
+    def list(self, request):
         for item in ImageList.objects.all():
             if item.images:
                 item.images.delete()
             item.delete()
             print("deleted\n")
+        print("done deleting all")
+        return HttpResponse("cleaned up all stored images", status=200)
 
     def create(self, request):
         # self.removeAll()
