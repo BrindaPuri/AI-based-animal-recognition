@@ -1,6 +1,7 @@
 May 07
 
 todo:
+- make sure all processes are synchronize properly (i.e. remove image; upload images; detect images)
 - understand the result of yolov8 prediction and form a JSON item in Prediction Model
 - Add Resnet and Vit model
 - output CSV file
