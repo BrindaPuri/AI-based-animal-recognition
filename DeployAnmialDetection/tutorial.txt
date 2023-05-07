@@ -1,0 +1,1 @@
+https://www.saaspegasus.com/guides/modern-javascript-for-django-developers/integrating-django-react/#single-page-applications-in-a-hybrid-architecture

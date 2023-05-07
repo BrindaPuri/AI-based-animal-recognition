@@ -2,5 +2,5 @@ from django.db import models
 
 # Create your models here.
 
-class MultipleImage(models.Model):
-    images = models.FileField()
+class ImageList(models.Model):
+    images = models.ImageField()

@@ -1,12 +1,13 @@
 import './App.css';
-import button_logo from "./images/logo/play.png"
-import image_logo from "./images/logo/image.png"
-import out_logo from "./images/logo/out.png"
-import scan_logo from "./images/logo/scan.png"
-import download_logo from "./images/logo/download.png"
-import React, { useState } from 'react';
+import button_logo from "./assets/logo/play.png"
+import image_logo from "./assets/logo/image.png"
+import out_logo from "./assets/logo/out.png"
+import scan_logo from "./assets/logo/scan.png"
+import download_logo from "./assets/logo/download.png"
+import React, {Component} from 'react';
+import axios from 'axios';
 
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
 
 
@@ -35,18 +36,41 @@ function Logos({image, imageName}) {
 
 
 export default function App(){
-
+// function notusing (){
   console.log("Get in App");
 
   const [images, setImages] = React.useState([]);
-  const maxNumber = 100; 
-  //maximum image input
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
+
+  const printConsole = (message) => {
+    console.log(message);
+  }
+  
+  // const ProgressBar = (current, goal) => {
+
+  // }
+
+  const uploadImage = () => {
+    let allImages = [ ...images.values() ];
+    allImages.forEach(function (item, index) {
+      let form_data = new FormData();
+      let image = item['file']
+      console.log(image)
+      form_data.append('images', image, image.name)
+      console.log(form_data);
+      let url = 'http://localhost:8000/djimagelist/';
+      axios.post(url, form_data, )
+          .then(res => {
+            console.log(res.data);
+          })
+          .catch(err => console.log(err))
+    });
+  }
 
   return (
     <>
@@ -73,7 +97,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           <Logos image={out_logo} imageName="out"/>
-          <PlayButton/>
+          <PlayButton buttonFunction={()=>{uploadImage();}}/>
         </div>
         <div className='line'></div>
         {/*  */}
@@ -91,6 +115,3 @@ export default function App(){
     </>
   );
 }
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<App />, rootElement);
