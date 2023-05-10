@@ -3,3 +3,5 @@ django
 react
 django react framework
 https://github.com/vutoan266/react-images-uploading
+ultralytics
+

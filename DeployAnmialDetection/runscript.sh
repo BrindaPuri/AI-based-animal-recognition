@@ -10,17 +10,20 @@ append() { process_ids+=( "$1" ); }
 
 echo 'all functions in this script tested working in linux'
 
-python ${managePath} makemigrations
+python3 ${managePath} makemigrations
 echo 'backend finished makemigrations'
 
-python ${managePath} migrate
+python3 ${managePath} migrate
 echo 'backend finished migrate'
 
 echo 'starting backend server'
-nohup python ${managePath} runserver > django-log.txt & 
+nohup python3 ${managePath} runserver > django-log.txt & 
 append "$!"
 
 echo 'starting frontend server'
+npm --prefix ${reactPath} install -g npm@latest
+rm -rf ${reactPath}/node_modules
+npm --prefix ${reactPath} install
 nohup npm --prefix ${reactPath} run start > react-log.txt &
 append "$!"
 
@@ -51,7 +54,7 @@ __cleanup ()
 
 trap __cleanup SIGINT SIGTERM INT
 
-for pid in ${process_ids[*]}; do
+for pid in ${process_ids[@]}; do
     # echo 'waiting on' ${pid}
     wait $pid
     echo ${pid} ' ended'
