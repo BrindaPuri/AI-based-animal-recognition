@@ -57,5 +57,5 @@ trap __cleanup SIGINT SIGTERM INT
 for pid in ${process_ids[@]}; do
     # echo 'waiting on' ${pid}
     wait $pid
-    echo ${pid} ' ended'
+    # echo ${pid} ' ended'
 done
