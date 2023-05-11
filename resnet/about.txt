@@ -1,3 +1,1 @@
-Given here is a python notebook that divides images into three different folders based on labled data retrived from roboflow. 
-The testing and training splits made are imported along with labeled folders for the training data. The dataset being used currently is a subset of the
-CalTech one.  The confusion matrix detects animals with 80% accuracy. The aim is to now reduce the amount of false negatives and false positives. 
+Moving away from roboflow. Fixing df to remove data entries of image not being used for training. Proper animal classification folder splits making for Test and Train. Using pretrained ResNet 50 model and then retraining. 
