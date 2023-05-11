@@ -10,6 +10,12 @@ append() { process_ids+=( "$1" ); }
 
 echo 'all functions in this script tested working in linux'
 
+echo 'activating python virtual env'
+virtualenv env
+source env/local/bin/activate
+
+python3 -m pip install Django
+
 python3 ${managePath} makemigrations
 echo 'backend finished makemigrations'
 
