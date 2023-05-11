@@ -2,7 +2,7 @@ Watching for file changes with StatReloader
 Performing system checks...
 
 System check identified no issues (0 silenced).
-May 11, 2023 - 06:19:06
+May 11, 2023 - 06:48:02
 Django version 4.2, using settings 'animalDetection.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
