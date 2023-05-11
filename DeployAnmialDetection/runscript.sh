@@ -14,7 +14,7 @@ echo 'activating python virtual env'
 virtualenv env
 source env/local/bin/activate
 
-python3 -m pip install Django djangorestframework django-cors-headers
+python3 -m pip install -r requirements.txt
 
 python3 ${managePath} makemigrations
 echo 'backend finished makemigrations'
@@ -48,7 +48,7 @@ __cleanup ()
     echo 'deactivating python virtual env'
     deactivate
     echo 'deactivated'
-    
+
     echo 'start killing background processes'
     for pid in ${process_ids[@]}; do
         echo 'killing process' ${pid}
