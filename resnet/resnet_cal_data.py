@@ -23,6 +23,7 @@ import torch
 from torchvision import transforms
 import glob
 import string
+import torchvision
 
 def PlotDataRep_Bar(df):
   plt.figure(figsize = (20,15))
@@ -62,8 +63,6 @@ names=[]
 for img_name in data_dir.glob('eccv_18_all_images_sm/*'):
   head, tail = os.path.split(img_name)
   names.append(tail)
-
-names
 
 len(names)
 
@@ -116,29 +115,40 @@ PIL.Image.open(str(img[IMG_NO]))
 
 image_id_train,image_id_test,label_train,label_test = train_test_split(image_id,label,test_size=0.2)
 
-print(image_id_train[0])
+count = 0
+subset_train= []
+label_train=[]
+for labl in label_train:
+  count = count +1
+  subset_train.append(labl)
+  if count == 1000:
+    break
+count = 0
+for image in image_id_train:
+  count = count +1
+  subset_train.append(image)
+  if count == 1000:
+    break
+
+print(len(subset_train))
 
 #creating classes
 for i in df.original_label.unique():
   os.makedirs("/content/Train/"+ i)
-  os.makedirs("/content/Test/"+ i)
-  #os.rmdir("/content/Training/"+ i)
-
-image_id_train[2]
+  #os.makedirs("/content/Test/"+ i)
 
 l=df.index[df['image_id']=="59b93a3b-23d2-11e8-a6a3-ec086b02610b.jpg"].tolist()
 
 print(l)
 
-label[l]
-
-for name in image_id_train:
+for name in subset:
   isFile=os.path.isfile(path+name)
   l=df.index[df['image_id']==name]
+  lab=list(label[l])[0]
   if(isFile):
-    shutil.copy(path+name, "/content/Train/"+label[l]+"/"+name)
+    shutil.copy(path+name, "/content/Train/"+lab+"/"+name)
 
-
+!zip -r /content/sample_data.zip /content/sample_data
 
 """Running on single image"""
 
@@ -182,8 +192,8 @@ Training set of images
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Set hyperparameters
-num_epochs = 10
-batch_size = 64
+num_epochs = 5
+batch_size = 4
 learning_rate = 0.001
 
 # Initialize transformations for data augmentation
@@ -200,14 +210,14 @@ transform = transforms.Compose([
 
 # Load the ImageNet Object Localization Challenge dataset
 train_dataset = torchvision.datasets.ImageFolder(
-    root='/kaggle/input/imagenet-object-localization-challenge/ILSVRC/Data/CLS-LOC/train', 
+    root='/content/Train', 
     transform=transform
 )
 
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
 
 # Load the ResNet50 model
-model = torchvision.models.resnet50(pretrained=True)
+model = torchvision.models.resnet50(weights=True)
 
 # Parallelize training across multiple GPUs
 model = torch.nn.DataParallel(model)
@@ -220,7 +230,7 @@ criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 # Train the model...
-for epoch in range(num_epochs):
+for epoch in range(10):
     for inputs, labels in train_loader:
         # Move input and label tensors to the device
         inputs = inputs.to(device)
@@ -241,3 +251,18 @@ for epoch in range(num_epochs):
     print(f'Epoch {epoch+1}/{num_epochs}, Loss: {loss.item():.4f}')
 
 print(f'Finished Training, Loss: {loss.item():.4f}')
+
+!mkdir models
+!mkdir models/pytorch
+torch.save(model.state_dict(), '/content/models/pytorch/model_weights.pth')
+
+model.load_state_dict(torch.load('/content/models/pytorch/model_weights.pth'))
+model.eval()
+#https://pytorch.org/tutorials/beginner/basics/saveloadrun_tutorial.html
+
+#creating classes
+for i in df.original_label.unique():
+  #os.makedirs("/content/Train/"+ i)
+  os.makedirs("/content/Test/"+ i)
+
+img_predict = model.fit(image_id_train, label_train).predict(image_id_test)
