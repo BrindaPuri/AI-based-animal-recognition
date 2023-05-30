@@ -141,9 +141,42 @@ export default function App(){
             {({
               imageList,
               onImageUpload,
-              onImageRemoveAll
+              onImageRemoveAll,
+              onImageUpdate,
+              onImageRemove
             }) => (
-          <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)}
+            // <Logos 
+            //   image={image_logo} 
+            //   imageName="image" 
+            //   buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}
+            //   {imageList.map((image, index) => (
+            //     <div key={index} className="image-item">
+            //       <img src={image.data_url} alt="" width="100" />
+            //       <div className="image-item__btn-wrapper">
+            //         <button onClick={() => onImageUpdate(index)}>Update</button>
+            //         <button onClick={() => onImageRemove(index)}>Remove</button>
+            //       </div>
+            //     </div>
+            //   ))}
+            // />
+            <div className='big_circle'>
+              <div className='small_circle'>
+                <img src={image_logo} alt="logo-logo" className={"image"} onClick={()=>{onImageRemoveAll();onImageUpload();}}>
+                </img>
+                {imageList.map((image, index) => (
+                  <div key={index} className="image-item">
+                    <img src={image.data_url} alt="" width="100" />
+                    <div className="image-item__btn-wrapper">
+                      <button onClick={() => onImageUpdate(index)}>Update</button>
+                      <button onClick={() => onImageRemove(index)}>Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          
+          )}
+                    
           {/* <PlayButton buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)} */}
           </ImageUploading>
         </div>
