@@ -1,5 +1,5 @@
 import './App.css';
-import button_logo from "./assets/logo/play.png"
+// import button_logo from "./assets/logo/play.png"
 import image_logo from "./assets/logo/image.png"
 import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
@@ -11,22 +11,22 @@ import axios from 'axios';
 import ImageUploading from "react-images-uploading";
 
 
-function PlayButton({ buttonFunction }) {
-  return (
-    <>
-      <button className='button'>
-        <img src={button_logo} className="play" alt="button-logo" onClick={buttonFunction}/>
-      </button>
-    </>
-    );
-}
+// function PlayButton({ buttonFunction }) {
+//   return (
+//     <>
+//       <button className='button'>
+//         <img src={button_logo} className="play" alt="button-logo" onClick={buttonFunction}/>
+//       </button>
+//     </>
+//     );
+// }
 
-function Logos({image, imageName}) {
+function Logos({image, imageName, buttonFunction}) {
   return (
     <>
       <div className='big_circle'>
         <div className='small_circle'>
-          <img src={image} alt="logo-logo" className={imageName}>
+          <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
           </img>
         </div>
       </div>
@@ -34,6 +34,19 @@ function Logos({image, imageName}) {
   );
 }
 
+function InfoText({buttonInfo}) {
+  return (
+    <>
+      <div className="introtext" id="introtext" onClick={buttonInfo}>
+        Welcome to the Animal Detection AI Pipeline.      
+      </div>
+      <div className="hidden" id="info">
+        <p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p>
+        <p>ECS 193, Winter and Spring 2023</p>
+      </div>
+    </>
+    );
+}
 
 export default function App(){
 // function notusing (){
@@ -53,8 +66,7 @@ export default function App(){
   }
   
   // const ProgressBar = (current, goal) => {
-
-  // }
+  
 
   const uploadImage = () => {
     let counter = 0;
@@ -102,16 +114,24 @@ export default function App(){
       .then(res => {
         console.log(res.data);
       })
-      .catch(err => console.log(err))
-    
+      .catch(err => console.log(err)) 
+  }
+
+  const showHide = () => {
+    var div = document.getElementById("info");
+    div.classList.toggle('hidden'); 
   }
 
   return (
     <>
-      <div className='container' >
+      <div className="container" id="topscreen">
+        <InfoText buttonInfo={()=>{showHide();}}/>
+      </div>
+      <div className='container' id="bottomscreen">
         {/*  */}
         <div className='Step1'>
-          <Logos image={image_logo} imageName="image"/>
+          Upload Image
+          {/* <Logos image={image_logo} imageName="image"/> */}
           <ImageUploading
             multiple
             value={images}
@@ -124,26 +144,30 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll
             }) => (
-          <PlayButton buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)}
+          <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)}
+          {/* <PlayButton buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)} */}
           </ImageUploading>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out"/>
-          <PlayButton buttonFunction={()=>{detectAnimals();}}/>
+          Detect Animals
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{detectAnimals();}}/>
+          {/* <PlayButton buttonFunction={()=>{detectAnimals();}}/> */}
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step3'>
+          Classify Animals
           <Logos image={scan_logo} imageName="scan"/>
-          <PlayButton/>
+          {/* <PlayButton/> */}
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step4'>
+          Download Results
           <Logos image={download_logo} imageName="download"/>
-          <PlayButton/>
+          {/* <PlayButton/> */}
         </div>
       </div>
     </>
