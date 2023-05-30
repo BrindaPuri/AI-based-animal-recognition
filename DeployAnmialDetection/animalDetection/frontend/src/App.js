@@ -48,6 +48,14 @@ function InfoText({buttonInfo}) {
     );
 }
 
+async function getAxios(url) {
+  return await axios.get(url)
+}
+
+async function postAxios(url, data){
+  return await axios.post(url, data,)
+}
+
 export default function App(){
 // function notusing (){
   console.log("Get in App");
@@ -68,10 +76,11 @@ export default function App(){
   // const ProgressBar = (current, goal) => {
   
 
-  const uploadImage = () => {
+  const uploadImage = async () => {
     let counter = 0;
     let imagearr = [ ...images.values()];
     let all = imagearr.length;
+    let promises = []
     imagearr.forEach(function (item, index) {
       let form_data = new FormData();
       console.log(item)
@@ -79,29 +88,20 @@ export default function App(){
       form_data.append('images', image, image.name)
       console.log(form_data);
       let url = 'http://localhost:8000/djimagelist/';
-      axios.post(url, form_data,)
-          .then(res => {
-            console.log(res.data);
-          })
-          .catch(err => console.log(err))
-      counter = counter + 1;
+      promises.push(postAxios(url,form_data))
     });
-    if(counter >= all) {
-      return true
-    } else {
-      return false
-    }
+    const data = await Promise.allSettled(promises);
+    console.log(data)
   }
 
-  const removeAllImage = () => {
+  const removeAllImage = async () => {
     let url = 'http://localhost:8000/djimagelist/';
-    axios.get(url).then(res => {
-      console.log(res.data);
-    })
-    .catch(err => console.log(err))
+    const promises = [getAxios(url)];
+    const data = await Promise.allSettled(promises);
+    console.log(data)
   }
 
-  const detectAnimals = () => {
+  const detectAnimals = async () => {
     let url = 'http://localhost:8000/prediction/detect/';
     console.log("starting to cleanup old media")
     removeAllImage();
@@ -110,11 +110,10 @@ export default function App(){
       console.log("waiting for images to upload")
     }
     console.log("finished upload image, start detecting")
-    axios.get(url)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => console.log(err)) 
+    const promises = [getAxios(url)];
+    const data = await Promise.allSettled(promises);
+    console.log(data);
+    console.log("finished detecting")
   }
 
   const showHide = () => {
