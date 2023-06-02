@@ -38,7 +38,7 @@ function InfoText({buttonInfo}) {
   return (
     <>
       <div className="introtext" id="introtext" onClick={buttonInfo}>
-        Welcome to the Animal Detection AI Pipeline.      
+        Welcome to the Animal Recognition AI Pipeline.      
       </div>
       <div className="hidden" id="info">
         <p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p>
