@@ -186,7 +186,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setBackToStartMessage(true);detectAnimals();}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setUploadImageRender(false);setBackToStartMessage(true);detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}
