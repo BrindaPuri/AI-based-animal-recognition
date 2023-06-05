@@ -47,7 +47,6 @@ function InfoText({buttonInfo}) {
     </>
     );
 }
-
 async function getAxios(url) {
   return await axios.get(url)
 }
@@ -61,7 +60,8 @@ export default function App(){
   console.log("Get in App");
 
   const [images, setImages] = React.useState([]);
-  // const [detectiondata, setDetectiondata] = React.useState([])
+  const [uploadImageRender, setUploadImageRender] = React.useState(false);
+  const [backToStartMessage, setBackToStartMessage] = React.useState(true);
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -121,16 +121,52 @@ export default function App(){
     div.classList.toggle('hidden'); 
   }
 
+  const topScreenRender = () => {
+    if(uploadImageRender) {
+      return (
+      <div className='uploadimagefunction'>
+      <ImageUploading
+      multiple
+      value={images}
+      onChange={onChange}
+      maxNumber={3000}
+      dataURLKey="data_url"
+    >
+      {({
+        imageList,
+        onImageUpdate,
+        onImageRemove
+      }) => (
+        <div className='uploadimage'>
+        {imageList.map((image, index) => (
+          <div key={index} className="image-item">
+            <img src={image.data_url} alt="" width="100" />
+            <div className="image-item__btn-wrapper">
+              <button onClick={() => onImageUpdate(index)}>Update</button>
+              <button onClick={() => onImageRemove(index)}>Remove</button>
+            </div>
+          </div>
+        ))}
+        </div>
+    )}
+    </ImageUploading>
+    </div>
+    );
+    }
+    if(backToStartMessage) {
+      return (<InfoText buttonInfo={()=>{showHide();}}/>);
+    }
+  }
+
   return (
     <>
       <div className="container" id="topscreen">
-        <InfoText buttonInfo={()=>{showHide();}}/>
+        {topScreenRender()}
       </div>
       <div className='container' id="bottomscreen">
         {/*  */}
         <div className='Step1'>
           Upload Image
-          {/* <Logos image={image_logo} imageName="image"/> */}
           <ImageUploading
             multiple
             value={images}
@@ -139,53 +175,18 @@ export default function App(){
             dataURLKey="data_url"
           >
             {({
-              imageList,
               onImageUpload,
               onImageRemoveAll,
-              onImageUpdate,
-              onImageRemove
             }) => (
-            // <Logos 
-            //   image={image_logo} 
-            //   imageName="image" 
-            //   buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}
-            //   {imageList.map((image, index) => (
-            //     <div key={index} className="image-item">
-            //       <img src={image.data_url} alt="" width="100" />
-            //       <div className="image-item__btn-wrapper">
-            //         <button onClick={() => onImageUpdate(index)}>Update</button>
-            //         <button onClick={() => onImageRemove(index)}>Remove</button>
-            //       </div>
-            //     </div>
-            //   ))}
-            // />
-            <div className='big_circle'>
-              <div className='small_circle'>
-                <img src={image_logo} alt="logo-logo" className={"image"} onClick={()=>{onImageRemoveAll();onImageUpload();}}>
-                </img>
-                {imageList.map((image, index) => (
-                  <div key={index} className="image-item">
-                    <img src={image.data_url} alt="" width="100" />
-                    <div className="image-item__btn-wrapper">
-                      <button onClick={() => onImageUpdate(index)}>Update</button>
-                      <button onClick={() => onImageRemove(index)}>Remove</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          
+          <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageUpload();onImageRemoveAll();setUploadImageRender(true);setBackToStartMessage(false);}}/>
           )}
-                    
-          {/* <PlayButton buttonFunction={()=>{onImageRemoveAll();onImageUpload();}}/>)} */}
           </ImageUploading>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
           Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{detectAnimals();}}/>
-          {/* <PlayButton buttonFunction={()=>{detectAnimals();}}/> */}
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setBackToStartMessage(true);detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}
