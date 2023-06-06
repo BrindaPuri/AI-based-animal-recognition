@@ -6,6 +6,7 @@ import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
 import React, {Component} from 'react';
 import axios from 'axios';
+import ProgressBar from "@ramonak/react-progress-bar";
 
 // import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
@@ -62,6 +63,9 @@ export default function App(){
   const [images, setImages] = React.useState([]);
   const [uploadImageRender, setUploadImageRender] = React.useState(false);
   const [backToStartMessage, setBackToStartMessage] = React.useState(true);
+  const [progressBarRender, setProgressBarRender] = React.useState(false);
+  const [maxProgress, setMaxProgress] = React.useState(0)
+  const [curProgress, setCurProgress] = React.useState(0)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -73,13 +77,16 @@ export default function App(){
     console.log(message);
   }
   
-  // const ProgressBar = (current, goal) => {
-  
+  const progressBarFunction = () => {
+    return <ProgressBar completed={curProgress} maxCompleted={maxProgress}/>;
+  }
 
   const uploadImage = async () => {
-    let counter = 0;
     let imagearr = [ ...images.values()];
     let all = imagearr.length;
+    setMaxProgress(all)
+    setUploadImageRender(false)
+    setProgressBarRender(true)
     let promises = []
     imagearr.forEach(function (item, index) {
       let form_data = new FormData();
@@ -88,7 +95,7 @@ export default function App(){
       form_data.append('images', image, image.name)
       console.log(form_data);
       let url = 'http://localhost:8000/djimagelist/';
-      promises.push(postAxios(url,form_data))
+      promises.push(new Promise(res => {postAxios(url,form_data);}).then(()=>setCurProgress(curProgress+1)))
     });
     const data = await Promise.allSettled(promises);
     console.log(data)
@@ -106,9 +113,7 @@ export default function App(){
     console.log("starting to cleanup old media")
     removeAllImage();
     console.log("starting to upload images")
-    while(!uploadImage()){
-      console.log("waiting for images to upload")
-    }
+    uploadImage()
     console.log("finished upload image, start detecting")
     const promises = [getAxios(url)];
     const data = await Promise.allSettled(promises);
@@ -156,6 +161,9 @@ export default function App(){
     if(backToStartMessage) {
       return (<InfoText buttonInfo={()=>{showHide();}}/>);
     }
+    if(progressBarRender) {
+      return progressBarFunction()
+    }
   }
 
   return (
@@ -171,7 +179,7 @@ export default function App(){
             multiple
             value={images}
             onChange={onChange}
-            // maxNumber={maxNumber}
+            maxNumber={3000}
             dataURLKey="data_url"
           >
             {({
@@ -186,7 +194,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setUploadImageRender(false);setBackToStartMessage(true);detectAnimals();}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{detectAnimals();setProgressBarRender(false);setBackToStartMessage(true);}}/>
         </div>
         <div className='line'></div>
         {/*  */}
