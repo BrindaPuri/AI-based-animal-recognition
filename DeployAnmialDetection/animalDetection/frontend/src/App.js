@@ -35,6 +35,8 @@ function Logos({image, imageName, buttonFunction}) {
   );
 }
 
+
+
 function InfoText({buttonInfo}) {
   return (
     <>
@@ -73,20 +75,31 @@ export default function App(){
     setImages(imageList);
   };
 
-  const printConsole = (message) => {
-    console.log(message);
-  }
+
   
   const progressBarFunction = () => {
-    return <ProgressBar completed={curProgress} maxCompleted={maxProgress}/>;
+    console.log(curProgress)
+    console.log(maxProgress)
+    var percentage = Math.floor((curProgress/maxProgress)*100)
+    return <ProgressBar completed={percentage} maxCompleted={100} />;
+  }
+
+  function allProgress(proms) {
+    let d = 0;
+    setCurProgress(0);
+    for (const p of proms) {
+      p.then(()=> {    
+        d ++;
+        setCurProgress(d);
+      });
+    }
+    return Promise.all(proms);
   }
 
   const uploadImage = async () => {
     let imagearr = [ ...images.values()];
     let all = imagearr.length;
     setMaxProgress(all)
-    setUploadImageRender(false)
-    setProgressBarRender(true)
     let promises = []
     imagearr.forEach(function (item, index) {
       let form_data = new FormData();
@@ -95,9 +108,9 @@ export default function App(){
       form_data.append('images', image, image.name)
       console.log(form_data);
       let url = 'http://localhost:8000/djimagelist/';
-      promises.push(new Promise(res => {postAxios(url,form_data);}).then(()=>setCurProgress(curProgress+1)))
+      promises.push(postAxios(url,form_data))
     });
-    const data = await Promise.allSettled(promises);
+    const data = allProgress(promises)
     console.log(data)
   }
 
@@ -162,6 +175,7 @@ export default function App(){
       return (<InfoText buttonInfo={()=>{showHide();}}/>);
     }
     if(progressBarRender) {
+      console.log("got in progress bar")
       return progressBarFunction()
     }
   }
@@ -194,7 +208,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{detectAnimals();setProgressBarRender(false);setBackToStartMessage(true);}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}}/>
         </div>
         <div className='line'></div>
         {/*  */}
