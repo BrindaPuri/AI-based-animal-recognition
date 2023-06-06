@@ -21,6 +21,17 @@ html {
   flex-direction: column;
 }
 
+.uploadimage {
+  overflow: auto;
+  height: 340px;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
 #bottomscreen {
   background: #DDE5B6;
 }
