@@ -68,6 +68,7 @@ export default function App(){
   const [progressBarRender, setProgressBarRender] = React.useState(false);
   const [maxProgress, setMaxProgress] = React.useState(0)
   const [curProgress, setCurProgress] = React.useState(0)
+  const [imageSize, setImageSize] = React.useState(0)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -156,6 +157,8 @@ export default function App(){
         onImageRemove
       }) => (
         <div className='uploadimage'>
+          {setImageSize(images.length)}
+          <div className='ImageSizeDisplay'>{imageSize}</div>
         {imageList.map((image, index) => (
           <div key={index} className="image-item">
             <img src={image.data_url} alt="" width="100" />
