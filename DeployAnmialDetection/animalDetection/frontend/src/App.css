@@ -21,14 +21,32 @@ html {
   flex-direction: column;
 }
 
+.uploadimage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .uploadimagefunction {
   display: flex;
   width: 100%;
 }
 
-.uploadimage {
+.ImageSizeDisplay {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 6%;
+  margin-right: 6%;  
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.allImages {
   overflow: auto;
-  height: 340px;
+  height: 308px;
   margin-left: 6%;
   margin-right: 6%;  
   display: flex;
