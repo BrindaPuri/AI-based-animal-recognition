@@ -8,6 +8,10 @@ process_ids=()
 
 append() { process_ids+=( "$1" ); }
 
+python3 -m pip install --user --upgrade pip
+python3 -m pip --version
+python3 -m pip install --user virtualenv
+
 echo 'all functions in this script tested working in linux'
 
 echo 'activating python virtual env'
@@ -16,14 +20,8 @@ source env/local/bin/activate
 
 python3 -m pip install -r requirements.txt
 
-python3 ${managePath} makemigrations
-echo 'backend finished makemigrations'
-
-python3 ${managePath} migrate
-echo 'backend finished migrate'
-
 echo 'starting backend server'
-nohup python3 ${managePath} runserver > django-log.txt & 
+nohup python3 ${managePath} app.py > flask-log.txt & 
 append "$!"
 
 echo 'starting frontend server'
@@ -38,7 +36,7 @@ printf ' - %s\n' "${process_ids[@]}"
 
 echo 'kill this script will kill all bg processes it created'
 
-echo 'django: http://127.0.0.1:8000/'
+echo 'flask: http://127.0.0.1:8000/'
 echo 'react: http://127.0.0.1:3000/'
 
 echo 'opening up http://localhost:3000/'
