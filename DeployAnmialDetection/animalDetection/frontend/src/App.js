@@ -64,6 +64,7 @@ export default function App(){
 
   const [images, setImages] = React.useState([]);
   const [uploadImageRender, setUploadImageRender] = React.useState(false);
+  const [classificationRender, setClassificationRender] = React.useState(false);
   const [backToStartMessage, setBackToStartMessage] = React.useState(true);
   const [progressBarRender, setProgressBarRender] = React.useState(false);
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -183,6 +184,15 @@ export default function App(){
       console.log("got in progress bar")
       return progressBarFunction()
     }
+    if(classificationRender) {
+      console.log("pick classification")
+      return (
+        <div className='pickClassification'>
+          <button>ViT</button>
+          <button>Resnet</button>
+        </div>
+      );
+    }
   }
 
   return (
@@ -219,15 +229,13 @@ export default function App(){
         {/*  */}
         <div className='Step3'>
           Classify Animals
-          <Logos image={scan_logo} imageName="scan"/>
-          {/* <PlayButton/> */}
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);}}/>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step4'>
           Download Results
           <Logos image={download_logo} imageName="download"/>
-          {/* <PlayButton/> */}
         </div>
       </div>
     </>
