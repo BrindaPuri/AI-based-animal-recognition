@@ -24,11 +24,25 @@ axios.defaults.baseURL = "http://localhost:5000/"
 //     );
 // }
 
-function Logos({image, imageName, buttonFunction}) {
+function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFunction}) {
+  if(disableFactor) {
+    return (
+      <>
+      <div className='big_circle'>
+        <div className='small_circle'>
+          {console.log({disableFactor})}
+          <img src={image} alt="logo-logo" className={imageName} onClick={disableErrorFunction}>
+          </img>
+        </div>
+      </div>
+    </>
+    );
+  }
   return (
     <>
       <div className='big_circle'>
         <div className='small_circle'>
+          {console.log({disableFactor})}
           <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
           </img>
         </div>
@@ -66,11 +80,15 @@ export default function App(){
 
   const [images, setImages] = React.useState([]);
   const [uploadImageRender, setUploadImageRender] = React.useState(false);
+  const [classificationRender, setClassificationRender] = React.useState(false);
   const [backToStartMessage, setBackToStartMessage] = React.useState(true);
   const [progressBarRender, setProgressBarRender] = React.useState(false);
   const [maxProgress, setMaxProgress] = React.useState(0)
   const [curProgress, setCurProgress] = React.useState(0)
   const [imageSize, setImageSize] = React.useState(0)
+  const [finishDetect, setFinishDetect] = React.useState(true)
+  const [finishClassification, setFinishClassification] = React.useState(true)
+  const [printError, setPrintError] = React.useState(false)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -84,7 +102,7 @@ export default function App(){
     console.log(curProgress)
     console.log(maxProgress)
     var percentage = Math.floor((curProgress/maxProgress)*100)
-    return <ProgressBar completed={percentage} maxCompleted={100} />;
+    return <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer"/>;
   }
 
   function allProgress(proms) {
@@ -136,6 +154,7 @@ export default function App(){
     const data = await Promise.allSettled(promises);
     console.log(data);
     console.log("finished detecting")
+    setFinishDetect(false);
   }
 
   const resnet = async () => {
@@ -150,6 +169,10 @@ export default function App(){
   const showHide = () => {
     var div = document.getElementById("info");
     div.classList.toggle('hidden'); 
+  }
+
+  const checkImageEmpty = () => {
+    return (images.length===0)
   }
 
   const topScreenRender = () => {
@@ -171,6 +194,19 @@ export default function App(){
         <div className='uploadimage'>
           {setImageSize(images.length)}
           <div className='ImageSizeDisplay'>{imageSize}</div>
+          {setFinishClassification(true)}
+          <div className='ImageSizeDisplay'>{imageSize} images have been selected.</div>
+
+          {/* <div>
+            {(() => {
+              if (images.length === 0) {
+                return (
+                  alert("Please make sure to upload images.")
+                )
+              } 
+            })()}
+          </div> */}
+          <div className='allImages'>
         {imageList.map((image, index) => (
           <div key={index} className="image-item">
             <img src={image.data_url} alt="" width="100" />
@@ -180,6 +216,7 @@ export default function App(){
             </div>
           </div>
         ))}
+        </div>
         </div>
     )}
     </ImageUploading>
@@ -193,6 +230,35 @@ export default function App(){
       console.log("got in progress bar")
       return progressBarFunction()
     }
+    if(classificationRender) {
+      console.log("pick classification")
+      return (
+        <div className='pickClassification'>
+          <button className='buttonClassify'>ViT</button>
+          <button className='buttonClassify' onClick={()=>resnet()}>Resnet</button>
+        </div>
+      );
+    }
+    if(printError) {
+      let task = ""
+      // if(finishClassification) {
+      //   task = "upload images"
+      // }
+      if (finishDetect) {
+        task = "upload images"
+      } 
+      if (checkImageEmpty()) {
+        task = "select images"
+      }
+
+      
+      console.log("not finished", {task})
+      return (
+        <div className='detectIncomplete'>
+          You have not completed the {task} step. Please make sure to complete that first.
+        </div>
+      )
+    }
   }
 
   return (
@@ -203,7 +269,7 @@ export default function App(){
       <div className='container' id="bottomscreen">
         {/*  */}
         <div className='Step1'>
-          Upload Image
+          Select Image(s)
           <ImageUploading
             multiple
             value={images}
@@ -215,28 +281,28 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-          <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageUpload();onImageRemoveAll();setUploadImageRender(true);setBackToStartMessage(false);}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();setUploadImageRender(true);setBackToStartMessage(false);}}/>
           )}
           </ImageUploading>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-          Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}}/>
+        Upload & Detect
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step3'>
           Classify Animals
-          <Logos image={scan_logo} imageName="scan"/>
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);setFinishDetect(true);}} disableFactor={finishDetect} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
           {/* <PlayButton/> */}
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step4'>
           Download Results
-          <Logos image={download_logo} imageName="download"/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{setBackToStartMessage(false);}} disableFactor={finishClassification}/>
           {/* <PlayButton/> */}
         </div>
       </div>
