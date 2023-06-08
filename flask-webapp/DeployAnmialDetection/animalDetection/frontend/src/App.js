@@ -138,6 +138,15 @@ export default function App(){
     console.log("finished detecting")
   }
 
+  const resnet = async () => {
+    let url = '/resnetPredict';
+    console.log("starting resnet")
+    const promises = [getAxios(url)];
+    const data = await Promise.allSettled(promises);
+    console.log(data);
+    console.log("finished detecting")
+  }
+
   const showHide = () => {
     var div = document.getElementById("info");
     div.classList.toggle('hidden'); 

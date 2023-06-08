@@ -16,7 +16,7 @@ echo 'all functions in this script tested working in linux'
 
 echo 'activating python virtual env'
 virtualenv env
-source env/local/bin/activate
+source env/bin/activate
 
 python3 -m pip install -r requirements.txt
 
@@ -55,6 +55,8 @@ __cleanup ()
 
     rm animalDetection/backend/images/*
     echo 'removed everything in animalDetection/backend/images/'
+    rm animalDetection/backend/stats/*
+    echo 'removed everything in animalDetection/backend/stats/'
 
     echo 'done cleaning up'
 }

@@ -2,7 +2,7 @@ from distutils.log import debug
 from fileinput import filename
 from werkzeug.utils import secure_filename
 from flask import *
-from ML import YoloPredict, initialize_weights
+from ML import YoloPredict, ViTPredict, Resnet_predict, initialize_weights
 import pandas as pd
 import os
 import json
@@ -16,6 +16,7 @@ BASEDIR = os.getcwd()
 BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
 STATSDIR = os.path.join(BACKENDDIR,"stats")
 IMAGEDIR = os.path.join(BACKENDDIR,"images")
+ANIMALDIR = os.path.join(BACKENDDIR,"animals")
 
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
@@ -23,7 +24,6 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
 yolov8Model = None
 resnetModel = None
 vitModel = None
-
   
 @app.route('/uploadImages', methods = ['POST'])  
 def uploadImages():
@@ -77,8 +77,9 @@ def allowed_image(filename):
     
 @app.route('/yolov8Predict', methods = ['GET'])
 def yolov8Predict():
-    yolov8Model,resnetModel,vitModel = initialize_weights()
     dict = {}
+    if yolov8Model is None:
+        yolov8Model,resnetModel,vitModel = initialize_weights()
     for image in os.listdir(app.config["IMAGE_UPLOADS"]):
         filename = image
         image = Image.open(os.path.join(IMAGEDIR,image))
@@ -94,9 +95,24 @@ def yolov8Predict():
                 'yolo_res' : yolo_res
             }
         image.close()
+
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(dict, file, sort_keys=True, indent=4)
     return jsonify(dict)
+
+@app.route('/resnetPredict', methods = ['GET'])
+def resnetPredict():
+    image_data = json.load(os.path.join(STATSDIR,'image_data.json'))
+    for key, value in image_data.items():
+        if value['detected'] == 1:
+            filename = str(key)
+            image = Image.open(os.path.join(IMAGEDIR,filename))
+            resnet_res = Resnet_predict(resnetModel,image,0.25)
+            image_data[filename]['resnet_res'] = resnet_res
+            image.close()
+    with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
+        json.dump(image_data, file, sort_keys=True, indent=4)
+    return jsonify(image_data)
 
     
 
