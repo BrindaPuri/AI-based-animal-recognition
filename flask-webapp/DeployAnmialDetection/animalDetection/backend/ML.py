@@ -8,21 +8,27 @@ import pandas as pd
 from PIL import Image
 import torchvision
 
+#Directories
+WEIGHTS_PATH = 'weights/'
 
-# def predict(images):
-#     for image in images:
-#         print(image.filename)
+#YOLOv8 Declaration
+yolo8 = YOLO(WEIGHTS_PATH + 'yolov8.pt')
 
-def predict(images):
-    WEIGHTS_PATH = 'weights/yolov8.pt'
-    yolo8 = YOLO(WEIGHTS_PATH)
+#Resnet model Declaration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+resnet = torchvision.models.resnet50(weights=True)
+resnet = torch.nn.DataParallel(resnet)
+resnet = resnet.to(device)
+resnet.load_state_dict(torch.load(WEIGHTS_PATH + 'resnet.pth', 
+                                  map_location=device))
+resnet.eval()
 
-    resnet = torchvision.models.resnet50(weights=True)
-    resnet = torch.nn.DataParallel(resnet)
-    resnet = resnet.to(torch.device('cpu'))
-    resnet.load_state_dict(torch.load('weights/resnet.pth',map_location=torch.device('cpu')))
-    resnet.eval()
-    
+#ViT Model Declarations
+model_name = 'B_16_imagenet1k'
+vit = ViT(model_name, pretrained=True)
+vit.eval()
+
+def predict(images):    
     my_dict= {}
     if len(images) > 0:
         for image in images:
@@ -38,8 +44,10 @@ def predict(images):
                 resnet_res = Resnet_predict(resnet,image,0.25)
                 #resnet_res = [0,0]
                 #load results
-                arr = [image.filename, yolo_results[0], yolo_results[1], 
-                                yolo_results[2], yolo_results[3], yolo_results[4], resnet_res[0].item(), resnet_res[1], vit_res[1],vit_res[0]]
+                arr = [yolo_results[0], yolo_results[1], 
+                                yolo_results[2], yolo_results[3], 
+                                yolo_results[4], resnet_res[0].item(), 
+                                resnet_res[1], vit_res[1],vit_res[0]]
             
             print(arr,'\n')
             my_dict[image.filename] =  arr
@@ -62,10 +70,13 @@ def Resnet_predict(model, image, conf):
     img_preprocessed = preprocess(image)
     img_tensor = torch.unsqueeze(img_preprocessed, 0)
     out = model(img_tensor)
+
     with open('imagenet1000Classes.txt') as f:
         labels = [line.strip() for line in f.readlines()]
+
     _, index = torch.max(out, 1)
     percentage = torch.nn.functional.softmax(out, dim=1)[0]
+    
     if percentage[index[0]].item() < conf:
         return[0,0]
     return [index[0],percentage[index[0]].item()]
@@ -74,32 +85,29 @@ def Resnet_predict(model, image, conf):
 def YoloPredict(model, image, conf_low):
     result = model.predict(source=image, save=False, show=False,
                             save_txt=False, conf=conf_low)
-    print(len(result[0]))
+    #print(len(result[0]))
     if len(result[0]) > 0:
-        print('detected')
+        #print('YOLO detected')
         return result[0].boxes.boxes.numpy()[0]
     else:
-        print('not detected')
+        #print('YOLO not detected')
         return [0,0,0,0,0,0]
     
 
 def ViTPredict(image,conf_low):
-    model_name = 'B_16_imagenet1k'
-    model = ViT(model_name, pretrained=True)
-    model.eval()
-    tfms = transforms.Compose([transforms.Resize(model.image_size), transforms.ToTensor(), transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),])
+    tfms = transforms.Compose([transforms.Resize(vit.image_size), 
+                               transforms.ToTensor(), 
+                               transforms.Normalize([0.5, 0.5, 0.5], 
+                                                    [0.5, 0.5, 0.5]),])
     image = tfms(image).unsqueeze(0)
+
     with torch.no_grad():
-        outputs = model(image).squeeze(0)
+        outputs = vit(image).squeeze(0)
+    
     for idx in torch.topk(outputs, k=1).indices.tolist():
         prob = torch.softmax(outputs, -1)[idx].item()
-        print('[{idx}] ({p:.2f}%)'.format(idx=idx ,p=prob*100))
-    if prob < conf_low:
-        return [0,0]    
-    return [idx, prob]
+        #print('[{idx}] ({p:.2f}%)'.format(idx=idx ,p=prob*100))
     
-
-def ViTPreprocess(model,image):
-    tfms = transforms.Compose([transforms.Resize(model.image_size), transforms.ToTensor(), transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),])
-    img = tfms(image).unsqueeze(0)
-    return img
+    if prob < conf_low:
+        return [0,0]
+    return [idx, prob]
