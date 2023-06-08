@@ -86,6 +86,7 @@ export default function App(){
   const [imageSize, setImageSize] = React.useState(0)
 
   const [step1Started, setStep1Started] = React.useState(false)
+  const [finishDetect, setFinishDetect] = React.useState(true)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -148,6 +149,7 @@ export default function App(){
     const data = await Promise.allSettled(promises);
     console.log(data);
     console.log("finished detecting")
+    setFinishDetect(false);
   }
 
   const showHide = () => {
@@ -257,7 +259,7 @@ export default function App(){
         {/*  */}
         <div className='Step3'>
           Classify Animals
-          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);}}/>
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);}} disableFactor={finishDetect}/>
         </div>
         <div className='line'></div>
         {/*  */}
