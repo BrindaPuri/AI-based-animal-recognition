@@ -7,12 +7,12 @@ import torch
 from pytorch_pretrained_vit import ViT
 import pandas as pd
 from PIL import Image
-#from torch import resnet50
+import torchvision
 
 def predict(images):
     print("starting prediction")
     yolo = YOLO('weights/yolov8.pt')
-    resnet = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
+    resnet = torchvision.models.resnet50(weights=True)
 
     df = pd.DataFrame(columns= ['Image','x1','y1','x2','y2','Yolo_Conf','Resnet_conf','Resnet_label','ViT_conf', 'ViT_label'] )
     for image in images:
@@ -28,11 +28,23 @@ def predict(images):
             df = df.append(new_row, ignore_index=True)
     df.to_csv('OUT.csv', sep='\t', encoding='utf-8')
 
-
-
-
 def Resnet_predict(model, image):
-     return [0,0,0]
+    preprocess = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),x
+    transforms.ToTensor(),
+    transforms.Normalize(
+    mean=[0.485, 0.456, 0.406],
+    std=[0.229, 0.224, 0.225]
+    )])
+    img_preprocessed = preprocess(img)
+    img_tensor = torch.unsqueeze(img_cat_preprocessed, 0)
+    out = model(img_tensor)
+    with open('/content/drive/Shareddrives/193/Code/Brinda/imagenet1000Classes.txt') as f: #CHANGE PATH
+    labels = [line.strip() for line in f.readlines()]
+    _, index = torch.max(out, 1)
+    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+    return labels[index[0]]
 
 
 def YoloPredict(model, image, conf_low):
