@@ -10,7 +10,7 @@ from pathlib import Path
 app = Flask(__name__)
 
 app.config["IMAGE_UPLOADS"] = Path(Path.cwd() / "images").as_posix()
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
   
 @app.route('/uploadImages', methods = ['POST'])  
 def uploadImages(): 
