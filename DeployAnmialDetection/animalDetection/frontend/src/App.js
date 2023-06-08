@@ -4,6 +4,7 @@ import image_logo from "./assets/logo/image.png"
 import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
+// eslint-disable-next-line
 import React, {Component} from 'react';
 import axios from 'axios';
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -105,6 +106,7 @@ export default function App(){
     let d = 0;
     setCurProgress(0);
     for (const p of proms) {
+      // eslint-disable-next-line
       p.then(()=> {    
         d ++;
         setCurProgress(d);
