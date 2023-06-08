@@ -6,13 +6,13 @@ import torch
 from pytorch_pretrained_vit import ViT
 import pandas as pd
 from PIL import Image
+from app import BASEDIR, BACKENDDIR, IMAGEDIR
 import torchvision
 
-#Directories
-WEIGHTS_PATH = 'weights/'
+WEIGHTS_PATH = os.path.join(BACKENDDIR,'weights')
 
 #YOLOv8 Declaration
-yolo8 = YOLO(WEIGHTS_PATH + 'yolov8.pt')
+yolov8 = YOLO(WEIGHTS_PATH+'yolov8.pt')
 
 #Resnet model Declaration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

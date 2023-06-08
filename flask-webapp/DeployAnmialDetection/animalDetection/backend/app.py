@@ -11,8 +11,10 @@ from flask import jsonify, request
 app = Flask(__name__)
 
 BASEDIR = os.getcwd()
+BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
+IMAGEDIR = os.path.join(BACKENDDIR,"images")
 
-app.config["IMAGE_UPLOADS"] = os.path.join(BASEDIR,"animalDetection/backend/images")
+app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
   
 @app.route('/uploadImages', methods = ['POST'])  
@@ -64,6 +66,10 @@ def allowed_image(filename):
         return True
     else:
         return False
+    
+@app.route('/yolov8Predict', method=['GET'])
+def yolov8Predict():
+    
     
 
 if __name__ == '__main__':  
