@@ -57,7 +57,7 @@ async function getAxios(url) {
 }
 
 async function postAxios(url, data){
-  return await axios.post(url, data,)
+  return await axios.post(url, data,).then((r)=>console.log(r))
 }
 
 export default function App(){
@@ -108,13 +108,14 @@ export default function App(){
       let form_data = new FormData();
       console.log(item)
       let image = item['file']
-      form_data.append('images', image)
+      form_data.append('image', image)
       console.log(form_data);
       let url = '/uploadImages';
-      promises.push(postAxios(url,form_data))
+      axios.post(url,form_data).then((r)=>console.log(r))
     });
-    const data = allProgress(promises)
-    console.log(data)
+    // const data = allProgress(promises)
+    // const data = Promise.all(promises)
+    // console.log(data)
   }
 
   const removeAllImage = async () => {

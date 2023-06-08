@@ -6,31 +6,57 @@ from ML import predict
 import pandas as pd
 import os
 from pathlib import Path
+from flask import jsonify, request
 
 app = Flask(__name__)
 
-app.config["IMAGE_UPLOADS"] = Path(Path.cwd() / "images").as_posix()
+BASEDIR = os.getcwd()
+
+app.config["IMAGE_UPLOADS"] = os.path.join(BASEDIR,"animalDetection/backend/images")
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
   
 @app.route('/uploadImages', methods = ['POST'])  
-def uploadImages(): 
-        # if request.form:  
-        #     images = request.form.getlist("images")
-        #     for image in images:
-        #         if image.filename == "":
-        #             print("Image needs a name")
-        #             return redirect("bad_file.html")
+def uploadImages():
+    # if request.method == 'POST':
+    #     filename = ''
+    #     data = request.get_json()
+    #     print(data)
+    #     image = request.form.get('image')
+    #     filename = secure_filename(image.filename)
+    #     image.save(Path(app.config["IMAGE_UPLOADS"] / image.filename))
+    #     return jsonify({'uploaded': 'yes'})
+    # else:
+    #     return jsonify({'uploaded' : 'no'})
+    file = request.files.get('image')
+    if file:
+        mimetype = file.content_type
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+        return jsonify({
+            'success': True,
+            'file': 'Received',
+            'type' : mimetype
+        })
+    return jsonify({
+        'success' : False
+    })
+
+# def uploadImages(): 
+#         if request.form:
+#             images = request.form.getlist("images")
+#             for image in images:
+#                 if image.filename == "":
+#                     return jsonify({'uploaded': 'Image needs a name'})
                     
-        #         if not allowed_image(image.filename):
-        #             print("Image type not allowed")
-        #             return redirect("bad_file.html") 
-        #         else:
-        #             filename = secure_filename(image.filename)
-        #             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-        #             print("Image Saved!")
-        #     predict(images)
-        return {'uploaded': 'yes'}
-    return {'uploaded': 'no'}
+#                 if not allowed_image(image.filename):
+#                     return jsonify({'uploaded': 'Image type not allow'})
+#                 else:
+#                     filename = secure_filename(image.filename)
+#                     image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+#                     print("Image Saved!")
+#             predict(images)
+#         return jsonify({'uploaded': 'yes'})
+#     return jsonify({'uploaded': 'nothing'})
 
 
 def allowed_image(filename):
