@@ -1,6 +1,6 @@
 #!/bin/bash
 
-managePath=animalDetection/manage.py
+flaskPath=animalDetection/backend
 reactPath=animalDetection/frontend
 
 process_ids=()
@@ -21,7 +21,7 @@ source env/local/bin/activate
 python3 -m pip install -r requirements.txt
 
 echo 'starting backend server'
-nohup python3 ${managePath} app.py > flask-log.txt & 
+nohup python3 ${flaskPath}/app.py > flask-log.txt & 
 append "$!"
 
 echo 'starting frontend server'
@@ -36,7 +36,7 @@ printf ' - %s\n' "${process_ids[@]}"
 
 echo 'kill this script will kill all bg processes it created'
 
-echo 'flask: http://127.0.0.1:8000/'
+echo 'flask: http://127.0.0.1:5000/'
 echo 'react: http://127.0.0.1:3000/'
 
 echo 'opening up http://localhost:3000/'
@@ -53,10 +53,6 @@ __cleanup ()
         kill $pid
     done
 
-    rm animalDetection/db.sqlite3
-    echo 'removed db.sqlite3'
-    rm animalDetection/media/*
-    echo 'removed all items in /media'
     echo 'done cleaning up'
 }
 

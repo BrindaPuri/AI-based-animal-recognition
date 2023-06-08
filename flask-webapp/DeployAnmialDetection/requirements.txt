@@ -1,5 +1,11 @@
-# Django==4.2
-# djangorestframework==3.14.0
-# django-cors-headers==3.14.0
-# ultralytics==8.0.90
 Flask==2.3.2
+numpy==1.24.2
+pandas==1.5.1
+Pillow==9.5.0
+pytorch_pretrained_vit==0.0.7
+setuptools==67.5.1
+torch==1.13.1
+torchvision==0.14.1
+ultralytics==8.0.90
+Werkzeug==2.3.5
+transformers==4.29.2

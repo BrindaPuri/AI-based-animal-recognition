@@ -15,7 +15,7 @@ def predict(images):
     resnet = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
 
     df = pd.DataFrame(columns= ['Image','x1','y1','x2','y2','Yolo_Conf','Resnet_conf','Resnet_label','ViT_conf', 'ViT_label'] )
-    for image in images
+    for image in images:
         print(image.filename)
         yolo_res = YoloPredict(yolo,image,0.25)
         if not np.asarray(yolo_res).shape == (1,0):
