@@ -84,9 +84,8 @@ export default function App(){
   const [maxProgress, setMaxProgress] = React.useState(0)
   const [curProgress, setCurProgress] = React.useState(0)
   const [imageSize, setImageSize] = React.useState(0)
-
-  const [step1Started, setStep1Started] = React.useState(false)
   const [finishDetect, setFinishDetect] = React.useState(true)
+  const [finishClassification, setFinishClassification] = React.useState(true)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -179,6 +178,7 @@ export default function App(){
       }) => (
         <div className='uploadimage'>
           {setImageSize(images.length)}
+          setFinishClassification(false);
           <div className='ImageSizeDisplay'>{imageSize} images have been uploaded.</div>
 
           {/* <div>
@@ -265,7 +265,7 @@ export default function App(){
         {/*  */}
         <div className='Step4'>
           Download Results
-          <Logos image={download_logo} imageName="download"/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{setBackToStartMessage(false);}} disableFactor={finishClassification}/>
         </div>
       </div>
     </>
