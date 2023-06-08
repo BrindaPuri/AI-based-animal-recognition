@@ -8,7 +8,7 @@ test('renders app', () => {
 
 });
 
-test("select images upload visible", async () => {
+test("check for two containers", async () => {
   const { container } = render(<App/>);
   // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
   const boxes = container.getElementsByClassName('container');
