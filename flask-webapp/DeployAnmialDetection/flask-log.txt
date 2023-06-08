@@ -6,7 +6,9 @@
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:27:15] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
+127.0.0.1 - - [08/Jun/2023 03:05:51] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:05:51] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:05:51] "[35m[1mGET /clearImages HTTP/1.1[0m" 500 -
 Traceback (most recent call last):
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
     return self.wsgi_app(environ, start_response)
@@ -20,37 +22,18 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 30, in uploadImages
-    return jsonify({
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/json/__init__.py", line 170, in jsonify
-    return current_app.json.response(*args, **kwargs)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/json/provider.py", line 215, in response
-    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/json/provider.py", line 180, in dumps
-    return json.dumps(obj, **kwargs)
-  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
-    **kw).encode(obj)
-  File "/usr/lib/python3.10/json/encoder.py", line 201, in encode
-    chunks = list(chunks)
-  File "/usr/lib/python3.10/json/encoder.py", line 431, in _iterencode
-    yield from _iterencode_dict(o, _current_indent_level)
-  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 438, in _iterencode
-    o = _default(o)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/json/provider.py", line 120, in _default
-    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
-TypeError: Object of type FileStorage is not JSON serializable
+  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 43, in clearImages
+    for file in os.path.listdir(app.config["IMAGE_UPLOADS"]):
+AttributeError: module 'posixpath' has no attribute 'listdir'
+127.0.0.1 - - [08/Jun/2023 03:05:51] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:05:51] "POST /uploadImages HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:28:28] "POST /uploadImages HTTP/1.1" 200 -
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:31:23] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
+127.0.0.1 - - [08/Jun/2023 03:08:18] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:08:18] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:08:18] "[35m[1mGET /clearImages HTTP/1.1[0m" 500 -
 Traceback (most recent call last):
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
     return self.wsgi_app(environ, start_response)
@@ -64,25 +47,42 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 30, in uploadImages
-    file.save(Path("/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/images" / file.name).as_posix())
-TypeError: unsupported operand type(s) for /: 'str' and 'str'
+  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 45, in clearImages
+    if len(os.path.listdir(app.config["IMAGE_UPLOADS"])==0):
+AttributeError: module 'posixpath' has no attribute 'listdir'
+127.0.0.1 - - [08/Jun/2023 03:08:18] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:08:18] "POST /uploadImages HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:31:47] "POST /uploadImages HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:37:44] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 02:38:48] "POST /uploadImages HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:40:37] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
+ * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-137-307
+ * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-137-307
+ * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-137-307
+ * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-137-307
+127.0.0.1 - - [08/Jun/2023 03:10:59] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:10:59] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:10:59] "[35m[1mGET /clearImages HTTP/1.1[0m" 500 -
 Traceback (most recent call last):
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
     return self.wsgi_app(environ, start_response)
@@ -96,101 +96,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 32, in uploadImages
-    file.save(Path("/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/images"/ filename).as_posix())
-TypeError: unsupported operand type(s) for /: 'str' and 'str'
-127.0.0.1 - - [08/Jun/2023 02:40:41] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 32, in uploadImages
-    file.save(Path("/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/images"/ filename).as_posix())
-TypeError: unsupported operand type(s) for /: 'str' and 'str'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:41:55] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 32, in uploadImages
-    file.save(os.path.join(app.config["IMAGE_UPLOADS"], "test.jpg"))
-  File "/home/studyztp/.local/lib/python3.10/site-packages/werkzeug/datastructures/file_storage.py", line 122, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: 'images/test.jpg'
-127.0.0.1 - - [08/Jun/2023 02:42:01] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 32, in uploadImages
-    file.save(os.path.join(app.config["IMAGE_UPLOADS"], "test.jpg"))
-  File "/home/studyztp/.local/lib/python3.10/site-packages/werkzeug/datastructures/file_storage.py", line 122, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: 'images/test.jpg'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:42:57] "POST /uploadImages HTTP/1.1" 200 -
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:44:14] "[35m[1mPOST /uploadImages HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 32, in uploadImages
-    file.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
-  File "/home/studyztp/.local/lib/python3.10/site-packages/werkzeug/datastructures/file_storage.py", line 122, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/images/Oled-demo.jpg'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
-127.0.0.1 - - [08/Jun/2023 02:45:20] "POST /uploadImages HTTP/1.1" 200 -
+  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 45, in clearImages
+    if len(os.listdir(app.config["IMAGE_UPLOADS"])==0):
+TypeError: object of type 'bool' has no len()
+127.0.0.1 - - [08/Jun/2023 03:10:59] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:10:59] "POST /uploadImages HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
@@ -199,9 +109,14 @@ FileNotFoundError: [Errno 2] No such file or directory: '/home/studyztp/senior-p
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 124-137-307
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
+127.0.0.1 - - [08/Jun/2023 03:11:55] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:11:55] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:11:55] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:11:55] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:11:55] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:13:32] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:13:32] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:14:17] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:14:18] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:15:02] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 03:15:02] "POST /uploadImages HTTP/1.1" 200 -

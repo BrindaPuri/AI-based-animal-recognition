@@ -53,7 +53,7 @@ function InfoText({buttonInfo}) {
     );
 }
 async function getAxios(url) {
-  return await axios.get(url)
+  return await axios.get(url).then((r)=>console.log(r))
 }
 
 async function postAxios(url, data){
@@ -111,17 +111,17 @@ export default function App(){
       form_data.append('image', image)
       console.log(form_data);
       let url = '/uploadImages';
-      axios.post(url,form_data).then((r)=>console.log(r))
+      promises.push(postAxios(url,form_data))
     });
-    // const data = allProgress(promises)
+    const data = allProgress(promises)
     // const data = Promise.all(promises)
-    // console.log(data)
+    console.log(data)
   }
 
   const removeAllImage = async () => {
-    let url = 'http://localhost:8000/djimagelist/';
+    let url = '/clearImages';
     const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
+    const data = Promise.all(promises);
     console.log(data)
   }
 

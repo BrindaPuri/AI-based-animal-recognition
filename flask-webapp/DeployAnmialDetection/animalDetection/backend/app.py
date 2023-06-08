@@ -17,46 +17,41 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
   
 @app.route('/uploadImages', methods = ['POST'])  
 def uploadImages():
-    # if request.method == 'POST':
-    #     filename = ''
-    #     data = request.get_json()
-    #     print(data)
-    #     image = request.form.get('image')
-    #     filename = secure_filename(image.filename)
-    #     image.save(Path(app.config["IMAGE_UPLOADS"] / image.filename))
-    #     return jsonify({'uploaded': 'yes'})
-    # else:
-    #     return jsonify({'uploaded' : 'no'})
     file = request.files.get('image')
     if file:
         mimetype = file.content_type
         filename = secure_filename(file.filename)
+        if not allowed_image(filename):
+            return jsonify({
+
+                'success' : False,
+                'note' : 'not allow file type'
+            })
         file.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
         return jsonify({
             'success': True,
-            'file': 'Received',
+            'note': 'file received',
             'type' : mimetype
         })
     return jsonify({
-        'success' : False
+        'success' : False,
+        'note' : 'file not recieved'
     })
 
-# def uploadImages(): 
-#         if request.form:
-#             images = request.form.getlist("images")
-#             for image in images:
-#                 if image.filename == "":
-#                     return jsonify({'uploaded': 'Image needs a name'})
-                    
-#                 if not allowed_image(image.filename):
-#                     return jsonify({'uploaded': 'Image type not allow'})
-#                 else:
-#                     filename = secure_filename(image.filename)
-#                     image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-#                     print("Image Saved!")
-#             predict(images)
-#         return jsonify({'uploaded': 'yes'})
-#     return jsonify({'uploaded': 'nothing'})
+@app.route('/clearImages', methods = ['GET'])
+def clearImages():
+    for file in os.listdir(app.config["IMAGE_UPLOADS"]):
+        os.remove(os.path.join(app.config["IMAGE_UPLOADS"], file))
+    if len(os.listdir(app.config["IMAGE_UPLOADS"]))==0:
+        return jsonify({
+            'success': True,
+            'note': 'all images removed',
+        })
+    else:
+        return jsonify({
+            'success': False,
+            'note': 'fail to remove all images',
+        })
 
 
 def allowed_image(filename):
@@ -69,9 +64,7 @@ def allowed_image(filename):
         return True
     else:
         return False
-
-def redirect(url):
-    return render_template(url)
+    
 
 if __name__ == '__main__':  
     app.run(debug=True)
