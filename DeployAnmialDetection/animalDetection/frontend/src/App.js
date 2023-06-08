@@ -274,7 +274,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           Upload & Detect
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setBackToStartMessage(false);setPrintError(true)}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
         </div>
         <div className='line'></div>
         {/*  */}
