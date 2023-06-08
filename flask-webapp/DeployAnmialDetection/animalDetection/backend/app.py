@@ -94,8 +94,8 @@ def yolov8Predict():
                 'yolo_res' : yolo_res
             }
         image.close()
-    # with open (STATSDIR+'image_data.json') as file:
-    #     json.dump(dict, file, sort_keys=True, indent=4)
+    with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
+        json.dump(dict, file, sort_keys=True, indent=4)
     return jsonify(dict)
 
     
