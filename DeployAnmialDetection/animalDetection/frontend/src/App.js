@@ -178,7 +178,7 @@ export default function App(){
       }) => (
         <div className='uploadimage'>
           {setImageSize(images.length)}
-          setFinishClassification(false);
+          {setFinishClassification(true)}
           <div className='ImageSizeDisplay'>{imageSize} images have been uploaded.</div>
 
           {/* <div>
