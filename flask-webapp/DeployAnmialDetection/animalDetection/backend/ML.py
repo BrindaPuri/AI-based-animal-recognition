@@ -31,7 +31,6 @@ def predict(images):
 def Resnet_predict(model, image):
     preprocess = transforms.Compose([
     transforms.Resize(256),
-    transforms.CenterCrop(224),x
     transforms.ToTensor(),
     transforms.Normalize(
     mean=[0.485, 0.456, 0.406],
