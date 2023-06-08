@@ -40,11 +40,11 @@ def Resnet_predict(model, image):
     img_preprocessed = preprocess(img)
     img_tensor = torch.unsqueeze(img_cat_preprocessed, 0)
     out = model(img_tensor)
-    with open('/content/drive/Shareddrives/193/Code/Brinda/imagenet1000Classes.txt') as f: #CHANGE PATH
+    with open('imagenet1000Classes.txt') as f:
     labels = [line.strip() for line in f.readlines()]
     _, index = torch.max(out, 1)
     percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-    return labels[index[0]]
+    return [index[0],percentage[index[0]].item()]
 
 
 def YoloPredict(model, image, conf_low):
