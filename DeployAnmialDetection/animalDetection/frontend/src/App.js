@@ -22,14 +22,14 @@ import ImageUploading from "react-images-uploading";
 //     );
 // }
 
-function Logos({image, imageName, buttonFunction, disableFactor}) {
+function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFunction}) {
   if(disableFactor) {
     return (
       <>
       <div className='big_circle'>
         <div className='small_circle'>
           {console.log({disableFactor})}
-          <img src={image} alt="logo-logo" className={imageName}>
+          <img src={image} alt="logo-logo" className={imageName} onClick={disableErrorFunction}>
           </img>
         </div>
       </div>
@@ -41,7 +41,7 @@ function Logos({image, imageName, buttonFunction, disableFactor}) {
       <div className='big_circle'>
         <div className='small_circle'>
           {console.log({disableFactor})}
-          <img src={image} alt="logo-logo" className={imageName} disabled={disableFactor} onClick={buttonFunction}>
+          <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
           </img>
         </div>
       </div>
@@ -86,6 +86,7 @@ export default function App(){
   const [imageSize, setImageSize] = React.useState(0)
   const [finishDetect, setFinishDetect] = React.useState(true)
   const [finishClassification, setFinishClassification] = React.useState(true)
+  const [printError, setPrintError] = React.useState(false)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -179,7 +180,7 @@ export default function App(){
         <div className='uploadimage'>
           {setImageSize(images.length)}
           {setFinishClassification(true)}
-          <div className='ImageSizeDisplay'>{imageSize} images have been uploaded.</div>
+          <div className='ImageSizeDisplay'>{imageSize} images have been selected.</div>
 
           {/* <div>
             {(() => {
@@ -223,6 +224,26 @@ export default function App(){
         </div>
       );
     }
+    if(printError) {
+      let task = ""
+      // if(finishClassification) {
+      //   task = "upload images"
+      // }
+      if (finishDetect) {
+        task = "upload images"
+      } 
+      if (checkImageEmpty()) {
+        task = "select images"
+      }
+
+      
+      console.log("not finished", {task})
+      return (
+        <div className='detectIncomplete'>
+          You have not completed the {task} step. Please make sure to complete that first.
+        </div>
+      )
+    }
   }
 
   return (
@@ -233,7 +254,7 @@ export default function App(){
       <div className='container' id="bottomscreen">
         {/*  */}
         <div className='Step1'>
-          Upload Image
+          Select Image(s)
           <ImageUploading
             multiple
             value={images}
@@ -252,14 +273,14 @@ export default function App(){
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-          Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()}/>
+          Upload & Detect
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setBackToStartMessage(false);setPrintError(true)}}/>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step3'>
           Classify Animals
-          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);}} disableFactor={finishDetect}/>
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);setFinishDetect(true);}} disableFactor={finishDetect} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
         </div>
         <div className='line'></div>
         {/*  */}
