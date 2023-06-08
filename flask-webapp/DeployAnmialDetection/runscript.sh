@@ -53,6 +53,9 @@ __cleanup ()
         kill $pid
     done
 
+    rm animalDetection/backend/images/*
+    echo 'removed everything in animalDetection/backend/images/'
+
     echo 'done cleaning up'
 }
 
