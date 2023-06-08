@@ -126,7 +126,7 @@ export default function App(){
   }
 
   const detectAnimals = async () => {
-    let url = 'http://localhost:8000/prediction/detect/';
+    let url = '/yolov8Predict';
     console.log("starting to cleanup old media")
     removeAllImage();
     console.log("starting to upload images")

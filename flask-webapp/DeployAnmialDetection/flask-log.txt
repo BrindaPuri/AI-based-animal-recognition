@@ -6,3 +6,25 @@
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 124-137-307
+127.0.0.1 - - [08/Jun/2023 04:20:08] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 04:20:08] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 04:20:08] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 04:20:08] "[35m[1mGET /yolov8Predict HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/studyztp/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 77, in yolov8Predict
+    filename = image.filename
+AttributeError: 'str' object has no attribute 'filename'
+127.0.0.1 - - [08/Jun/2023 04:20:08] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 04:20:08] "POST /uploadImages HTTP/1.1" 200 -

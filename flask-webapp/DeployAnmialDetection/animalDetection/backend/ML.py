@@ -5,6 +5,7 @@ from torchvision import transforms
 import torch
 from pytorch_pretrained_vit import ViT
 import pandas as pd
+import os
 from PIL import Image
 import torchvision
 
@@ -26,6 +27,7 @@ def initialize_weights():
                                     map_location=device))
     resnet.eval()
 
+
     #ViT Model Declarations
     model_name = 'B_16_imagenet1k'
     vit = ViT(model_name, pretrained=True)
@@ -38,7 +40,7 @@ def predict(images):
     if len(images) > 0:
         for image in images:
             #save as PiL
-            image = Image.open('images/'+image.filename)
+            image = Image.open(IMAGEDIR+image.filename)
             print('--------',image.filename,'--------')
             yolo_results = YoloPredict(yolov8, image, 0.25)
             vit_res =  [0,0]
@@ -91,7 +93,9 @@ def Resnet_predict(model, image, conf):
     return [index[0],percentage[index[0]].item()]
 
 
-def YoloPredict(model, image, conf_low):
+
+def YoloPredict(image, conf_low):
+    model = YOLO(WEIGHTS_PATH+'yolov8.pt')
     result = model.predict(source=image, save=False, show=False,
                             save_txt=False, conf=conf_low)
     #print(len(result[0]))

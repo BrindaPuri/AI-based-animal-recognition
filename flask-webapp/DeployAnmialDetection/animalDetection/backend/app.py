@@ -2,9 +2,11 @@ from distutils.log import debug
 from fileinput import filename
 from werkzeug.utils import secure_filename
 from flask import *
-from ML import predict
+from ML import YoloPredict
 import pandas as pd
 import os
+import json
+from PIL import Image
 from pathlib import Path
 from flask import jsonify, request
 
@@ -12,6 +14,7 @@ app = Flask(__name__)
 
 BASEDIR = os.getcwd()
 BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
+STATSDIR = os.path.join(BACKENDDIR,"stats")
 IMAGEDIR = os.path.join(BACKENDDIR,"images")
 
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
@@ -67,9 +70,28 @@ def allowed_image(filename):
     else:
         return False
     
-@app.route('/yolov8Predict', method=['GET'])
+@app.route('/yolov8Predict', methods = ['GET'])
 def yolov8Predict():
-    
+    dict = {}
+    for image in os.listdir(app.config["IMAGE_UPLOADS"]):
+        filename = image.filename
+        image = Image.open(image)
+        yolo_res = YoloPredict(image, 0.25)
+        if yolo_res[4]!=0:
+            dict[filename] = {
+                'detected' : 1,
+                'yolo_res' : yolo_res
+            }
+        else:
+            dict[filename] = {
+                'detected' : 0,
+                'yolo_res' : yolo_res
+            }
+        image.close()
+    with open (STATSDIR+'image_data.json') as file:
+        json.dump(dict, file, sort_keys=True, indent=4)
+    return jsonify(dict)
+
     
 
 if __name__ == '__main__':  
