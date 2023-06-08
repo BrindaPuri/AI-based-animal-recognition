@@ -83,7 +83,7 @@ export default function App(){
     console.log(curProgress)
     console.log(maxProgress)
     var percentage = Math.floor((curProgress/maxProgress)*100)
-    return <ProgressBar completed={percentage} maxCompleted={100} />;
+    return <ProgressBar completed={percentage} maxCompleted={100} maxCompleted={100} barContainerClassName="barContainer"/>;
   }
 
   function allProgress(proms) {
