@@ -10,7 +10,7 @@ from PIL import Image
 import torchvision
 
 #Directories
-WEIGHTS_PATH = 'weights/'
+WEIGHTS_PATH = os.path.join(os.getcwd(),"animalDetection/backend/weights/")
 
 #model names
 
@@ -94,14 +94,13 @@ def Resnet_predict(model, image, conf):
 
 
 
-def YoloPredict(image, conf_low):
-    model = YOLO(WEIGHTS_PATH+'yolov8.pt')
+def YoloPredict(model, image, conf_low):
     result = model.predict(source=image, save=False, show=False,
                             save_txt=False, conf=conf_low)
     #print(len(result[0]))
     if len(result[0]) > 0:
         #print('YOLO detected')
-        return result[0].boxes.boxes.numpy()[0]
+        return (result[0].boxes.boxes.numpy()[0]).tolist()
     else:
         #print('YOLO not detected')
         return [0,0,0,0,0,0]

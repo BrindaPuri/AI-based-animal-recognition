@@ -2,7 +2,7 @@ from distutils.log import debug
 from fileinput import filename
 from werkzeug.utils import secure_filename
 from flask import *
-from ML import YoloPredict
+from ML import YoloPredict, initialize_weights
 import pandas as pd
 import os
 import json
@@ -19,6 +19,11 @@ IMAGEDIR = os.path.join(BACKENDDIR,"images")
 
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
+
+yolov8Model = None
+resnetModel = None
+vitModel = None
+
   
 @app.route('/uploadImages', methods = ['POST'])  
 def uploadImages():
@@ -72,11 +77,12 @@ def allowed_image(filename):
     
 @app.route('/yolov8Predict', methods = ['GET'])
 def yolov8Predict():
+    yolov8Model,resnetModel,vitModel = initialize_weights()
     dict = {}
     for image in os.listdir(app.config["IMAGE_UPLOADS"]):
-        filename = image.filename
-        image = Image.open(image)
-        yolo_res = YoloPredict(image, 0.25)
+        filename = image
+        image = Image.open(os.path.join(IMAGEDIR,image))
+        yolo_res = YoloPredict(yolov8Model,image, 0.25)
         if yolo_res[4]!=0:
             dict[filename] = {
                 'detected' : 1,
@@ -88,8 +94,8 @@ def yolov8Predict():
                 'yolo_res' : yolo_res
             }
         image.close()
-    with open (STATSDIR+'image_data.json') as file:
-        json.dump(dict, file, sort_keys=True, indent=4)
+    # with open (STATSDIR+'image_data.json') as file:
+    #     json.dump(dict, file, sort_keys=True, indent=4)
     return jsonify(dict)
 
     
