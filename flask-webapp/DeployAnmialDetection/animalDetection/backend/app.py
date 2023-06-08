@@ -5,36 +5,32 @@ from flask import *
 from ML import predict
 import pandas as pd
 import os
+from pathlib import Path
 
-app = Flask(__name__)  
-  
+app = Flask(__name__)
 
-app.config["IMAGE_UPLOADS"] = "/Users/shubanranganath/Desktop/HM/images"
+app.config["IMAGE_UPLOADS"] = Path(Path.cwd() / "images").as_posix()
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["PNG", "JPG", "JPEG"]
-
-@app.route('/')  
-def main():  
-    return render_template("index.html")  
   
-@app.route('/success', methods = ['POST'])  
-def success(): 
-    if request.method == 'POST':
-        if request.files:  
-            images = request.files.getlist("file")
-            for image in images:
-                if image.filename == "":
-                    print("Image needs a name")
-                    return redirect("bad_file.html")
+@app.route('/uploadImages', methods = ['POST'])  
+def uploadImages(): 
+        # if request.form:  
+        #     images = request.form.getlist("images")
+        #     for image in images:
+        #         if image.filename == "":
+        #             print("Image needs a name")
+        #             return redirect("bad_file.html")
                     
-                if not allowed_image(image.filename):
-                    print("Image type not allowed")
-                    return redirect("bad_file.html") 
-                else:
-                    filename = secure_filename(image.filename)
-                    image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-                    print("Image Saved!")
-            predict(images)
-        return render_template("Acknowledgement.html")
+        #         if not allowed_image(image.filename):
+        #             print("Image type not allowed")
+        #             return redirect("bad_file.html") 
+        #         else:
+        #             filename = secure_filename(image.filename)
+        #             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+        #             print("Image Saved!")
+        #     predict(images)
+        return {'uploaded': 'yes'}
+    return {'uploaded': 'no'}
 
 
 def allowed_image(filename):

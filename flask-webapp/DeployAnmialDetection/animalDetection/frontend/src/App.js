@@ -11,6 +11,8 @@ import ProgressBar from "@ramonak/react-progress-bar";
 // import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
 
+axios.defaults.baseURL = "http://localhost:5000/"
+
 
 // function PlayButton({ buttonFunction }) {
 //   return (
@@ -106,9 +108,9 @@ export default function App(){
       let form_data = new FormData();
       console.log(item)
       let image = item['file']
-      form_data.append('images', image, image.name)
+      form_data.append('images', image)
       console.log(form_data);
-      let url = 'http://localhost:8000/djimagelist/';
+      let url = '/uploadImages';
       promises.push(postAxios(url,form_data))
     });
     const data = allProgress(promises)
