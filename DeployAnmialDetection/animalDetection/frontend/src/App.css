@@ -81,6 +81,12 @@ html {
   width: 400px;
 }
 
+.detectIncomplete {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
 /* .barCompleted {
   background: #ADC178;
 } */
