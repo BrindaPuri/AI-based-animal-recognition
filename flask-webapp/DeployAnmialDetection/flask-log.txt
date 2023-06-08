@@ -6,28 +6,20 @@
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 05:52:26] "GET /clearImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 05:52:26] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 05:52:26] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 05:52:26] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 05:52:26] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:39:59] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:39:59] "POST /uploadImages HTTP/1.1" 200 -
 
-0: 544x800 1 animals, 211.5ms
-Speed: 3.7ms preprocess, 211.5ms inference, 1.6ms postprocess per image at shape (1, 3, 800, 800)
+0: 544x800 1 animals, 354.9ms
+Speed: 12.8ms preprocess, 354.9ms inference, 4.3ms postprocess per image at shape (1, 3, 800, 800)
 WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
-
-0: 608x800 (no detections), 214.2ms
-Speed: 3.1ms preprocess, 214.2ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
-
-0: 608x800 (no detections), 201.8ms
-Speed: 2.9ms preprocess, 201.8ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
-
-0: 800x608 (no detections), 242.0ms
-Speed: 14.8ms preprocess, 242.0ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
-127.0.0.1 - - [08/Jun/2023 05:52:27] "GET /yolov8Predict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:40:00] "GET /yolov8Predict HTTP/1.1" 200 -
 /home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 05:52:34] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
+127.0.0.1 - - [08/Jun/2023 06:40:03] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:40:10] "GET /vitPredict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:43:05] "GET /vitPredict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:43:34] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:43:39] "[35m[1mGET /download HTTP/1.1[0m" 500 -
 Traceback (most recent call last):
   File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
     return self.wsgi_app(environ, start_response)
@@ -41,147 +33,16 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 120, in resnetPredict
-    resnet_res = Resnet_predict(resnetModel,image,0.25)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py", line 87, in Resnet_predict
-    with open('imagenet1000Classes.txt') as f:
-FileNotFoundError: [Errno 2] No such file or directory: 'imagenet1000Classes.txt'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 05:56:20] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 124, in resnetPredict
-    json.dump(image_data, file, sort_keys=True, indent=4)
-  File "/usr/lib/python3.10/json/__init__.py", line 179, in dump
-    for chunk in iterable:
-  File "/usr/lib/python3.10/json/encoder.py", line 431, in _iterencode
-    yield from _iterencode_dict(o, _current_indent_level)
-  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 438, in _iterencode
-    o = _default(o)
-  File "/usr/lib/python3.10/json/encoder.py", line 179, in default
-    raise TypeError(f'Object of type {o.__class__.__name__} '
-TypeError: Object of type Tensor is not JSON serializable
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 05:57:33] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file)
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 38 column 13 (char 629)
+  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 150, in download
+    json.dump(image_data, indent=4)
+TypeError: dump() missing 1 required positional argument: 'fp'
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
+Loaded pretrained weights.
+Loaded pretrained weights.
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:00:27] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file.read())
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-AttributeError: 'str' object has no attribute 'read'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:00:56] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.loads(file.read())
-  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 38 column 13 (char 629)
+127.0.0.1 - - [08/Jun/2023 06:44:11] "GET /download HTTP/1.1" 200 -
  * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
  * Restarting with stat
  * Debugger is active!
@@ -194,233 +55,4 @@ json.decoder.JSONDecodeError: Expecting value: line 38 column 13 (char 629)
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:01:48] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.loads(file)
-  File "/usr/lib/python3.10/json/__init__.py", line 339, in loads
-    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
-TypeError: the JSON object must be str, bytes or bytearray, not TextIOWrapper
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:02:52] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file)
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 38 column 13 (char 629)
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:03:10] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file.read())
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-AttributeError: 'str' object has no attribute 'read'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:04:13] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:04:13] "GET /clearImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:04:13] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:04:13] "POST /uploadImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:04:13] "POST /uploadImages HTTP/1.1" 200 -
-
-0: 608x800 (no detections), 245.9ms
-Speed: 7.0ms preprocess, 245.9ms inference, 0.6ms postprocess per image at shape (1, 3, 800, 800)
-
-0: 608x800 (no detections), 219.9ms
-Speed: 7.6ms preprocess, 219.9ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
-
-0: 800x608 (no detections), 234.2ms
-Speed: 2.9ms preprocess, 234.2ms inference, 0.6ms postprocess per image at shape (1, 3, 800, 800)
-127.0.0.1 - - [08/Jun/2023 06:04:14] "GET /yolov8Predict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:04:19] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file.read())
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-AttributeError: 'str' object has no attribute 'read'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:05:13] "GET /resnetPredict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:05:50] "GET /clearImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:05:50] "POST /uploadImages HTTP/1.1" 200 -
-
-0: 544x800 1 animals, 205.1ms
-Speed: 2.2ms preprocess, 205.1ms inference, 1.3ms postprocess per image at shape (1, 3, 800, 800)
-WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
-127.0.0.1 - - [08/Jun/2023 06:05:50] "GET /yolov8Predict HTTP/1.1" 200 -
-/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 06:05:53] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 120, in resnetPredict
-    resnet_res = Resnet_predict(resnetModel,image,0.25)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py", line 95, in Resnet_predict
-    return [index[0],percentage[index[0]].item()].tolist()
-AttributeError: 'list' object has no attribute 'tolist'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 06:06:20] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 124, in resnetPredict
-    json.dump(image_data, file, sort_keys=True, indent=4)
-  File "/usr/lib/python3.10/json/__init__.py", line 179, in dump
-    for chunk in iterable:
-  File "/usr/lib/python3.10/json/encoder.py", line 431, in _iterencode
-    yield from _iterencode_dict(o, _current_indent_level)
-  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
-    yield from chunks
-  File "/usr/lib/python3.10/json/encoder.py", line 438, in _iterencode
-    o = _default(o)
-  File "/usr/lib/python3.10/json/encoder.py", line 179, in default
-    raise TypeError(f'Object of type {o.__class__.__name__} '
-TypeError: Object of type Tensor is not JSON serializable
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/ML.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:08:25] "[35m[1mGET /resnetPredict HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 114, in resnetPredict
-    image_data = json.load(file)
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 5 column 13 (char 107)
-127.0.0.1 - - [08/Jun/2023 06:08:48] "GET /clearImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:08:48] "POST /uploadImages HTTP/1.1" 200 -
-
-0: 544x800 1 animals, 210.6ms
-Speed: 2.8ms preprocess, 210.6ms inference, 0.8ms postprocess per image at shape (1, 3, 800, 800)
-WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
-127.0.0.1 - - [08/Jun/2023 06:08:49] "GET /yolov8Predict HTTP/1.1" 200 -
-/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 06:08:52] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [08/Jun/2023 06:46:05] "GET /download HTTP/1.1" 200 -

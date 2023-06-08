@@ -164,6 +164,26 @@ export default function App(){
     const data = await Promise.allSettled(promises);
     console.log(data);
     console.log("finished detecting")
+    setFinishClassification(false)
+  }
+
+  const vit = async () => {
+    let url = '/vitPredict';
+    console.log("starting vit")
+    const promises = [getAxios(url)];
+    const data = await Promise.allSettled(promises);
+    console.log(data);
+    console.log("finished detecting")
+    setFinishClassification(false)
+  }
+
+  const download = async () => {
+    let url = '/download';
+    console.log("starting downloading result")
+    const promises = [getAxios(url)];
+    const data = await Promise.allSettled(promises);
+    console.log(data);
+    console.log("finished downloading")
   }
 
   const showHide = () => {
@@ -234,7 +254,7 @@ export default function App(){
       console.log("pick classification")
       return (
         <div className='pickClassification'>
-          <button className='buttonClassify'>ViT</button>
+          <button className='buttonClassify' onClick={()=>vit()}>ViT</button>
           <button className='buttonClassify' onClick={()=>resnet()}>Resnet</button>
         </div>
       );
@@ -302,7 +322,7 @@ export default function App(){
         {/*  */}
         <div className='Step4'>
           Download Results
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{setBackToStartMessage(false);}} disableFactor={finishClassification}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();setBackToStartMessage(false);}} disableFactor={finishClassification}/>
           {/* <PlayButton/> */}
         </div>
       </div>

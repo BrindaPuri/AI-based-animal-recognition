@@ -24,6 +24,7 @@ BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
 STATSDIR = os.path.join(BACKENDDIR,"stats")
 IMAGEDIR = os.path.join(BACKENDDIR,"images")
 ANIMALDIR = os.path.join(BACKENDDIR,"animals")
+DOWNLOADDIR = os.path.join(BASEDIR, "output")
 
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
@@ -112,19 +113,44 @@ def yolov8Predict():
 def resnetPredict():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
+    resnetModel = intialize_resnet()
     for key, value in image_data.items():
         if value['detected'] == 1:
             filename = str(key)
             image = Image.open(os.path.join(IMAGEDIR,filename))
-            resnetModel = intialize_resnet()
+            
             resnet_res = Resnet_predict(resnetModel,image,0.25)
             image_data[filename]['resnet_res'] = resnet_res
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
-        json.dump(image_data, file, sort_keys=True, indent=4)
+        json.dump(image_data, file)
     return jsonify(image_data)
 
-    
+@app.route('/vitPredict', methods = ['GET'])
+def vitPredict():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    vitModel = initialize_vit()
+    for key, value in image_data.items():
+        if value['detected'] == 1:
+            filename = str(key)
+            image = Image.open(os.path.join(IMAGEDIR,filename))
+            vit_res = ViTPredict(vitModel,image,0.25)
+            image_data[filename]['vit_res'] = vit_res
+            image.close()
+    with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
+        json.dump(image_data, file)
+    return jsonify(image_data)
+
+@app.route('/download', methods = ['GET'])
+def download():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    if not os.path.exists(DOWNLOADDIR):
+        os.makedirs(DOWNLOADDIR)
+    with open (os.path.join(DOWNLOADDIR, "image_data.json"), "w") as file:
+        json.dump(image_data, file, indent=4)
+    return jsonify(image_data)
 
 if __name__ == '__main__':  
     app.run(debug=True)
