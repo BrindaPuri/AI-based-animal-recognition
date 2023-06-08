@@ -38,7 +38,7 @@ def Resnet_predict(model, image):
     std=[0.229, 0.224, 0.225]
     )])
     img_preprocessed = preprocess(img)
-    img_tensor = torch.unsqueeze(img_cat_preprocessed, 0)
+    img_tensor = torch.unsqueeze(img_preprocessed, 0)
     out = model(img_tensor)
     with open('imagenet1000Classes.txt') as f:
     labels = [line.strip() for line in f.readlines()]
