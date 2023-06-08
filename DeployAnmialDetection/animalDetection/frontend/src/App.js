@@ -22,12 +22,26 @@ import ImageUploading from "react-images-uploading";
 //     );
 // }
 
-function Logos({image, imageName, buttonFunction}) {
+function Logos({image, imageName, buttonFunction, disableFactor}) {
+  if(disableFactor) {
+    return (
+      <>
+      <div className='big_circle'>
+        <div className='small_circle'>
+          {console.log({disableFactor})}
+          <img src={image} alt="logo-logo" className={imageName}>
+          </img>
+        </div>
+      </div>
+    </>
+    );
+  }
   return (
     <>
       <div className='big_circle'>
         <div className='small_circle'>
-          <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
+          {console.log({disableFactor})}
+          <img src={image} alt="logo-logo" className={imageName} disabled={disableFactor} onClick={buttonFunction}>
           </img>
         </div>
       </div>
@@ -71,19 +85,19 @@ export default function App(){
   const [curProgress, setCurProgress] = React.useState(0)
   const [imageSize, setImageSize] = React.useState(0)
 
+  const [step1Started, setStep1Started] = React.useState(false)
+
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
-
-  
   const progressBarFunction = () => {
     console.log(curProgress)
     console.log(maxProgress)
     var percentage = Math.floor((curProgress/maxProgress)*100)
-    return <ProgressBar completed={percentage} maxCompleted={100} maxCompleted={100} barContainerClassName="barContainer"/>;
+    return <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer" />;
   }
 
   function allProgress(proms) {
@@ -141,6 +155,10 @@ export default function App(){
     div.classList.toggle('hidden'); 
   }
 
+  const checkImageEmpty = () => {
+    return (images.length===0)
+  }
+
   const topScreenRender = () => {
     if(uploadImageRender) {
       return (
@@ -160,6 +178,16 @@ export default function App(){
         <div className='uploadimage'>
           {setImageSize(images.length)}
           <div className='ImageSizeDisplay'>{imageSize} images have been uploaded.</div>
+
+          {/* <div>
+            {(() => {
+              if (images.length === 0) {
+                return (
+                  alert("Please make sure to upload images.")
+                )
+              } 
+            })()}
+          </div> */}
           <div className='allImages'>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
@@ -188,8 +216,8 @@ export default function App(){
       console.log("pick classification")
       return (
         <div className='pickClassification'>
-          <button>ViT</button>
-          <button>Resnet</button>
+          <button className='buttonClassify'>ViT</button>
+          <button className='buttonClassify'>Resnet</button>
         </div>
       );
     }
@@ -215,7 +243,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-          <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageUpload();onImageRemoveAll();setUploadImageRender(true);setBackToStartMessage(false);}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();setUploadImageRender(true);setBackToStartMessage(false);}}/>
           )}
           </ImageUploading>
         </div>
@@ -223,7 +251,7 @@ export default function App(){
         {/*  */}
         <div className='Step2'>
           Detect Animals
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()}/>
         </div>
         <div className='line'></div>
         {/*  */}
