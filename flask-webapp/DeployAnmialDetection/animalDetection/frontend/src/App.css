@@ -21,14 +21,32 @@ html {
   flex-direction: column;
 }
 
+.uploadimage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .uploadimagefunction {
   display: flex;
   width: 100%;
 }
 
-.uploadimage {
+.ImageSizeDisplay {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 6%;
+  margin-right: 6%;  
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.allImages {
   overflow: auto;
-  height: 340px;
+  height: 308px;
   margin-left: 6%;
   margin-right: 6%;  
   display: flex;
@@ -37,6 +55,41 @@ html {
   align-content: flex-start;
   justify-content: flex-start;
 }
+
+.pickClassification {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonClassify {
+  background-color: #DDE5B6;
+  width: 110px;
+  height: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 3%;
+}
+
+.buttonClassify:hover {
+  background: #ADC178;
+  cursor: pointer;
+}
+
+.barContainer {
+  background-color: #000000;
+  width: 400px;
+}
+
+.detectIncomplete {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* .barCompleted {
+  background: #ADC178;
+} */
 
 #bottomscreen {
   background: #DDE5B6;
@@ -117,8 +170,6 @@ body {
 .button:hover {
   background: #ADC178;
   cursor: pointer;
-  /*margin-left: 50px;*/
-  /*transform: rotate(360deg);*/
 }
 
 img:hover{
