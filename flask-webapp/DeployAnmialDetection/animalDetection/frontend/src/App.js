@@ -213,7 +213,6 @@ export default function App(){
       }) => (
         <div className='uploadimage'>
           {setImageSize(images.length)}
-          <div className='ImageSizeDisplay'>{imageSize}</div>
           {setFinishClassification(true)}
           <div className='ImageSizeDisplay'>{imageSize} images have been selected.</div>
 
