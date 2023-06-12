@@ -197,38 +197,46 @@ export default function App(){
     let url = '/yolov8Predict';
     console.log("starting to cleanup old media")
     console.log("starting to upload images")
+    setOnProgress(true)
     removeAllImage()
     .then(()=>{uploadImage()})
     .then(()=>{allPromiseGet(url)})
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishDetect(true)})
     .then(()=>{console.log("finished detecting")})
+    .then(()=>{setOnProgress(false)})
   }
 
   const resnet = async () => {
     let url = '/resnetPredict';
     console.log("starting resnet")
+    setOnProgress(true)
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishClassification(true)})
     .then(()=>{console.log("finished resnet detecting")})
+    .then(()=>{setOnProgress(false)})
   }
 
   const vit = async () => {
     let url = '/vitPredict';
     console.log("starting vit")
+    setOnProgress(true)
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
     .then(()=>{setFinishClassification(true)})
+    .then(()=>{setOnProgress(false)})
   }
 
   const download = async () => {
     let url = '/download';
     console.log("starting downloading result")
+    setOnProgress(true)
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(console.log("finished downloading"))
+    .then(()=>{setOnProgress(false)})
   }
 
   const checkImageEmpty = () => {
@@ -283,8 +291,8 @@ export default function App(){
       console.log("pick classification")
       return (
         <div className='pickClassification'>
-          <button className='buttonClassify' onClick={()=>vit()}>ViT</button>
-          <button className='buttonClassify' onClick={async ()=>resnet()}>Resnet</button>
+          <button className='buttonClassify' onClick={()=>vit()} disabled={onProgress}>ViT</button>
+          <button className='buttonClassify' onClick={async ()=>resnet()} disabled={onProgress}>Resnet</button>
         </div>
       );
     }
@@ -328,7 +336,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-              <Logos image={image_logo} imageName="image" buttonFunction={()=>{setOnProgress(true).then(()=>{removeAllButtonFlags()}).then(()=>{onImageRemoveAll()}).then(()=>{onImageUpload()}).then(()=>{setFinishSelectImages(checkImageEmpty()).then(()=>{setOnProgress(false)})}).then(()=>{renderImageUpload()})}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}}/>
           )}
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>
@@ -336,7 +344,7 @@ export default function App(){
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setOnProgress(true).then(()=>{setCurProgress(0)}).then(()=>{renderProgressBar()}).then(()=>{detectAnimals()}).then(()=>{setFinishDetect(true)}).then(()=>{setOnProgress(false)})}} disableFactor={(!finishSelectImages)|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals();setFinishDetect(true)}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
           <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
         <div className='line'></div>
@@ -349,8 +357,7 @@ export default function App(){
         <div className='line'></div>
         {/*  */}
         <div className='Step4'>
-        
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{setOnProgress(true).then(()=>{download()}).then(()=>{renderStartMessage()})}} disableFactor={(!finishDetect)|onProgress} />
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishDetect)|onProgress} />
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>
