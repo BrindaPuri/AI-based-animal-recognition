@@ -124,7 +124,7 @@ def resnetPredict():
         if value['detected'] == 1:
             filename = str(key)
             image = Image.open(os.path.join(IMAGEDIR,filename))
-            
+            image = image.convert('RGB')
             resnet_res = Resnet_predict(resnetModel,image,0.25)
             image_data[filename]['resnet_res'] = resnet_res
             image.close()
@@ -141,6 +141,7 @@ def vitPredict():
         if value['detected'] == 1:
             filename = str(key)
             image = Image.open(os.path.join(IMAGEDIR,filename))
+            image = image.convert('RGB')
             vit_res = ViTPredict(vitModel,image,0.25)
             image_data[filename]['vit_res'] = vit_res
             image.close()
