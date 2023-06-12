@@ -57,12 +57,11 @@ function InfoText({buttonInfo}) {
   return (
     <>
       <div className="introtext" id="introtext" onClick={buttonInfo}>
-        Welcome to the Animal Recognition AI Pipeline.      
+        Animal Recognition AI Pipeline      
       </div>
-      <div className="hidden" id="info">
-        <p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p>
-        <p>ECS 193, Winter and Spring 2023</p>
-      </div>
+
+      <div className="subtext" id="subtext">
+      Identify animal species by uploading your own dataset.      </div>
     </>
     );
 }
@@ -95,8 +94,6 @@ export default function App(){
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
-
-
   
   const progressBarFunction = () => {
     console.log(curProgress)
@@ -146,6 +143,7 @@ async function allPromiseGet(url) {
     const promises = [getAxios(url)];
     const data = await Promise.allSettled(promises);
     console.log(data)
+    console.log("finished clearing images")
   }
 
   const detectAnimals = async () => {
@@ -284,13 +282,12 @@ async function allPromiseGet(url) {
 
   return (
     <>
-      <div className="container" id="topscreen">
+      <div className="topcontainer" id="topscreen">
         {topScreenRender()}
       </div>
       <div className='container' id="bottomscreen">
         {/*  */}
         <div className='Step1'>
-          Select Image(s)
           <ImageUploading
             multiple
             value={images}
@@ -305,26 +302,29 @@ async function allPromiseGet(url) {
               <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();setUploadImageRender(true);setBackToStartMessage(false);}}/>
           )}
           </ImageUploading>
+          <p className='insttext' id='insttext'>Select Image(s)</p>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-        Upload & Detect
           <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
+          <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step3'>
-          Classify Animals
+        
           <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);setFinishDetect(true);}} disableFactor={finishDetect} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
           {/* <PlayButton/> */}
+          <p className='insttext' id='insttext'>Classify Animals</p>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step4'>
-          Download Results
+        
           <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();setBackToStartMessage(false);}} disableFactor={finishClassification}/>
           {/* <PlayButton/> */}
+          <p className='insttext' id='insttext'>Download Results</p>
         </div>
       </div>
     </>
