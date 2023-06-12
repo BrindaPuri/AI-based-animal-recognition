@@ -72,20 +72,28 @@ async function allPromisePost(url, data) {
 
 
 export default function App(){
-// function notusing (){
-  console.log("Get in App");
 
   const [images, setImages] = React.useState([]);
-  const [uploadImageRender, setUploadImageRender] = React.useState(false);
-  const [classificationRender, setClassificationRender] = React.useState(false);
-  const [backToStartMessage, setBackToStartMessage] = React.useState(true);
-  const [progressBarRender, setProgressBarRender] = React.useState(false);
+  
+  
+  //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
   const [curProgress, setCurProgress] = React.useState(0)
   const [imageSize, setImageSize] = React.useState(0)
-  const [finishDetect, setFinishDetect] = React.useState(true)
-  const [finishClassification, setFinishClassification] = React.useState(true)
-  const [printError, setPrintError] = React.useState(false)
+
+
+  //button function trigger
+  const [finishSelectImages, setFinishSelectImages] = React.useState(false)
+  const [finishDetect, setFinishDetect] = React.useState(false)
+  const [finishClassification, setFinishClassification] = React.useState(false)
+  
+
+  //render triggers
+  const [uploadImageRender, setUploadImageRender] = React.useState(false);
+  const [startMessageRender, setStartMessageRender] = React.useState(true);
+  const [progressBarRender, setProgressBarRender] = React.useState(false);
+  const [classificationRender, setClassificationRender] = React.useState(false);
+  const [printErrorRender, setPrintErrorRender] = React.useState(false)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -103,6 +111,12 @@ export default function App(){
       });
     }
     return proms;
+  }
+
+  const removeAllButtonFlags = () => {
+    setFinishSelectImages(false)
+    setFinishDetect(false)
+    setFinishClassification(false)
   }
   
   const progressBarFunction = () => {
@@ -146,7 +160,7 @@ export default function App(){
     .then(()=>{uploadImage()})
     .then(()=>{allPromiseGet(url)})
     .then((r)=>{console.log(r)})
-    .then(()=>{setFinishDetect(false)})
+    .then(()=>{setFinishDetect(true)})
     .then(()=>{console.log("finished detecting")})
   }
 
@@ -155,7 +169,7 @@ export default function App(){
     console.log("starting resnet")
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
-    .then(()=>{setFinishClassification(false)})
+    .then(()=>{setFinishClassification(true)})
     .then(()=>{console.log("finished resnet detecting")})
   }
 
@@ -165,7 +179,7 @@ export default function App(){
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
-    .then(()=>{setFinishClassification(false)})
+    .then(()=>{setFinishClassification(true)})
   }
 
   const download = async () => {
@@ -227,7 +241,7 @@ export default function App(){
     </div>
     );
     }
-    if(backToStartMessage) {
+    if(startMessageRender) {
       return (<InfoText/>);
     }
     if(progressBarRender) {
@@ -243,7 +257,7 @@ export default function App(){
         </div>
       );
     }
-    if(printError) {
+    if(printErrorRender) {
       let task = ""
       // if(finishClassification) {
       //   task = "upload images"
@@ -284,7 +298,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-              <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();setUploadImageRender(true);setBackToStartMessage(false);}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{onImageRemoveAll();onImageUpload();setUploadImageRender(true);setStartMessageRender(false);}}/>
           )}
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>
@@ -292,14 +306,14 @@ export default function App(){
         <div className='line'></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setBackToStartMessage(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(true);setUploadImageRender(false);setStartMessageRender(false);detectAnimals();}} disableFactor={checkImageEmpty()} disableErrorFunction={()=>{setUploadImageRender(false);setStartMessageRender(false);setPrintErrorRender(true)}}/>
           <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
         <div className='line'></div>
         {/*  */}
         <div className='Step3'>
         
-          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setBackToStartMessage(false);setFinishDetect(true);}} disableFactor={finishDetect} disableErrorFunction={()=>{setUploadImageRender(false);setBackToStartMessage(false);setPrintError(true)}}/>
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{setCurProgress(0);setProgressBarRender(false);setClassificationRender(true);setStartMessageRender(false);setFinishDetect(true);}} disableFactor={finishDetect} disableErrorFunction={()=>{setUploadImageRender(false);setStartMessageRender(false);setPrintErrorRender(true)}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Classify Animals</p>
         </div>
@@ -307,7 +321,7 @@ export default function App(){
         {/*  */}
         <div className='Step4'>
         
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();setBackToStartMessage(false);}} disableFactor={finishClassification}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();setStartMessageRender(false);}} disableFactor={finishClassification}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>
