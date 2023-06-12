@@ -105,7 +105,7 @@ export default function App(){
     return <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer"/>;
   }
 
-  function allProgress(proms) {
+function allProgress(proms) {
     let d = 0;
     setCurProgress(0);
     for (const p of proms) {
@@ -114,8 +114,13 @@ export default function App(){
         setCurProgress(d);
       });
     }
-    return Promise.all(proms);
+    return proms;
   }
+
+async function allPromiseGet(url) {
+  const data = await Promise.allSettled([getAxios(url)])
+  return data
+}
 
   const uploadImage = async () => {
     let imagearr = [ ...images.values()];
@@ -131,7 +136,7 @@ export default function App(){
       let url = '/uploadImages';
       promises.push(postAxios(url,form_data))
     });
-    const data = allProgress(promises)
+    const data = await Promise.allSettled(allProgress(promises));
     // const data = Promise.all(promises)
     console.log(data)
   }
@@ -139,32 +144,29 @@ export default function App(){
   const removeAllImage = async () => {
     let url = '/clearImages';
     const promises = [getAxios(url)];
-    const data = Promise.all(promises);
+    const data = await Promise.allSettled(promises);
     console.log(data)
   }
 
   const detectAnimals = async () => {
     let url = '/yolov8Predict';
     console.log("starting to cleanup old media")
-    removeAllImage();
     console.log("starting to upload images")
-    uploadImage()
-    console.log("finished upload image, start detecting")
-    const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
-    console.log(data);
-    console.log("finished detecting")
-    setFinishDetect(false);
+    removeAllImage()
+    .then(()=>{uploadImage()})
+    .then(async ()=>{await Promise.allSettled([getAxios(url)])})
+    .then((r)=>{console.log(r)})
+    .then(()=>{setFinishDetect(false)})
+    .then(()=>{console.log("finished detecting")})
   }
 
   const resnet = async () => {
     let url = '/resnetPredict';
     console.log("starting resnet")
-    const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
-    console.log(data);
-    console.log("finished detecting")
-    setFinishClassification(false)
+    allPromiseGet(url)
+    .then((r)=>{console.log(r)})
+    .then(()=>{setFinishClassification(false)})
+    .then(()=>{console.log("finished resnet detecting")})
   }
 
   const vit = async () => {
@@ -254,7 +256,7 @@ export default function App(){
       return (
         <div className='pickClassification'>
           <button className='buttonClassify' onClick={()=>vit()}>ViT</button>
-          <button className='buttonClassify' onClick={()=>resnet()}>Resnet</button>
+          <button className='buttonClassify' onClick={async ()=>resnet()}>Resnet</button>
         </div>
       );
     }

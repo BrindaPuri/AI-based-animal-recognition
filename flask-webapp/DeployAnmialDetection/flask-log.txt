@@ -1,58 +1,426 @@
  * Serving Flask app 'app'
  * Debug mode: on
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on http://127.0.0.1:5000
-[33mPress CTRL+C to quit[0m
+Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:39:59] "GET /clearImages HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:39:59] "POST /uploadImages HTTP/1.1" 200 -
+ * Debugger PIN: 116-274-899
+127.0.0.1 - - [12/Jun/2023 10:11:43] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:11:43] "POST /uploadImages HTTP/1.1" 200 -
 
-0: 544x800 1 animals, 354.9ms
-Speed: 12.8ms preprocess, 354.9ms inference, 4.3ms postprocess per image at shape (1, 3, 800, 800)
+0: 608x800 (no detections), 128.2ms
+Speed: 2.8ms preprocess, 128.2ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 96.1ms
+Speed: 1.9ms preprocess, 96.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 93.7ms
+Speed: 2.0ms preprocess, 93.7ms inference, 0.7ms postprocess per image at shape (1, 3, 800, 800)
 WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
-127.0.0.1 - - [08/Jun/2023 06:40:00] "GET /yolov8Predict HTTP/1.1" 200 -
-/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+
+0: 608x800 (no detections), 93.9ms
+Speed: 2.3ms preprocess, 93.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.9ms
+Speed: 2.0ms preprocess, 91.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 89.8ms
+Speed: 2.0ms preprocess, 89.8ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 90.0ms
+Speed: 2.0ms preprocess, 90.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 92.1ms
+Speed: 2.5ms preprocess, 92.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 94.5ms
+Speed: 2.0ms preprocess, 94.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 92.4ms
+Speed: 2.0ms preprocess, 92.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 102.8ms
+Speed: 2.0ms preprocess, 102.8ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 2 animalss, 112.6ms
+Speed: 2.1ms preprocess, 112.6ms inference, 1.0ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 107.8ms
+Speed: 2.1ms preprocess, 107.8ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 93.4ms
+Speed: 2.0ms preprocess, 93.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.1ms
+Speed: 2.1ms preprocess, 91.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.3ms
+Speed: 2.0ms preprocess, 91.3ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.2ms
+Speed: 2.0ms preprocess, 91.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 97.6ms
+Speed: 2.0ms preprocess, 97.6ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 91.5ms
+Speed: 2.0ms preprocess, 91.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 91.7ms
+Speed: 2.0ms preprocess, 91.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 92.1ms
+Speed: 2.0ms preprocess, 92.1ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 91.1ms
+Speed: 2.0ms preprocess, 91.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 89.7ms
+Speed: 2.0ms preprocess, 89.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 127.5ms
+Speed: 2.1ms preprocess, 127.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 123.1ms
+Speed: 2.1ms preprocess, 123.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 97.9ms
+Speed: 2.0ms preprocess, 97.9ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 119.9ms
+Speed: 2.1ms preprocess, 119.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 5 animalss, 121.6ms
+Speed: 2.0ms preprocess, 121.6ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 123.7ms
+Speed: 2.0ms preprocess, 123.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 123.7ms
+Speed: 2.0ms preprocess, 123.7ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 124.2ms
+Speed: 2.0ms preprocess, 124.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+127.0.0.1 - - [12/Jun/2023 10:11:47] "GET /yolov8Predict HTTP/1.1" 200 -
+/home/ztpc/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
-127.0.0.1 - - [08/Jun/2023 06:40:03] "GET /resnetPredict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:40:10] "GET /vitPredict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:43:05] "GET /vitPredict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:43:34] "GET /resnetPredict HTTP/1.1" 200 -
-127.0.0.1 - - [08/Jun/2023 06:43:39] "[35m[1mGET /download HTTP/1.1[0m" 500 -
-Traceback (most recent call last):
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2213, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2193, in wsgi_app
-    response = self.handle_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/env/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py", line 150, in download
-    json.dump(image_data, indent=4)
-TypeError: dump() missing 1 required positional argument: 'fp'
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
-Loaded pretrained weights.
-Loaded pretrained weights.
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:44:11] "GET /download HTTP/1.1" 200 -
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
- * Detected change in '/home/studyztp/senior-project/AI-based-animal-recognition/flask-webapp/DeployAnmialDetection/animalDetection/backend/app.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 841-502-340
-127.0.0.1 - - [08/Jun/2023 06:46:05] "GET /download HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:12:09] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:17:12] "POST /uploadImages HTTP/1.1" 200 -
+
+0: 608x800 (no detections), 110.9ms
+Speed: 2.1ms preprocess, 110.9ms inference, 0.2ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 93.0ms
+Speed: 2.2ms preprocess, 93.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 90.6ms
+Speed: 2.0ms preprocess, 90.6ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 90.6ms
+Speed: 2.0ms preprocess, 90.6ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.1ms
+Speed: 2.1ms preprocess, 91.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 90.6ms
+Speed: 2.0ms preprocess, 90.6ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 91.5ms
+Speed: 2.0ms preprocess, 91.5ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 91.2ms
+Speed: 2.0ms preprocess, 91.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 89.0ms
+Speed: 2.0ms preprocess, 89.0ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 89.2ms
+Speed: 2.0ms preprocess, 89.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 100.7ms
+Speed: 2.0ms preprocess, 100.7ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 2 animalss, 109.2ms
+Speed: 2.1ms preprocess, 109.2ms inference, 0.9ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 107.8ms
+Speed: 2.1ms preprocess, 107.8ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 93.4ms
+Speed: 2.2ms preprocess, 93.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.3ms
+Speed: 2.0ms preprocess, 88.3ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.7ms
+Speed: 2.0ms preprocess, 88.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.6ms
+Speed: 2.0ms preprocess, 88.6ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.2ms
+Speed: 2.0ms preprocess, 88.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 89.0ms
+Speed: 2.0ms preprocess, 89.0ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 89.0ms
+Speed: 2.0ms preprocess, 89.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 88.4ms
+Speed: 2.0ms preprocess, 88.4ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 88.4ms
+Speed: 2.0ms preprocess, 88.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.2ms
+Speed: 2.1ms preprocess, 88.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 100.8ms
+Speed: 2.0ms preprocess, 100.8ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 107.9ms
+Speed: 2.0ms preprocess, 107.9ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 105.8ms
+Speed: 2.1ms preprocess, 105.8ms inference, 1.0ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 95.8ms
+Speed: 2.1ms preprocess, 95.8ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 5 animalss, 88.5ms
+Speed: 2.0ms preprocess, 88.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 87.9ms
+Speed: 2.0ms preprocess, 87.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 88.5ms
+Speed: 2.0ms preprocess, 88.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 88.7ms
+Speed: 2.0ms preprocess, 88.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+127.0.0.1 - - [12/Jun/2023 10:17:16] "GET /yolov8Predict HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:20:30] "POST /resnetPredict HTTP/1.1" 405 -
+/home/ztpc/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+127.0.0.1 - - [12/Jun/2023 10:20:52] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:20:52] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "GET /clearImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:38] "POST /uploadImages HTTP/1.1" 200 -
+
+0: 608x800 (no detections), 124.2ms
+Speed: 2.1ms preprocess, 124.2ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 120.7ms
+Speed: 2.1ms preprocess, 120.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 120.4ms
+Speed: 2.0ms preprocess, 120.4ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 89.7ms
+Speed: 2.0ms preprocess, 89.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 89.3ms
+Speed: 2.0ms preprocess, 89.3ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 91.5ms
+Speed: 2.0ms preprocess, 91.5ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 90.9ms
+Speed: 2.0ms preprocess, 90.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.9ms
+Speed: 2.0ms preprocess, 88.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 87.9ms
+Speed: 2.0ms preprocess, 87.9ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 87.1ms
+Speed: 2.0ms preprocess, 87.1ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 87.5ms
+Speed: 2.0ms preprocess, 87.5ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 2 animalss, 106.3ms
+Speed: 2.1ms preprocess, 106.3ms inference, 0.7ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 105.4ms
+Speed: 2.1ms preprocess, 105.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 101.7ms
+Speed: 2.8ms preprocess, 101.7ms inference, 0.4ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 87.0ms
+Speed: 2.0ms preprocess, 87.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 87.9ms
+Speed: 2.0ms preprocess, 87.9ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 87.7ms
+Speed: 2.1ms preprocess, 87.7ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 87.5ms
+Speed: 2.0ms preprocess, 87.5ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 87.6ms
+Speed: 2.0ms preprocess, 87.6ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 87.6ms
+Speed: 2.0ms preprocess, 87.6ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 88.9ms
+Speed: 2.0ms preprocess, 88.9ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 90.8ms
+Speed: 2.0ms preprocess, 90.8ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 88.4ms
+Speed: 2.0ms preprocess, 88.4ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 90.8ms
+Speed: 2.0ms preprocess, 90.8ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 (no detections), 109.0ms
+Speed: 2.1ms preprocess, 109.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 107.2ms
+Speed: 2.3ms preprocess, 107.2ms inference, 0.8ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 101.0ms
+Speed: 2.1ms preprocess, 101.0ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 5 animalss, 91.3ms
+Speed: 2.1ms preprocess, 91.3ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 95.2ms
+Speed: 2.1ms preprocess, 95.2ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+
+0: 608x800 1 animals, 94.9ms
+Speed: 2.1ms preprocess, 94.9ms inference, 0.5ms postprocess per image at shape (1, 3, 800, 800)
+WARNING ⚠️ 'Boxes.boxes' is deprecated. Use 'Boxes.data' instead.
+
+0: 608x800 (no detections), 93.8ms
+Speed: 2.0ms preprocess, 93.8ms inference, 0.3ms postprocess per image at shape (1, 3, 800, 800)
+127.0.0.1 - - [12/Jun/2023 10:21:41] "GET /yolov8Predict HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:21:46] "POST /resnetPredict HTTP/1.1" 405 -
+/home/ztpc/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+127.0.0.1 - - [12/Jun/2023 10:22:54] "GET /resnetPredict HTTP/1.1" 200 -
+127.0.0.1 - - [12/Jun/2023 10:22:59] "GET /download HTTP/1.1" 200 -

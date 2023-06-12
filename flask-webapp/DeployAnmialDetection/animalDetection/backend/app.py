@@ -37,6 +37,12 @@ initalized = False
   
 @app.route('/uploadImages', methods = ['POST'])  
 def uploadImages():
+    if not os.path.exists(IMAGEDIR):
+        os.makedirs(IMAGEDIR)
+    if not os.path.exists(STATSDIR):
+        os.makedirs(STATSDIR)
+    if not os.path.exists(ANIMALDIR):
+        os.makedirs(ANIMALDIR)
     file = request.files.get('image')
     if file:
         mimetype = file.content_type
