@@ -41,7 +41,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
 function InfoText() {
   return (
     <>
-      <div className="introtext" id="introtext" onClick={buttonInfo}>
+      <div className="introtext" id="introtext">
         Animal Recognition AI Pipeline      
       </div>
 
@@ -65,21 +65,11 @@ async function allPromiseGet(url) {
 }
 
 async function allPromisePost(url, data) {
-  const data = await Promise.allSettled([postAxios(url)])
-  return data
+  const promise_data = await Promise.allSettled([postAxios(url, data)])
+  return promise_data
 }
 
-function countProgress(proms) {
-  let d = 0;
-  setCurProgress(0);
-  for (const p of proms) {
-    p.then(()=> {    
-      d ++;
-      setCurProgress(d);
-    });
-  }
-  return proms;
-}
+
 
 export default function App(){
 // function notusing (){
@@ -102,6 +92,18 @@ export default function App(){
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
+
+  function countProgress(proms) {
+    let d = 0;
+    setCurProgress(0);
+    for (const p of proms) {
+      p.then(()=> {    
+        d ++;
+        setCurProgress(d);
+      });
+    }
+    return proms;
+  }
   
   const progressBarFunction = () => {
     console.log(curProgress)
