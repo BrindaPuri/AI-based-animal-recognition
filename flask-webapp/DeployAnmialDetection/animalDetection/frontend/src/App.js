@@ -7,22 +7,9 @@ import download_logo from "./assets/logo/download.png"
 import React, {Component} from 'react';
 import axios from 'axios';
 import ProgressBar from "@ramonak/react-progress-bar";
-
-// import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
 
 axios.defaults.baseURL = "http://localhost:5000/"
-
-
-// function PlayButton({ buttonFunction }) {
-//   return (
-//     <>
-//       <button className='button'>
-//         <img src={button_logo} className="play" alt="button-logo" onClick={buttonFunction}/>
-//       </button>
-//     </>
-//     );
-// }
 
 function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFunction}) {
   if(disableFactor) {
@@ -51,9 +38,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
   );
 }
 
-
-
-function InfoText({buttonInfo}) {
+function InfoText() {
   return (
     <>
       <div className="introtext" id="introtext" onClick={buttonInfo}>
@@ -61,7 +46,8 @@ function InfoText({buttonInfo}) {
       </div>
 
       <div className="subtext" id="subtext">
-      Identify animal species by uploading your own dataset.      </div>
+        Identify animal species by uploading your own dataset.      
+      </div>
     </>
     );
 }
@@ -71,6 +57,28 @@ async function getAxios(url) {
 
 async function postAxios(url, data){
   return await axios.post(url, data,).then((r)=>console.log(r))
+}
+
+async function allPromiseGet(url) {
+  const data = await Promise.allSettled([getAxios(url)])
+  return data
+}
+
+async function allPromisePost(url, data) {
+  const data = await Promise.allSettled([postAxios(url)])
+  return data
+}
+
+function countProgress(proms) {
+  let d = 0;
+  setCurProgress(0);
+  for (const p of proms) {
+    p.then(()=> {    
+      d ++;
+      setCurProgress(d);
+    });
+  }
+  return proms;
 }
 
 export default function App(){
@@ -102,29 +110,12 @@ export default function App(){
     return <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer"/>;
   }
 
-function allProgress(proms) {
-    let d = 0;
-    setCurProgress(0);
-    for (const p of proms) {
-      p.then(()=> {    
-        d ++;
-        setCurProgress(d);
-      });
-    }
-    return proms;
-  }
-
-async function allPromiseGet(url) {
-  const data = await Promise.allSettled([getAxios(url)])
-  return data
-}
-
   const uploadImage = async () => {
     let imagearr = [ ...images.values()];
     let all = imagearr.length;
     setMaxProgress(all)
     let promises = []
-    imagearr.forEach(function (item, index) {
+    imagearr.forEach(function (item, _) {
       let form_data = new FormData();
       console.log(item)
       let image = item['file']
@@ -133,17 +124,16 @@ async function allPromiseGet(url) {
       let url = '/uploadImages';
       promises.push(postAxios(url,form_data))
     });
-    const data = await Promise.allSettled(allProgress(promises));
+    const data = await Promise.allSettled(countProgress(promises));
     // const data = Promise.all(promises)
     console.log(data)
   }
 
   const removeAllImage = async () => {
     let url = '/clearImages';
-    const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
-    console.log(data)
-    console.log("finished clearing images")
+    allPromiseGet(url)
+    .then((r)=>{console.log(r)})
+    .then(()=>{console.log("finished clearing images")})
   }
 
   const detectAnimals = async () => {
@@ -152,7 +142,7 @@ async function allPromiseGet(url) {
     console.log("starting to upload images")
     removeAllImage()
     .then(()=>{uploadImage()})
-    .then(async ()=>{await Promise.allSettled([getAxios(url)])})
+    .then(()=>{allPromiseGet(url)})
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishDetect(false)})
     .then(()=>{console.log("finished detecting")})
@@ -170,25 +160,18 @@ async function allPromiseGet(url) {
   const vit = async () => {
     let url = '/vitPredict';
     console.log("starting vit")
-    const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
-    console.log(data);
-    console.log("finished detecting")
-    setFinishClassification(false)
+    allPromiseGet(url)
+    .then((r)=>{console.log(r)})
+    .then(()=>{console.log("finished vit detecting")})
+    .then(()=>{setFinishClassification(false)})
   }
 
   const download = async () => {
     let url = '/download';
     console.log("starting downloading result")
-    const promises = [getAxios(url)];
-    const data = await Promise.allSettled(promises);
-    console.log(data);
-    console.log("finished downloading")
-  }
-
-  const showHide = () => {
-    var div = document.getElementById("info");
-    div.classList.toggle('hidden'); 
+    allPromiseGet(url)
+    .then((r)=>{console.log(r)})
+    .then(console.log("finished downloading"))
   }
 
   const checkImageEmpty = () => {
@@ -243,7 +226,7 @@ async function allPromiseGet(url) {
     );
     }
     if(backToStartMessage) {
-      return (<InfoText buttonInfo={()=>{showHide();}}/>);
+      return (<InfoText/>);
     }
     if(progressBarRender) {
       console.log("got in progress bar")
