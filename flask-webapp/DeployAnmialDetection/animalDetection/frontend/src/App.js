@@ -86,7 +86,8 @@ export default function App(){
   const [images, setImages] = React.useState([]);
   const [progressInfoMessage, setProgressInfoMessage] = React.useState("")
   const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
-  const [plot, setPlot] = useState(0);
+  const [plotData, setPlotData] = useState(0);
+  const [plotLayout, setPlotLayout] = useState(0);
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -252,22 +253,17 @@ export default function App(){
     }
   }
 
-  const PrintGraph = () => {
-
-      axios.get('/graph',{
+  const getGraph = () => {
+    setOnProgress(true)
+    renderProgressInfo("Generating Graphs")
+    axios.get('/graph',{
         headers: {
             'Content-Type': 'application/json',
         }
-    },).then(res => setPlot(JSON.stringify(res)))
-    // console.log(JSON.parse(plot).data.data)
-    var data = JSON.parse(plot).data.data
-    var layout = JSON.parse(plot).data.layout
-    // setPlot(JSON.parse(plot).data)
-    return (
-      <div className='content'>
-      <Plot data={data} layout={layout}/>
-      </div>
-    );
+    },)
+    .then(res => {setPlotData(JSON.parse(JSON.stringify(res)).data.data);setPlotLayout(JSON.parse(JSON.stringify(res)).data.layout)})
+    .then(renderGraphPageRender())
+    .then(setOnProgress(false))
   };
 
   const showHide = () => {
@@ -430,7 +426,11 @@ export default function App(){
       return renderPercentage("Image Uploading")
     }
     if(graphPageRender) {
-      return PrintGraph()
+      return (
+        <div className='content'>
+        <Plot data={plotData} layout={plotLayout}/>
+        </div>
+      );
     }
     if(classificationRender) {
       console.log("pick classification")
@@ -449,7 +449,7 @@ export default function App(){
         <div className='downloadpageclass'>
           <button className='buttonDownload' onClick={()=>{download()}} disabled={onProgress}>Download CSV</button>
           <button className='buttonDownload' onClick={()=>{sortimages()}} disabled={onProgress}>Sort Image To Folders</button>
-          <button className='buttonDownload' onClick={()=>{renderGraphPageRender()}} disabled={onProgress}>Show Graphs</button>
+          <button className='buttonDownload' onClick={()=>{getGraph()}} disabled={onProgress}>Show Graphs</button>
         </div>
         </>
       )
