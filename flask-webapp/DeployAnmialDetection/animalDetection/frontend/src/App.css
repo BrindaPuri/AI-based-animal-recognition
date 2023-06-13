@@ -127,6 +127,9 @@ html {
 #introtext:hover {
   cursor: pointer;
 }
+.hidden {
+  display : none;
+}
 
 #subtext {
   /* display : none; */

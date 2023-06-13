@@ -38,15 +38,21 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
   );
 }
 
-function InfoText() {
+
+function InfoText({buttonInfo}) {
   return (
     <>
-      <div className="introtext" id="introtext">
+      <div className="introtext" id="introtext" onClick={buttonInfo}>
         Animal Recognition AI Pipeline      
       </div>
 
       <div className="subtext" id="subtext">
         Identify animal species by uploading your own dataset.      
+      </div>
+
+      <div className="hidden" id="info">
+        <p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p>
+        <p>ECS 193, Winter and Spring 2023</p>
       </div>
     </>
     );
@@ -76,6 +82,7 @@ export default function App(){
 
   const [images, setImages] = React.useState([]);
   const [progressInfoMessage, setProgressInfoMessage] = React.useState("")
+  const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -210,7 +217,7 @@ export default function App(){
 
     return (
       <>
-      <p className='percent' id='percent'>{message}</p>
+      <p className='percent' id='percent' style={{color:progressInfoColor}}>{message}</p>
       </>
     );
   }
@@ -221,6 +228,11 @@ export default function App(){
     } else {
       return "#000000";
     }
+  }
+
+  const showHide = () => {
+    var div = document.getElementById("info");
+    div.classList.toggle('hidden'); 
   }
 
   const uploadImage = async () => {
@@ -257,12 +269,14 @@ export default function App(){
     await removeAllImage()
     .then(()=>{renderProgressBar()})
     .then(async ()=>{await uploadImage()})
+    .then(()=>{setProgressInfoColor("#000000")})
     .then(()=>{renderProgressInfo("Running Yolov8 Model")})
     .then(async ()=>{await allPromiseGet(url)})
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishDetect(true)})
     .then(()=>{console.log("finished detecting")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{setProgressInfoColor("#0047BA")})
     .then(()=>{renderProgressInfo("Finished Yolov8 Detection")})
   }
 
@@ -270,13 +284,16 @@ export default function App(){
     let url = '/resnetPredict';
     console.log("starting resnet")
     setOnProgress(true)
+    setProgressInfoColor("#000000")
     renderProgressInfo("Running ResNet")
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishClassification(true)})
     .then(()=>{console.log("finished resnet detecting")})
+    .then(()=>{setProgressInfoColor("#0047BA")})
     .then(()=>{renderProgressInfo("Finished ResNet Classification")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{setProgressInfoColor("#000000")})
     .then(()=>{renderClassification()})
   }
 
@@ -284,13 +301,16 @@ export default function App(){
     let url = '/vitPredict';
     console.log("starting vit")
     setOnProgress(true)
+    setProgressInfoColor("#000000")
     renderProgressInfo("Running Vit")
     await allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
     .then(()=>{setFinishClassification(true)})
+    .then(()=>{setProgressInfoColor("#0047BA")})
     .then(()=>{renderProgressInfo("Finished Vit Classification")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{setProgressInfoColor("#000000")})
     .then(()=>{renderClassification()})
   }
 
@@ -298,6 +318,7 @@ export default function App(){
     let url = '/download';
     console.log("starting downloading result")
     setOnProgress(true)
+    setProgressInfoColor("#000000")
     renderProgressInfo("Downloading CSV file")
     await allPromiseGet(url)
     .then((r)=>{console.log(r)})
@@ -309,6 +330,7 @@ export default function App(){
   const sortimages = async () => {
     let url = '/sortImages';
     console.log("starting sorting images")
+    setProgressInfoColor("#000000")
     renderProgressInfo("Sorting Images In Output Folder")
     setOnProgress(true)
     await allPromiseGet(url)
@@ -359,7 +381,7 @@ export default function App(){
     );
     }
     if(startMessageRender) {
-      return (<InfoText/>);
+      return (<InfoText buttonInfo={()=>{showHide()}}/>);
     }
     if(progressBarRender) {
       console.log("got in progress bar")
@@ -381,7 +403,7 @@ export default function App(){
       return (
         <>
         <div className='downloadpageclass'>
-          <button className='buttonDownload' onClick={()=>download()} disabled={onProgress}>Download CSV</button>
+          <button className='buttonDownload' onClick={()=>{download()}} disabled={onProgress}>Download CSV</button>
           <button className='buttonDownload' onClick={()=>{sortimages()}} disabled={onProgress}>Sort Image To Folders</button>
         </div>
         </>
@@ -392,19 +414,15 @@ export default function App(){
     }
     if(printErrorRender) {
       let task = ""
-      // if(finishClassification) {
-      //   task = "upload images"
-      // }
       if (!finishDetect) {
         task = "upload images"
       } 
       if (checkImageEmpty()) {
         task = "select images"
       }
-      
       console.log("not finished", {task})
       return (
-        <div className='detectIncomplete'>
+        <div className='detectIncomplete' onClick={()=>{renderStartMessage()}}>
           You have not completed the {task} step. Please make sure to complete that first.
         </div>
       )
