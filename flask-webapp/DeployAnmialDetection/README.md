@@ -32,7 +32,7 @@ Then type the command below. This runs a script that will install all the depend
 ```
 Your browser should open a window that looks like this
 
-![screenshot1](assets/images/screenshot1.png?raw=true "screenshot1")
+![image](assets/images/image.png?raw=true "image")
 
 
 ## Usage
