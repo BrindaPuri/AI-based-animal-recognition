@@ -131,7 +131,11 @@ def resnetPredict():
             image = Image.open(os.path.join(IMAGEDIR,filename))
             image = image.convert('RGB')
             resnet_res = Resnet_predict(resnetModel,image,0.25)
-            image_data[filename]['resnet_res'] = {"confident" : resnet_res[1], "label" : resnet_res[2]}
+            image_data[filename]['resnet_res'] = {"confident" : resnet_res[1]}
+            if len(resnet_res) > 2:
+                image_data[filename]['resnet_res']["label"] = resnet_res[2]
+            else:
+                image_data[filename]['resnet_res']["label"] = 0
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(image_data, file)
