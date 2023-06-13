@@ -88,7 +88,7 @@ async function allPromisePost(url, data) {
 export default function App(){
 
   const [images, setImages] = React.useState([]);
-  
+  const [progressInfoMessage, setProgressInfoMessage] = React.useState("")
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -109,6 +109,7 @@ export default function App(){
   const [progressBarRender, setProgressBarRender] = React.useState(false);
   const [classificationRender, setClassificationRender] = React.useState(false);
   const [printErrorRender, setPrintErrorRender] = React.useState(false)
+  const [progressInfoRender, setProgressInfoRender] = React.useState(false)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -140,6 +141,7 @@ export default function App(){
     setProgressBarRender(false);
     setClassificationRender(false);
     setPrintErrorRender(false);
+    setProgressInfoRender(false);
   }
 
   const renderStartMessage = () => {
@@ -148,6 +150,7 @@ export default function App(){
     setProgressBarRender(false);
     setClassificationRender(false);
     setPrintErrorRender(false);
+    setProgressInfoRender(false);
   }
 
   const renderProgressBar = () => {
@@ -156,6 +159,7 @@ export default function App(){
     setProgressBarRender(true);
     setClassificationRender(false);
     setPrintErrorRender(false);
+    setProgressInfoRender(false);
   }
 
   const renderClassification = () => {
@@ -164,6 +168,7 @@ export default function App(){
     setProgressBarRender(false);
     setClassificationRender(true);
     setPrintErrorRender(false);
+    setProgressInfoRender(false);
   }
 
   const renderPrintError = () => {
@@ -172,15 +177,36 @@ export default function App(){
     setProgressBarRender(false);
     setClassificationRender(false);
     setPrintErrorRender(true);
+    setProgressInfoRender(false);
   }
 
-  const renderPercentage= () =>{
+  const renderProgressInfo = (message) => {
+    setUploadImageRender(false);
+    setStartMessageRender(false);
+    setProgressBarRender(false);
+    setClassificationRender(false);
+    setPrintErrorRender(false);
+    setProgressInfoRender(true);
+    setProgressInfoMessage(message);
+  }
+
+  const renderPercentage = (message) =>{
     console.log(curProgress)
     console.log(maxProgress)
     var percentage = Math.floor((curProgress/maxProgress)*100)
     return (
       <>
-      <div className='percent' id='percent'>{percentage}%</div>
+      <p className='percent' id='percent'>{message}</p>
+      <p className='percent' id='percent'>{percentage}%</p>
+      </>
+    );
+  }
+
+  const progressInfo = (message) => {
+
+    return (
+      <>
+      <p className='percent' id='percent'>{message}</p>
       </>
     );
   }
@@ -237,12 +263,15 @@ export default function App(){
     console.log("starting to upload images")
     setOnProgress(true)
     removeAllImage()
-    .then(()=>{uploadImage()})
-    .then(()=>{allPromiseGet(url)})
+    .then(()=>{renderProgressBar()})
+    .then(async ()=>{await uploadImage()})
+    .then(()=>{renderProgressInfo("Running Yolov8 Model")})
+    .then(async ()=>{await allPromiseGet(url)})
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishDetect(true)})
     .then(()=>{console.log("finished detecting")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{renderProgressInfo("Finished Yolov8 Detection")})
   }
 
   const resnet = async () => {
@@ -324,7 +353,7 @@ export default function App(){
     if(progressBarRender) {
       console.log("got in progress bar")
       // return progressBarFunction()
-      return renderPercentage()
+      return renderPercentage("Image Uploading")
     }
     if(classificationRender) {
       console.log("pick classification")
@@ -334,6 +363,9 @@ export default function App(){
           <button className='buttonClassify' onClick={async ()=>resnet()} disabled={onProgress}>Resnet</button>
         </div>
       );
+    }
+    if (progressInfoRender) {
+      return progressInfo(progressInfoMessage)
     }
     if(printErrorRender) {
       let task = ""
@@ -393,10 +425,10 @@ export default function App(){
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Classify Animals</p>
         </div>
-        <div className='line' style={{background : lineColor(finishDetect)}}></div>
+        <div className='line' style={{background : lineColor(finishClassification)}}></div>
         {/*  */}
         <div className='Step4'>
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishDetect)|onProgress}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishClassification)|onProgress}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>
