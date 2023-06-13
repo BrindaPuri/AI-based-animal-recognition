@@ -278,22 +278,28 @@ export default function App(){
     let url = '/resnetPredict';
     console.log("starting resnet")
     setOnProgress(true)
+    renderProgressInfo("Running ResNet")
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishClassification(true)})
     .then(()=>{console.log("finished resnet detecting")})
+    .then(()=>{renderProgressInfo("Finished ResNet Classification")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{renderClassification()})
   }
 
   const vit = async () => {
     let url = '/vitPredict';
     console.log("starting vit")
     setOnProgress(true)
+    renderProgressInfo("Running Vit")
     allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
     .then(()=>{setFinishClassification(true)})
+    .then(()=>{renderProgressInfo("Finished Vit Classification")})
     .then(()=>{setOnProgress(false)})
+    .then(()=>{renderClassification()})
   }
 
   const download = async () => {
@@ -328,7 +334,6 @@ export default function App(){
       }) => (
         <div className='uploadimage'>
           {setImageSize(images.length)}
-          {setFinishClassification(true)}
           <div className='ImageSizeDisplay'>{imageSize} images have been selected.</div>
           <div className='allImages'>
         {imageList.map((image, index) => (
@@ -388,6 +393,10 @@ export default function App(){
     }
   }
 
+  const nothing = () => {
+    console.log("got in nothing")
+  }
+
   return (
     <>
       <div className="topcontainer" id="topscreen">
@@ -415,13 +424,13 @@ export default function App(){
         <div className='line' style={{background : lineColor(!checkImageEmpty())}}></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals()}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals()}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{!onProgress ? renderPrintError(): nothing()}}/>
           <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
         <div className='line' style={{background : lineColor(finishDetect)}}></div>
         {/*  */}
         <div className='Step3'>
-          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{renderClassification()}} disableFactor={(!finishDetect)|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
+          <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{renderClassification()}} disableFactor={(!finishDetect)|onProgress} disableErrorFunction={()=>{!onProgress? renderPrintError(): nothing()}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Classify Animals</p>
         </div>
