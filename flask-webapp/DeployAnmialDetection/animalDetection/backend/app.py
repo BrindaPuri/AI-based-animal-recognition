@@ -17,6 +17,8 @@ from PIL import Image
 from pathlib import Path
 from flask import jsonify, request
 import shutil
+import plotly
+import plotly.express as px
 
 app = Flask(__name__)
 
@@ -195,6 +197,27 @@ def sort():
         else:
             shutil.copy2(os.path.join(IMAGEDIR,str(key)), ANIMALDIR)
     return jsonify({"result":f"finished sorting {len(image_data)}"})
+
+@app.route('/graph', methods = ['GET'])
+def graph():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    count = 0
+    for key, value in image_data.items():
+        if value["detected"]==0:
+            shutil.copy2(os.path.join(IMAGEDIR,str(key)), NOANIMALDIR)
+        else:
+            count += 1
+            shutil.copy2(os.path.join(IMAGEDIR,str(key)), ANIMALDIR)
+    res = {}
+    not_detected = len(image_data)-count
+    df = pd.DataFrame({
+        "values": [count,not_detected],
+        "labels": ["detected_animals", "no_animals"],
+    })
+    fig = px.pie(df, values="values",labels="labels")
+    graphJSON = plotly.io.to_json(fig, pretty=True)
+    return jsonify(graphJSON)
 
 if __name__ == '__main__':  
     app.run(debug=True)

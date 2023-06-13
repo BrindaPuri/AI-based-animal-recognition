@@ -4,10 +4,11 @@ import image_logo from "./assets/logo/image.png"
 import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import axios from 'axios';
 import ProgressBar from "@ramonak/react-progress-bar";
 import ImageUploading from "react-images-uploading";
+import Plot from 'react-plotly.js';
 
 axios.defaults.baseURL = "http://localhost:5000/"
 
@@ -37,7 +38,6 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
     </>
   );
 }
-
 
 function InfoText({buttonInfo}) {
   return (
@@ -86,7 +86,7 @@ export default function App(){
   const [images, setImages] = React.useState([]);
   const [progressInfoMessage, setProgressInfoMessage] = React.useState("")
   const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
-  const [jsonData, setJsonData] = React.useState({})
+  const [plot, setPlot] = useState(0);
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -109,7 +109,7 @@ export default function App(){
   const [printErrorRender, setPrintErrorRender] = React.useState(false)
   const [progressInfoRender, setProgressInfoRender] = React.useState(false)
   const [downloadPageRender, setDownloadPageRender] = React.useState(false)
-
+  const [graphPageRender, setGraphPageRender] = React.useState(false)
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
     console.log(imageList, addUpdateIndex);
@@ -142,6 +142,7 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(false);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderStartMessage = () => {
@@ -152,6 +153,7 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(false);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderProgressBar = () => {
@@ -162,6 +164,7 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(false);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderClassification = () => {
@@ -172,6 +175,7 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(false);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderPrintError = () => {
@@ -182,6 +186,7 @@ export default function App(){
     setPrintErrorRender(true);
     setProgressInfoRender(false);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderProgressInfo = (message) => {
@@ -193,6 +198,7 @@ export default function App(){
     setProgressInfoRender(true);
     setProgressInfoMessage(message);
     setDownloadPageRender(false);
+    setGraphPageRender(false);
   }
 
   const renderDownloadPage = () => {
@@ -203,6 +209,18 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(false);
     setDownloadPageRender(true);
+    setGraphPageRender(false);
+  }
+
+  const renderGraphPageRender = () => {
+    setUploadImageRender(false);
+    setStartMessageRender(false);
+    setProgressBarRender(false);
+    setClassificationRender(false);
+    setPrintErrorRender(false);
+    setProgressInfoRender(false);
+    setDownloadPageRender(false);
+    setGraphPageRender(true);
   }
 
   const renderPercentage = (message) =>{
@@ -233,6 +251,20 @@ export default function App(){
       return "#000000";
     }
   }
+
+  const PrintGraph = async () => {
+    
+    axios.get('/graph')
+    .then(res => res.data)
+    .then(data => {setPlot(JSON.parse(data))})
+      // console.log(plot)
+    
+    return (
+      <div className='content'>
+      <Plot data={plot.data} layout={plot.layout}/>
+      </div>
+    );
+  };
 
   const showHide = () => {
     var div = document.getElementById("info");
@@ -343,6 +375,7 @@ export default function App(){
     .then(()=>{setOnProgress(false)})
     .then(()=>renderDownloadPage())
   }
+  
 
   const checkImageEmpty = () => {
     return (images.length===0)
@@ -392,6 +425,9 @@ export default function App(){
       // return progressBarFunction()
       return renderPercentage("Image Uploading")
     }
+    if(graphPageRender) {
+      return PrintGraph()
+    }
     if(classificationRender) {
       console.log("pick classification")
       return (
@@ -409,6 +445,7 @@ export default function App(){
         <div className='downloadpageclass'>
           <button className='buttonDownload' onClick={()=>{download()}} disabled={onProgress}>Download CSV</button>
           <button className='buttonDownload' onClick={()=>{sortimages()}} disabled={onProgress}>Sort Image To Folders</button>
+          <button className='buttonDownload' onClick={()=>{renderGraphPageRender()}} disabled={onProgress}>Show Graphs</button>
         </div>
         </>
       )
