@@ -15,7 +15,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
   if(disableFactor) {
     return (
       <>
-      <div className='big_circle'>
+      <div className='big_circle' style={{background: "#000000"}}>
         <div className='small_circle'>
           {console.log({disableFactor})}
           <img src={image} alt="logo-logo" className={imageName} onClick={disableErrorFunction}>
@@ -27,7 +27,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
   }
   return (
     <>
-      <div className='big_circle'>
+      <div className='big_circle' style={{background: "#0047BA"}}>
         <div className='small_circle'>
           {console.log({disableFactor})}
           <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
@@ -158,6 +158,14 @@ export default function App(){
     setProgressBarRender(false);
     setClassificationRender(false);
     setPrintErrorRender(true);
+  }
+
+  const lineColor = (factor) => {
+    if (factor) {
+      return "#0047BA";
+    } else {
+      return "#000000";
+    }
   }
   
   const progressBarFunction = () => {
@@ -341,23 +349,23 @@ export default function App(){
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>
         </div>
-        <div className='line'></div>
+        <div className='line' style={{background : lineColor(!checkImageEmpty())}}></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals();setFinishDetect(true)}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals()}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
           <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
-        <div className='line'></div>
+        <div className='line' style={{background : lineColor(finishDetect)}}></div>
         {/*  */}
         <div className='Step3'>
           <Logos image={scan_logo} imageName="scan" buttonFunction={()=>{renderClassification()}} disableFactor={(!finishDetect)|onProgress} disableErrorFunction={()=>{renderPrintError()}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Classify Animals</p>
         </div>
-        <div className='line'></div>
+        <div className='line' style={{background : lineColor(finishDetect)}}></div>
         {/*  */}
         <div className='Step4'>
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishDetect)|onProgress} />
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishDetect)|onProgress}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>

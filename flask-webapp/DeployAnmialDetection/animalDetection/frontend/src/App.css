@@ -130,7 +130,7 @@ body {
 }
 
 .big_circle {
-  background: #000000; /*parchment : F0EAD2*/
+  /* background: #000000; parchment : F0EAD2 */
   border-radius: 50%;
   height: 60px;
   width: 60px;
@@ -163,7 +163,7 @@ body {
  position: relative;
  top: -11%;
  left: -0.35%;
- background-color: #000000;
+ /* background-color: #000000; */
  width: 100px;
  height: 5px;
  line-height: 10%;
