@@ -298,20 +298,24 @@ export default function App(){
     let url = '/download';
     console.log("starting downloading result")
     setOnProgress(true)
+    renderProgressInfo("Downloading CSV file")
     await allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(console.log("finished downloading"))
     .then(()=>{setOnProgress(false)})
+    .then(()=>renderDownloadPage())
   }
 
   const sortimages = async () => {
     let url = '/sortImages';
     console.log("starting sorting images")
+    renderProgressInfo("Sorting Images In Output Folder")
     setOnProgress(true)
     await allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(console.log("sorting images"))
     .then(()=>{setOnProgress(false)})
+    .then(()=>renderDownloadPage())
   }
 
   const checkImageEmpty = () => {
@@ -378,7 +382,7 @@ export default function App(){
         <>
         <div className='downloadpageclass'>
           <button className='buttonDownload' onClick={()=>download()} disabled={onProgress}>Download CSV</button>
-          <button className='buttonDownload' disabled={onProgress}>Sort Image To Folders</button>
+          <button className='buttonDownload' onClick={()=>{sortimages()}} disabled={onProgress}>Sort Image To Folders</button>
         </div>
         </>
       )

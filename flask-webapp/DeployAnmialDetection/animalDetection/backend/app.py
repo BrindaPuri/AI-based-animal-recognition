@@ -185,7 +185,7 @@ def sort():
     os.makedirs(ANIMALDIR)
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    for key, value in image_data:
+    for key, value in image_data.items():
         if value["detected"]==0:
             shutil.copy2(os.path.join(IMAGEDIR,str(key)), NOANIMALDIR)
         else:
