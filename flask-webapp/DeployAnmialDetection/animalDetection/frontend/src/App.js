@@ -88,6 +88,7 @@ export default function App(){
   const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
+  const [plot, setPlot] = useState("");
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -253,17 +254,19 @@ export default function App(){
     }
   }
 
-  const getGraph = () => {
+  const getGraph = async () => {
     setOnProgress(true)
     renderProgressInfo("Generating Graphs")
-    axios.get('/graph',{
+    await Promise.allSettled[axios.get('/graph',{
         headers: {
             'Content-Type': 'application/json',
         }
-    },)
-    .then(res => {setPlotData(JSON.parse(JSON.stringify(res)).data.data);setPlotLayout(JSON.parse(JSON.stringify(res)).data.layout)})
-    .then(renderGraphPageRender())
-    .then(setOnProgress(false))
+    },).then(res => setPlot(res))]
+    console.log(plot)
+    setPlotData(JSON.parse(JSON.stringify(plot)).data.data)
+    setPlotLayout(JSON.parse(JSON.stringify(plot)).data.layout)
+    renderGraphPageRender()
+    setOnProgress(false)
   };
 
   const showHide = () => {
