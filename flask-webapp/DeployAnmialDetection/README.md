@@ -30,7 +30,7 @@ Then type the command below. This runs a script that will install all the depend
 ```console
 ./runscript.sh
 ```
-Your browser should open a window that looks like this
+Your browser should open a window at `localhost:3000` that looks like this
 
 ![image](../../assets/images/image.png)
 
