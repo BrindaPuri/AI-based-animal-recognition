@@ -153,10 +153,25 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
+    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_result":[], "vit_result":[]}
+    for key, value in image_data.items():
+        d["image_name"].append(str(key))
+        d["animal_detected"].append(value["detected"])
+        d["yolov8_result"].append(value["yolo_res"])
+        if "vit_res" in value:
+            d["vit_result"].append(value["vit_res"])
+        else:
+            d["vit_result"].append("N/A")
+        if "resnet_res" in value:
+            d["resnet_result"].append(value['resnet_res'])
+        else:
+            d["resnet_result"].append("N/A")
+    df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):
         os.makedirs(DOWNLOADDIR)
     with open (os.path.join(DOWNLOADDIR, "image_data.json"), "w") as file:
         json.dump(image_data, file, indent=4)
+    df.to_csv(os.path.join(DOWNLOADDIR, "image_data.csv"))
     return jsonify(image_data)
 
 if __name__ == '__main__':  

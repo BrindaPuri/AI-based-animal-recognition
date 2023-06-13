@@ -52,19 +52,6 @@ function InfoText() {
     );
 }
 
-function displayText(message) {
-  return (
-    <>
-      <div className="introtext" id="introtext">
-        {message}
-      </div>
-
-      <div className="subtext" id="subtext">
-        Identify animal species by uploading your own dataset.      
-      </div>
-    </>
-    );
-}
 async function getAxios(url) {
   return await axios.get(url).then((r)=>console.log(r))
 }
@@ -217,18 +204,6 @@ export default function App(){
     } else {
       return "#000000";
     }
-  }
-  
-  const progressBarFunction = () => {
-    console.log(curProgress)
-    console.log(maxProgress)
-    var percentage = Math.floor((curProgress/maxProgress)*100)
-    return (
-      <>
-    <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer" completedClassName="barCompleted">
-    </ProgressBar>
-    </>
-    );
   }
 
   const uploadImage = async () => {
