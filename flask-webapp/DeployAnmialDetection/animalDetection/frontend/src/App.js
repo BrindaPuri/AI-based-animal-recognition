@@ -89,6 +89,7 @@ export default function App(){
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
   const [plot, setPlot] = useState("");
+  const [plotUrl, setPlotUrl] = useState("/graphPie")
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -254,10 +255,10 @@ export default function App(){
     }
   }
 
-  const getGraph = async () => {
+  const getGraph = async (url) => {
     setOnProgress(true)
     renderProgressInfo("Generating Graphs")
-    await Promise.allSettled[axios.get('/graph',{
+    await Promise.allSettled[axios.get(url ,{
         headers: {
             'Content-Type': 'application/json',
         }
@@ -401,6 +402,7 @@ export default function App(){
       }) => (
         <div className='uploadimage'>
           {setImageSize(images.length)}
+          {setOnProgress(false)}
           <div className='ImageSizeDisplay'>{imageSize} images have been selected.</div>
           <div className='allImages'>
         {imageList.map((image, index) => (
@@ -429,7 +431,9 @@ export default function App(){
     }
     if(graphPageRender) {
       return (
-        <div className='content'>
+        <div className='graphContent'>
+          <button className='graphButton' onClick={()=>{getGraph("/graphPie")}}>Detection Pie Graph</button>
+          <button className='graphButton'onClick={()=>{getGraph("/graphTime")}}>Time VS Detection</button>
         <Plot data={plotData} layout={plotLayout}/>
         </div>
       );
@@ -451,7 +455,7 @@ export default function App(){
         <div className='downloadpageclass'>
           <button className='buttonDownload' onClick={()=>{download()}} disabled={onProgress}>Download CSV</button>
           <button className='buttonDownload' onClick={()=>{sortimages()}} disabled={onProgress}>Sort Image To Folders</button>
-          <button className='buttonDownload' onClick={()=>{getGraph()}} disabled={onProgress}>Show Graphs</button>
+          <button className='buttonDownload' onClick={()=>{getGraph("/graphPie")}} disabled={onProgress}>Show Graphs</button>
         </div>
         </>
       )
@@ -499,7 +503,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-              <Logos image={image_logo} imageName="image" buttonFunction={()=>{removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}} disableFactor={onProgress} disableErrorFunction={()=>{nothing()}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{setOnProgress(true);removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}} disableFactor={onProgress} disableErrorFunction={()=>{nothing()}}/>
           )}
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>

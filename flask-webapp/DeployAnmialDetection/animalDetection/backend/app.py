@@ -1,5 +1,6 @@
 from distutils.log import debug
 from fileinput import filename
+import sys
 from werkzeug.utils import secure_filename
 from flask import *
 from ML import (
@@ -13,8 +14,8 @@ from ML import (
 import pandas as pd
 import os
 import json
-from PIL import Image
-from pathlib import Path
+from PIL import Image, TiffImagePlugin
+from PIL.ExifTags import TAGS
 from flask import jsonify, request
 import shutil
 import plotly
@@ -102,6 +103,15 @@ def yolov8Predict():
     for image in os.listdir(app.config["IMAGE_UPLOADS"]):
         filename = image
         image = Image.open(os.path.join(IMAGEDIR,image))
+        exifdata = image.getexif()
+        metadata = {}
+        for tag_id in exifdata:
+            tag = TAGS.get(tag_id, tag_id)
+            data = exifdata.get(tag_id)
+            if isinstance(data, bytes):
+                data = data.decode()
+            if not isinstance(data, TiffImagePlugin.IFDRational):
+                metadata[str(tag)] = data
         yolo_res = YoloPredict(yolov8Model,image, 0.25)
         if yolo_res[4]!=0:
             dict[filename] = {
@@ -114,6 +124,7 @@ def yolov8Predict():
                 'detected' : 0,
                 'yolo_res' : yolo_res
             }
+        dict[filename]["metadata"] = metadata
         image.close()
 
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
@@ -162,9 +173,10 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_label":[],"resnet_confident":[], "vit_result":[]}
+    d = {"image_name":[],"animal_detected":[], "metadata":[], "yolov8_result":[], "resnet_label":[],"resnet_confident":[], "vit_result":[]}
     for key, value in image_data.items():
         d["image_name"].append(str(key))
+        d["metadata"].append(value['metadata'])
         d["animal_detected"].append(value["detected"])
         d["yolov8_result"].append(value["yolo_res"])
         if "vit_res" in value:
@@ -204,24 +216,51 @@ def sort():
             shutil.copy2(os.path.join(IMAGEDIR,str(key)), ANIMALDIR)
     return jsonify({"result":f"finished sorting {len(image_data)}"})
 
-@app.route('/graph', methods = ['GET'])
-def graph():
+@app.route('/graphPie', methods = ['GET'])
+def graphPie():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
     count = 0
-    for key, value in image_data.items():
-        if value["detected"]==0:
-            shutil.copy2(os.path.join(IMAGEDIR,str(key)), NOANIMALDIR)
-        else:
+    for value in image_data.values():
+        if value["detected"]==1:
             count += 1
-            shutil.copy2(os.path.join(IMAGEDIR,str(key)), ANIMALDIR)
-    res = {}
     not_detected = len(image_data)-count
     df = pd.DataFrame({
-        "values": [count,not_detected],
-        "labels": ["detected_animals", "no_animals"],
+        "count": [count,not_detected],
+        "image type": ["detected_animals", "no_animals"],
     })
-    fig = px.pie(df, values="values",labels="labels")
+    fig = px.pie(df, values="count",names="image type")
+    graphJSON = plotly.io.to_json(fig, pretty=True)
+    return graphJSON
+
+@app.route('/graphTime', methods = ['GET'])
+def graphTime():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    counter = {"05_12":0,"13_20":0,"21_04":0}
+    for value in image_data.values():
+        timestamp = str(value['metadata']['DateTime'])
+        timestamp = timestamp.split(" ")[1]
+        print(f'timestamp: {timestamp}\n', file=sys.stderr)
+        hour = int(timestamp.split(":")[0])
+        print(f'hour: {hour}\n', file=sys.stderr)
+        if hour >=5 and hour<13:
+            counter["05_12"] += 1
+        if hour >=13 and hour < 21:
+            counter["13_20"] += 1
+        if hour >=21 and hour < 5:
+            counter["21_04"] += 1
+    values = []
+    labels = []
+    for range, count in counter.items():
+        labels.append(range)
+        values.append(count)
+
+    df = pd.DataFrame({
+        "count": values,
+        "time range": labels,
+    })
+    fig = px.pie(df, values="count",names="time range")
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
