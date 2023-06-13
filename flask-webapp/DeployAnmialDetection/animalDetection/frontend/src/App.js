@@ -261,12 +261,11 @@ export default function App(){
         headers: {
             'Content-Type': 'application/json',
         }
-    },).then(res => setPlot(res))]
-    console.log(plot)
-    setPlotData(JSON.parse(JSON.stringify(plot)).data.data)
-    setPlotLayout(JSON.parse(JSON.stringify(plot)).data.layout)
-    renderGraphPageRender()
-    setOnProgress(false)
+    },)
+    .then(res => {setPlotData(JSON.parse(JSON.stringify(res)).data.data);
+      setPlotLayout(JSON.parse(JSON.stringify(res)).data.layout)})
+      .then(()=>{renderGraphPageRender();setOnProgress(false)})]
+
   };
 
   const showHide = () => {

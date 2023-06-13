@@ -131,7 +131,7 @@ def resnetPredict():
             image = Image.open(os.path.join(IMAGEDIR,filename))
             image = image.convert('RGB')
             resnet_res = Resnet_predict(resnetModel,image,0.25)
-            image_data[filename]['resnet_res'] = resnet_res
+            image_data[filename]['resnet_res'] = {"confident" : resnet_res[1], "label" : resnet_res[2]}
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(image_data, file)
@@ -158,7 +158,7 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_label":[],"resnet_result":[], "vit_result":[]}
+    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_label":[],"resnet_confident":[], "vit_result":[]}
     for key, value in image_data.items():
         d["image_name"].append(str(key))
         d["animal_detected"].append(value["detected"])
@@ -168,16 +168,18 @@ def download():
         else:
             d["vit_result"].append("N/A")
         if "resnet_res" in value:
-            d['resnet_label'].append(value['resnet_res'][2])
-            d["resnet_result"].append(value['resnet_res'])
+            d['resnet_label'].append(value['resnet_res']['label'])
+            d["resnet_confident"].append(value['resnet_res']['confident'])
         else:
             d['resnet_label'].append("N/A")
-            d["resnet_result"].append("N/A")
+            d["resnet_confident"].append("N/A")
     df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):
         os.makedirs(DOWNLOADDIR)
     # with open (os.path.join(DOWNLOADDIR, "image_data.json"), "w") as file:
     #     json.dump(image_data, file, indent=4)
+    if os.path.isfile(os.path.join(DOWNLOADDIR, "image_data.csv")):
+        os.remove(os.path.join(DOWNLOADDIR, "image_data.csv"))
     df.to_csv(os.path.join(DOWNLOADDIR, "image_data.csv"))
     return jsonify(image_data)
 

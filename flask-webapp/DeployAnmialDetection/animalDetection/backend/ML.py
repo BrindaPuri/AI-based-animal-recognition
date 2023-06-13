@@ -36,41 +36,6 @@ def initialize_vit():
     vit.eval()
     return vit
 
-# def predict(images):
-#     yolov8,resnet,vit = initialize_weights()    
-#     my_dict= {}
-#     if len(images) > 0:
-#         for image in images:
-#             #save as PiL
-#             image = Image.open(IMAGEDIR+image.filename)
-#             print('--------',image.filename,'--------')
-#             yolo_results = YoloPredict(yolov8, image, 0.25)
-#             vit_res =  [0,0]
-#             resnet_res = [0,0]
-#             #check if animal is detected
-#             if yolo_results[4] != 0:
-#                 print("animal detected: ", yolo_results[4]*100)
-#                 vit_res = ViTPredict(vit,image,0.25)
-#                 resnet_res = Resnet_predict(resnet,image,0.25)
-#                 #resnet_res = [0,0]
-#                 #load results
-#                 field_names  =  ['x1','y1','x2','y2','Yolo_conf','Res_label','Res_conf'
-#                                  ,'ViT_label','ViT_conf']
-#             arr = {'x1':yolo_results[0], 'y1':yolo_results[1], 
-#                             'x2':yolo_results[2], 'y2':yolo_results[3], 
-#                             'Yolo_conf':yolo_results[4], 'Res_label':resnet_res[0], 
-#                             'Res_conf':resnet_res[1], 'ViT_label':vit_res[0],
-#                             'ViT_conf':vit_res[1]}
-            
-#             print(arr,'\n')
-#             my_dict[image.filename] =  arr
-            
-#             #close the file
-#             image.close()
-#         print(my_dict)
-#     return my_dict
-
-
 def Resnet_predict(model, image, conf):
     preprocess = transforms.Compose([
         transforms.Resize(256),
