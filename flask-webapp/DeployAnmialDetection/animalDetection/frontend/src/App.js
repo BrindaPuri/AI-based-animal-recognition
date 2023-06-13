@@ -252,16 +252,20 @@ export default function App(){
     }
   }
 
-  const PrintGraph = async () => {
-    
-    axios.get('/graph')
-    .then(res => res.data)
-    .then(data => {setPlot(JSON.parse(data))})
-      // console.log(plot)
-    
+  const PrintGraph = () => {
+
+      axios.get('/graph',{
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    },).then(res => setPlot(JSON.stringify(res)))
+    // console.log(JSON.parse(plot).data.data)
+    var data = JSON.parse(plot).data.data
+    var layout = JSON.parse(plot).data.layout
+    // setPlot(JSON.parse(plot).data)
     return (
       <div className='content'>
-      <Plot data={plot.data} layout={plot.layout}/>
+      <Plot data={data} layout={layout}/>
       </div>
     );
   };

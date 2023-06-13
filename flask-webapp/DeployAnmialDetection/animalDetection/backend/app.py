@@ -217,7 +217,7 @@ def graph():
     })
     fig = px.pie(df, values="values",labels="labels")
     graphJSON = plotly.io.to_json(fig, pretty=True)
-    return jsonify(graphJSON)
+    return graphJSON
 
 if __name__ == '__main__':  
     app.run(debug=True)
