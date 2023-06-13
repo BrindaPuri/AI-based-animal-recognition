@@ -95,6 +95,7 @@ def allowed_image(filename):
 @app.route('/yolov8Predict', methods = ['GET'])
 def yolov8Predict():
     dict = {}
+    count = 0
     yolov8Model = initalize_yolov8()
     for image in os.listdir(app.config["IMAGE_UPLOADS"]):
         filename = image
@@ -105,6 +106,7 @@ def yolov8Predict():
                 'detected' : 1,
                 'yolo_res' : yolo_res
             }
+            count += 1
         else:
             dict[filename] = {
                 'detected' : 0,
@@ -114,7 +116,7 @@ def yolov8Predict():
 
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(dict, file)
-    return jsonify(dict)
+    return jsonify({"detected":count, "total": len(dict), "image_data":dict})
 
 @app.route('/resnetPredict', methods = ['GET'])
 def resnetPredict():
@@ -154,7 +156,7 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_result":[], "vit_result":[]}
+    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "resnet_label":[],"resnet_result":[], "vit_result":[]}
     for key, value in image_data.items():
         d["image_name"].append(str(key))
         d["animal_detected"].append(value["detected"])
@@ -164,8 +166,10 @@ def download():
         else:
             d["vit_result"].append("N/A")
         if "resnet_res" in value:
+            d['resnet_label'].append(value['resnet_res'][2])
             d["resnet_result"].append(value['resnet_res'])
         else:
+            d['resnet_label'].append("N/A")
             d["resnet_result"].append("N/A")
     df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):

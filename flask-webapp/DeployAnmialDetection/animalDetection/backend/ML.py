@@ -92,7 +92,7 @@ def Resnet_predict(model, image, conf):
 
     if percentage[index[0]].item() < conf:
         return[0,0]
-    return [index[0].item(),percentage[index[0]].item()]
+    return [index[0].item(),percentage[index[0]].item(),labels[index[0]]]
 
 
 

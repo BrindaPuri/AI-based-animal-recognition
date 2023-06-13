@@ -59,7 +59,10 @@ function InfoText({buttonInfo}) {
 }
 
 async function getAxios(url) {
-  return await axios.get(url).then((r)=>console.log(r))
+  return await axios.get(url,{
+    headers: {
+        'Content-Type': 'application/json'
+    }}).then((r)=>console.log(r))
 }
 
 async function postAxios(url, data){
@@ -83,6 +86,7 @@ export default function App(){
   const [images, setImages] = React.useState([]);
   const [progressInfoMessage, setProgressInfoMessage] = React.useState("")
   const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
+  const [jsonData, setJsonData] = React.useState({})
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
