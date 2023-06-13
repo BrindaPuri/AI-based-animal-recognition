@@ -51,6 +51,20 @@ function InfoText() {
     </>
     );
 }
+
+function displayText(message) {
+  return (
+    <>
+      <div className="introtext" id="introtext">
+        {message}
+      </div>
+
+      <div className="subtext" id="subtext">
+        Identify animal species by uploading your own dataset.      
+      </div>
+    </>
+    );
+}
 async function getAxios(url) {
   return await axios.get(url).then((r)=>console.log(r))
 }
@@ -160,6 +174,17 @@ export default function App(){
     setPrintErrorRender(true);
   }
 
+  const renderPercentage= () =>{
+    console.log(curProgress)
+    console.log(maxProgress)
+    var percentage = Math.floor((curProgress/maxProgress)*100)
+    return (
+      <>
+      <div className='percent' id='percent'>{percentage}%</div>
+      </>
+    );
+  }
+
   const lineColor = (factor) => {
     if (factor) {
       return "#0047BA";
@@ -172,7 +197,12 @@ export default function App(){
     console.log(curProgress)
     console.log(maxProgress)
     var percentage = Math.floor((curProgress/maxProgress)*100)
-    return <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer"/>;
+    return (
+      <>
+    <ProgressBar completed={percentage} maxCompleted={100} barContainerClassName="barContainer" completedClassName="barCompleted">
+    </ProgressBar>
+    </>
+    );
   }
 
   const uploadImage = async () => {
@@ -293,7 +323,8 @@ export default function App(){
     }
     if(progressBarRender) {
       console.log("got in progress bar")
-      return progressBarFunction()
+      // return progressBarFunction()
+      return renderPercentage()
     }
     if(classificationRender) {
       console.log("pick classification")
