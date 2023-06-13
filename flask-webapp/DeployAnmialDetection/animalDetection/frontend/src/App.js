@@ -97,6 +97,7 @@ export default function App(){
   const [classificationRender, setClassificationRender] = React.useState(false);
   const [printErrorRender, setPrintErrorRender] = React.useState(false)
   const [progressInfoRender, setProgressInfoRender] = React.useState(false)
+  const [downloadPageRender, setDownloadPageRender] = React.useState(false)
 
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
@@ -129,6 +130,7 @@ export default function App(){
     setClassificationRender(false);
     setPrintErrorRender(false);
     setProgressInfoRender(false);
+    setDownloadPageRender(false);
   }
 
   const renderStartMessage = () => {
@@ -138,6 +140,7 @@ export default function App(){
     setClassificationRender(false);
     setPrintErrorRender(false);
     setProgressInfoRender(false);
+    setDownloadPageRender(false);
   }
 
   const renderProgressBar = () => {
@@ -147,6 +150,7 @@ export default function App(){
     setClassificationRender(false);
     setPrintErrorRender(false);
     setProgressInfoRender(false);
+    setDownloadPageRender(false);
   }
 
   const renderClassification = () => {
@@ -156,6 +160,7 @@ export default function App(){
     setClassificationRender(true);
     setPrintErrorRender(false);
     setProgressInfoRender(false);
+    setDownloadPageRender(false);
   }
 
   const renderPrintError = () => {
@@ -165,6 +170,7 @@ export default function App(){
     setClassificationRender(false);
     setPrintErrorRender(true);
     setProgressInfoRender(false);
+    setDownloadPageRender(false);
   }
 
   const renderProgressInfo = (message) => {
@@ -175,6 +181,17 @@ export default function App(){
     setPrintErrorRender(false);
     setProgressInfoRender(true);
     setProgressInfoMessage(message);
+    setDownloadPageRender(false);
+  }
+
+  const renderDownloadPage = () => {
+    setUploadImageRender(false);
+    setStartMessageRender(false);
+    setProgressBarRender(false);
+    setClassificationRender(false);
+    setPrintErrorRender(false);
+    setProgressInfoRender(false);
+    setDownloadPageRender(true);
   }
 
   const renderPercentage = (message) =>{
@@ -287,6 +304,16 @@ export default function App(){
     .then(()=>{setOnProgress(false)})
   }
 
+  const sortimages = async () => {
+    let url = '/sortImages';
+    console.log("starting sorting images")
+    setOnProgress(true)
+    await allPromiseGet(url)
+    .then((r)=>{console.log(r)})
+    .then(console.log("sorting images"))
+    .then(()=>{setOnProgress(false)})
+  }
+
   const checkImageEmpty = () => {
     return (images.length===0)
   }
@@ -343,6 +370,18 @@ export default function App(){
           <button className='buttonClassify' onClick={async ()=>resnet()} disabled={onProgress}>Resnet</button>
         </div>
       );
+    }
+
+    if(downloadPageRender) {
+      console.log("get to download page")
+      return (
+        <>
+        <div className='downloadpageclass'>
+          <button className='buttonDownload' onClick={()=>download()} disabled={onProgress}>Download CSV</button>
+          <button className='buttonDownload' disabled={onProgress}>Sort Image To Folders</button>
+        </div>
+        </>
+      )
     }
     if (progressInfoRender) {
       return progressInfo(progressInfoMessage)
@@ -412,7 +451,7 @@ export default function App(){
         <div className='line' style={{background : lineColor(finishClassification)}}></div>
         {/*  */}
         <div className='Step4'>
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishClassification)|onProgress} disableErrorFunction={()=>{nothing()}}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{renderDownloadPage();}} disableFactor={(!finishClassification)|onProgress} disableErrorFunction={()=>{nothing()}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>

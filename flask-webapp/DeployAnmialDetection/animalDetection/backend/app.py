@@ -16,6 +16,7 @@ import json
 from PIL import Image
 from pathlib import Path
 from flask import jsonify, request
+import shutil
 
 app = Flask(__name__)
 
@@ -23,9 +24,9 @@ BASEDIR = os.getcwd()
 BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
 STATSDIR = os.path.join(BACKENDDIR,"stats")
 IMAGEDIR = os.path.join(BACKENDDIR,"images")
-ANIMALDIR = os.path.join(BACKENDDIR,"animals")
 DOWNLOADDIR = os.path.join(BASEDIR, "output")
-
+NOANIMALDIR = os.path.join(DOWNLOADDIR,"no_animals")
+ANIMALDIR = os.path.join(DOWNLOADDIR,"animals")
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
 
@@ -169,10 +170,27 @@ def download():
     df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):
         os.makedirs(DOWNLOADDIR)
-    with open (os.path.join(DOWNLOADDIR, "image_data.json"), "w") as file:
-        json.dump(image_data, file, indent=4)
+    # with open (os.path.join(DOWNLOADDIR, "image_data.json"), "w") as file:
+    #     json.dump(image_data, file, indent=4)
     df.to_csv(os.path.join(DOWNLOADDIR, "image_data.csv"))
     return jsonify(image_data)
+
+@app.route('/sortImages', methods = ['GET'])
+def sort():
+    if os.path.exists(NOANIMALDIR):
+        shutil.rmtree(NOANIMALDIR)
+    os.makedirs(NOANIMALDIR)
+    if os.path.exists(ANIMALDIR):
+        shutil.rmtree(ANIMALDIR)
+    os.makedirs(ANIMALDIR)
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    for key, value in image_data:
+        if value["detected"]==0:
+            shutil.copy2(os.path.join(IMAGEDIR,str(key)), NOANIMALDIR)
+        else:
+            shutil.copy2(os.path.join(IMAGEDIR,str(key)), ANIMALDIR)
+    return jsonify({"result":f"finished sorting {len(image_data)}"})
 
 if __name__ == '__main__':  
     app.run(debug=True)
