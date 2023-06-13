@@ -464,7 +464,7 @@ export default function App(){
       return progressInfo(progressInfoMessage)
     }
     if(printErrorRender) {
-      let task = ""
+      let task = "classification"
       if (!finishDetect) {
         task = "upload images"
       } 
