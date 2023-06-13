@@ -520,7 +520,7 @@ export default function App(){
         <div className='line' style={{background : lineColor(finishClassification)}}></div>
         {/*  */}
         <div className='Step4'>
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{renderDownloadPage();}} disableFactor={(!finishClassification)|onProgress} disableErrorFunction={()=>{nothing()}}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{renderDownloadPage();}} disableFactor={(!finishClassification)|onProgress} disableErrorFunction={()=>{!onProgress? renderPrintError(): nothing()}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>
