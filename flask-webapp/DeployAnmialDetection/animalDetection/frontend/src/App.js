@@ -262,7 +262,7 @@ export default function App(){
     console.log("starting to cleanup old media")
     console.log("starting to upload images")
     setOnProgress(true)
-    removeAllImage()
+    await removeAllImage()
     .then(()=>{renderProgressBar()})
     .then(async ()=>{await uploadImage()})
     .then(()=>{renderProgressInfo("Running Yolov8 Model")})
@@ -293,7 +293,7 @@ export default function App(){
     console.log("starting vit")
     setOnProgress(true)
     renderProgressInfo("Running Vit")
-    allPromiseGet(url)
+    await allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
     .then(()=>{setFinishClassification(true)})
@@ -306,7 +306,7 @@ export default function App(){
     let url = '/download';
     console.log("starting downloading result")
     setOnProgress(true)
-    allPromiseGet(url)
+    await allPromiseGet(url)
     .then((r)=>{console.log(r)})
     .then(console.log("finished downloading"))
     .then(()=>{setOnProgress(false)})
@@ -416,7 +416,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-              <Logos image={image_logo} imageName="image" buttonFunction={()=>{removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}} disableFactor={onProgress} disableErrorFunction={()=>{nothing()}}/>
           )}
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>
@@ -437,7 +437,7 @@ export default function App(){
         <div className='line' style={{background : lineColor(finishClassification)}}></div>
         {/*  */}
         <div className='Step4'>
-          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishClassification)|onProgress}/>
+          <Logos image={download_logo} imageName="download" buttonFunction={()=>{download();renderStartMessage()}} disableFactor={(!finishClassification)|onProgress} disableErrorFunction={()=>{nothing()}}/>
           {/* <PlayButton/> */}
           <p className='insttext' id='insttext'>Download Results</p>
         </div>
