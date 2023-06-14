@@ -57,6 +57,8 @@ __cleanup ()
     echo 'removed everything in animalDetection/backend/images/'
     rm animalDetection/backend/stats/*
     echo 'removed everything in animalDetection/backend/stats/'
+    rm animalDetection/backend/temp/*
+    echo 'removed everything in animalDetection/backend/temp/'
 
     echo 'done cleaning up'
 }

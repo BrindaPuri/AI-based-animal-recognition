@@ -253,6 +253,8 @@ def ifhasMetadata():
     for _, data in image_data.items():
         if len(dict(data['metadata'])) == 0:
             return jsonify({"result": "false"})
+        elif "DateTime" not in data['metadata']:
+            return jsonify({"result": "false"})
     return jsonify({"result": "true"})
 
 @app.route('/ifResnetWeightWorks', methods = ['POST'])
@@ -268,7 +270,7 @@ def ifResnetWeightWorks():
             weightname = filename
             if not os.path.exists(TEMPDIR):
                 os.mkdir(TEMPDIR)
-            if os.path.isfile(os.path.join(TEMPDIR, weightname)):
+            while os.path.isfile(os.path.join(TEMPDIR, weightname)):
                 weightname = f"{count}{str(filename)}"
                 count += 1
             file.save(os.path.join(TEMPDIR, weightname))

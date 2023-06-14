@@ -150,6 +150,20 @@ export default function App(){
 
   const renderSettingButton = () => {
     if (settingButtonRender) {
+      if(onProgress) {
+        return (
+          <>
+          <div className='setting'>
+            <div className='setting_outline' style={{background : "black"}}>
+              <div className='setting_inline'>
+                <img className='settingbutton' src={document_logo}></img>
+              </div>
+            </div>
+            <p className='setting_text' id='setting_text'>Setting</p>
+          </div>
+          </>
+        );
+      }
       return (
         <>
         <div className='setting'>
@@ -293,8 +307,7 @@ export default function App(){
         headers: {
             'Content-Type': 'application/json',
         }
-    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result)})
-    .then(()=>{console.log(ifHasMetadata)})]
+    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result=="true")})]
     )
   }
 
@@ -549,6 +562,7 @@ export default function App(){
     }
     if(classificationRender) {
       console.log("pick classification")
+      checkIfHasMetadata()
       return (
         <div className='pickClassification'>
           <button className='buttonClassify' onClick={()=>vit()} disabled={onProgress}>ViT</button>
@@ -562,6 +576,7 @@ export default function App(){
         <>
         <div className='settingInput'>
           <p>Confident Value (default: 0.25) :</p>
+          <p>Currently Using: </p>
         <input type='text' value={confidentValue} disabled={onProgress} onChange={(i)=>setConfidentValue(i.target.value)}></input>
         <p>ResNet Weight File :</p>
         <p style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
@@ -574,7 +589,6 @@ export default function App(){
 
     if(downloadPageRender) {
       console.log("get to download page")
-      checkIfHasMetadata()
       return (
         <>
         <div className='downloadpageclass'>
