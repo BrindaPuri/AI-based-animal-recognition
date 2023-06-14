@@ -269,7 +269,7 @@ img:hover{
   border-radius: 50%;
   height: 60px;
   width: 60px;
-  top: 8px;
+  top: 0px;
   left: -70px;
   position: relative;
 }
@@ -299,7 +299,7 @@ img:hover{
 
 .setting_text {
   position: relative;
-  top: 8px;
+  top: 0px;
   left: -65px;
   height: 0%;
   width: 75%;

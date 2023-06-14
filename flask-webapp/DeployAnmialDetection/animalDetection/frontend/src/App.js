@@ -113,6 +113,9 @@ export default function App(){
   const [progressInfoRender, setProgressInfoRender] = React.useState(false)
   const [downloadPageRender, setDownloadPageRender] = React.useState(false)
   const [graphPageRender, setGraphPageRender] = React.useState(false)
+  const [settingButtonRender, setSettingButtonRender] = React.useState(true)
+
+
   const onChange = (imageList, addUpdateIndex) => {
     //data for submit
     console.log(imageList, addUpdateIndex);
@@ -141,8 +144,8 @@ export default function App(){
     return !(finishDetect|finishClassification)
   }
 
-  const renderSettingButton = (ifrender) => {
-    if (ifrender) {
+  const renderSettingButton = () => {
+    if (settingButtonRender) {
       return (
         <>
         <div className='setting'>
@@ -151,7 +154,7 @@ export default function App(){
               <img className='settingbutton' src={document_logo}></img>
             </div>
           </div>
-          <p className='setting_text' id='setting_text'>Change Setting</p>
+          <p className='setting_text' id='setting_text'>Setting</p>
         </div>
         </>
       );
@@ -539,7 +542,7 @@ export default function App(){
       </div>
       <div className='container' id="bottomscreen">
         {/*  */}
-        {renderSettingButton(()=>{ifAllButtonFlagFalse()})}
+        {renderSettingButton()}
         <div className='Step1'>
           <ImageUploading
             multiple
@@ -552,7 +555,7 @@ export default function App(){
               onImageUpload,
               onImageRemoveAll,
             }) => (
-              <Logos image={image_logo} imageName="image" buttonFunction={()=>{setOnProgress(true);removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}} disableFactor={onProgress} disableErrorFunction={()=>{nothing()}}/>
+              <Logos image={image_logo} imageName="image" buttonFunction={()=>{setSettingButtonRender(true);setOnProgress(true);removeAllButtonFlags();onImageRemoveAll();onImageUpload();renderImageUpload()}} disableFactor={onProgress} disableErrorFunction={()=>{nothing()}}/>
           )}
           </ImageUploading>
           <p className='insttext' id='insttext'>Select Image(s)</p>
@@ -560,7 +563,7 @@ export default function App(){
         <div className='line' style={{background : lineColor(!checkImageEmpty())}}></div>
         {/*  */}
         <div className='Step2'>
-          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setCurProgress(0);renderProgressBar();detectAnimals()}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{!onProgress ? renderPrintError(): nothing()}}/>
+          <Logos image={out_logo} imageName="out" buttonFunction={()=>{setSettingButtonRender(false);setCurProgress(0);renderProgressBar();detectAnimals()}} disableFactor={checkImageEmpty()|onProgress} disableErrorFunction={()=>{!onProgress ? renderPrintError(): nothing()}}/>
           <p className='insttext' id='insttext'>Upload & Detect</p>
         </div>
         <div className='line' style={{background : lineColor(finishDetect)}}></div>
