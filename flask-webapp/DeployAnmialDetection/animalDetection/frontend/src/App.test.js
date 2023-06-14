@@ -67,4 +67,6 @@ test('click settings button', () => {
   const logo = screen.getByRole('presentation', { name: "settingbutton"});
   fireEvent.click(logo);
   expect(screen.getByText("Yolov8 Confident Value (default: 0.25) :")).toBeInTheDocument();
+  expect(screen.getByText("ResNet Confident Value (default: 0.25) :")).toBeInTheDocument();
+  expect(screen.getByText("VIT Confident Value (default: 0.25) :")).toBeInTheDocument();
 });
