@@ -67,6 +67,60 @@ test('click select images button and error on download', () => {
   expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
 });
 
+test('click select images button and error on upload multiple click', () => {
+  render(<Logos />);
+  const imageLogo = screen.getByRole('presentation', { name: "image"});
+  fireEvent.click(imageLogo);
+  const uploadLogo = screen.getByRole('presentation', { name: "out"});
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('click select images button and error on classify multiple click', () => {
+  render(<Logos />);
+  const imageLogo = screen.getByRole('presentation', { name: "image"});
+  fireEvent.click(imageLogo);
+  const classifyLogo = screen.getByRole('presentation', { name: "scan"});
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('click select images button and error on download multiple click', () => {
+  render(<Logos />);
+  const imageLogo = screen.getByRole('presentation', { name: "image"});
+  fireEvent.click(imageLogo);
+  const downloadLogo = screen.getByRole('presentation', { name: "download"});
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
 test('do not click select images button and error on upload', () => {
   render(<Logos />);
   const uploadLogo = screen.getByRole('presentation', { name: "out"});
@@ -84,6 +138,54 @@ test('do not click select images button and error on classify', () => {
 test('do not click select images button and error on download', () => {
   render(<Logos />);
   const downloadLogo = screen.getByRole('presentation', { name: "download"});
+  fireEvent.click(downloadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('click upload multiple times', () => {
+  render(<Logos />);
+  const uploadLogo = screen.getByRole('presentation', { name: "out"});
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  fireEvent.click(uploadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('click classify multiple times', () => {
+  render(<Logos />);
+  const classifyLogo = screen.getByRole('presentation', { name: "scan"});
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  fireEvent.click(classifyLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('click download multiple times', () => {
+  render(<Logos />);
+  const downloadLogo = screen.getByRole('presentation', { name: "download"});
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
+  fireEvent.click(downloadLogo);
   fireEvent.click(downloadLogo);
   expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
 });
