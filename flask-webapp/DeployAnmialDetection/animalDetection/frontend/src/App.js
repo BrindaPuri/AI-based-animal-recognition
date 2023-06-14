@@ -119,7 +119,6 @@ export default function App(){
   const [graphPageRender, setGraphPageRender] = React.useState(false)
   const [settingButtonRender, setSettingButtonRender] = React.useState(true)
   const [settingPageRender, setSettingPageRender] = React.useState(false)
-  const [settingResnetWeightError, setSettingResnetWeightError] = React.useState("#3DAE2B")
 
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -362,7 +361,6 @@ export default function App(){
 
   const handleResnetWeightFileUpload = async () => {
     console.log(resnetWeightfile)
-    setSettingResnetWeightError("#3DAE2B")
     setOnProgress(true)
     if (resnetWeightfile) {
       await Promise.allSettled([

@@ -258,7 +258,11 @@ def graphPie():
         "count": [count,not_detected],
         "image type": ["detected_animals", "no_animals"],
     })
-    fig = px.pie(df, values="count",names="image type")
+    fig = px.pie(df, values="count",names="image type", title="Detection Ratio", color="image type",
+                 color_discrete_map={
+                     "no_animals" : '#1D4776',
+                     "detected_animals" : '#FFCC33',
+                 })
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
@@ -337,7 +341,12 @@ def graphTime():
         "count": values,
         "time range": labels,
     })
-    fig = px.pie(df, values="count",names="time range")
+    fig = px.pie(df, values="count",names="time range", title="Time Range v.s. Detection", color="time range",
+                 color_discrete_map={
+                     "05_12" : '#1D4776',
+                     "13_20" : '#FFCC33',
+                     "21_04" : '#000000'
+                 })
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
@@ -369,7 +378,7 @@ def graphResnetClass():
         "count": values,
         "label": labels,
     })
-    fig = px.bar(df, y="count", x="label", title="Resnet Classification Population")
+    fig = px.bar(df, y="count", x="label", title="Resnet Classification Population", color="label")
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
