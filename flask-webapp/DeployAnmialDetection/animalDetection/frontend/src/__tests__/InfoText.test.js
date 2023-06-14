@@ -45,12 +45,10 @@ test('renders hidden info text', () => {
   });
 
 test('is there hidden', () => {
-  window.URL.createObjectURL = jest.fn();
-  render(<InfoText />);
-    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-    const hidden = screen.getByText("ECS 193, Winter and Spring 2023");
-    expect(hidden).toBeInTheDocument();
-    // fireEvent.click(button);
-    // expect(hidden).toBe(<div class="hidden" data-testid="info"><p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p><p>ECS 193, Winter and Spring 2023</p></div>);
-    // expect(hidden.innerHTML).toBe("<p>created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain</p><p>ECS 193, Winter and Spring 2023</p>");
+    window.URL.createObjectURL = jest.fn();
+    render(<InfoText />);
+    const logo = screen.getByText("Animal Recognition AI Pipeline");
+    fireEvent.click(logo);
+    expect(screen.getByText("created by Shuban Ranganath, Zhantong Qiu, Brinda Puri, and Sanskriti Jain")).toBeInTheDocument();
+    expect(screen.getByText("ECS 193, Winter and Spring 2023")).toBeInTheDocument();
 });
