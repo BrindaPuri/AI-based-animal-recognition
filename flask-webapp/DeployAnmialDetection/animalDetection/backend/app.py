@@ -273,10 +273,19 @@ def ifhasMetadata():
             return jsonify({"result": "false"})
     return jsonify({"result": "true"})
 
+@app.route('/ifHasResnetData', methods = ['GET'])
+def ifHasResnetData():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    for _, data in image_data.items():
+        if "resnet_res" in data:
+            return jsonify({"result": "true"})
+    return jsonify({"result": "false"})
+    
+
 @app.route('/ifResnetWeightWorks', methods = ['POST'])
 def ifResnetWeightWorks():
     file = request.files.get('fileToUpload')
-    
     if file:
         filename = secure_filename(file.filename)
         if filename == "resnet.pth":
@@ -329,6 +338,39 @@ def graphTime():
     fig = px.pie(df, values="count",names="time range")
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
+
+@app.route('/graphResnetClass', methods = ['GET'])
+def graphResnetClass():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    counter = {}
+    for value in image_data.values():
+        if "resnet_res" in value:
+            label = str(value['resnet_res']['label'])
+            if label == '0':
+                label = "no classification"
+            else:
+                print(label, file=sys.stderr)
+                label = label.split("'")[1]
+                print(label, file=sys.stderr)
+            if label in counter:
+                counter[label] += 1
+            else:
+                counter[label] = 1
+    values = []
+    labels = []
+    for label, count in counter.items():
+        labels.append(label)
+        values.append(count)
+
+    df = pd.DataFrame({
+        "count": values,
+        "label": labels,
+    })
+    fig = px.bar(df, y="count", x="label", title="Resnet Classification Population")
+    graphJSON = plotly.io.to_json(fig, pretty=True)
+    return graphJSON
+
 
 if __name__ == '__main__':  
     app.run(debug=True)

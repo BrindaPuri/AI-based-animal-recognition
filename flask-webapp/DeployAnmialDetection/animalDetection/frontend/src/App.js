@@ -89,6 +89,7 @@ export default function App(){
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
   const [ifHasMetadata, setIfHasMetadata] = useState(false)
+  const [ifHasResnetData, setIfHasResnetData] = useState(false)
   const [resnetWeightfile, setResnetWeightFile] = useState()
   const [resnetWeightInUse, setResnetWeightInUse] = useState("resnet.pth")
   const [yolov8ConValue, setYolov8ConValue] = useState(0.25)
@@ -179,6 +180,8 @@ export default function App(){
     }
     return (<></>)
   }
+
+  
 
   const renderImageUpload = () => {
     setUploadImageRender(true);
@@ -301,13 +304,13 @@ export default function App(){
     );
   }
 
-  const checkIfHasMetadata = async () => {
+  const checkIf = async (url, setupfunct) => {
     await Promise.allSettled([
-      axios.get("/ifHasMetadata",{
+      axios.get(url,{
         headers: {
             'Content-Type': 'application/json',
         }
-    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result==="true")})]
+    },).then((res)=>{setupfunct(JSON.parse(JSON.stringify(res)).data.result==="true")})]
     )
   }
 
@@ -374,6 +377,15 @@ export default function App(){
   const showHide = () => {
     var div = document.getElementById("info");
     div.classList.toggle('hidden'); 
+  }
+
+  const ifHideButton = (iffactor) => {
+    console.log(iffactor)
+    if(iffactor) {
+      return {display : "none"}
+    } else {
+      return {}
+    }
   }
 
   const uploadImage = async () => {
@@ -534,30 +546,22 @@ export default function App(){
     }
     if(graphPageRender) {
       console.log(ifHasMetadata)
-      if(ifHasMetadata===true) {
-        return (
-          <>
-          <div className='graphContent'>
-            <button className='graphButton' onClick={()=>{getGraph("/graphPie")}}>Detection Pie Graph</button>
-            <button className='graphButton'onClick={()=>{getGraph("/graphTime")}}>Time VS Detection</button>
-          <Plot data={plotData} layout={plotLayout}/>
-          </div>
-          </>
-        );
-      } else {
-        return (
-          <>
-          <div className='graphContent'>
-             <Plot data={plotData} layout={plotLayout}/>
+      return (
+        <>
+        <div className='graphContent'>
+          <button className='graphButton' id='graphPie' onClick={()=>{getGraph("/graphPie")}}>Detection Pie Graph</button>
+          {ifHasMetadata?<button className='graphButton' id='graphTime' onClick={()=>{getGraph("/graphTime")}}>Time VS Detection</button>:<></>}
+          {ifHasResnetData?<button className='graphButton' id='graphResnetClass' onClick={()=>{getGraph("/graphResnetClass")}}>Resnet Classification Chart</button>:<></>}
+        <Plot data={plotData} layout={plotLayout}/>
         </div>
-          </>
-        );
-      }
+        </>
+      );
+    
       
     }
     if(classificationRender) {
       console.log("pick classification")
-      checkIfHasMetadata()
+      checkIf('/ifHasMetadata',setIfHasMetadata)
       return (
         <div className='pickClassification'>
           <button className='buttonClassify' onClick={()=>vit()} disabled={onProgress}>ViT</button>
@@ -593,6 +597,7 @@ export default function App(){
     }
 
     if(downloadPageRender) {
+      checkIf('/ifHasResnetData', setIfHasResnetData)
       console.log("get to download page")
       return (
         <>
