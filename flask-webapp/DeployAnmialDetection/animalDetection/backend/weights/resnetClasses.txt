@@ -10,4 +10,4 @@
  9: 'raccoon',
  10: 'rodent',
  11: 'bird',
- 12: 'rabbit',}
+ 12: 'rabbit'}
