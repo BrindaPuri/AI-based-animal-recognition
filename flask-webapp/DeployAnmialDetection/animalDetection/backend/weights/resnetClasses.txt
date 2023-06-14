@@ -4,11 +4,10 @@
  3: 'coyote',
  4: 'deer',
  5: 'dog',
- 6: 'empty',
- 7: 'fox',
- 8: 'opposum',
- 9: 'rabbit',
- 10: 'racoon',
- 11: 'rodent',
- 12: 'skunk',
- 13: 'squirrel'}
+ 6: 'fox',
+ 7: 'opposum',
+ 8: 'rabbit',
+ 9: 'racoon',
+ 10: 'rodent',
+ 11: 'skunk',
+ 12: 'squirrel',}
