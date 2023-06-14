@@ -1,5 +1,5 @@
 import '../mockJsdom'
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, getByLabelText } from '@testing-library/react';
 import Logos from '../App';
 import { unmountComponentAtNode } from "react-dom";
 
@@ -62,6 +62,27 @@ test('click select images button and error on download', () => {
   render(<Logos />);
   const imageLogo = screen.getByRole('presentation', { name: "image"});
   fireEvent.click(imageLogo);
+  const downloadLogo = screen.getByRole('presentation', { name: "download"});
+  fireEvent.click(downloadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('do not click select images button and error on upload', () => {
+  render(<Logos />);
+  const uploadLogo = screen.getByRole('presentation', { name: "out"});
+  fireEvent.click(uploadLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('do not click select images button and error on classify', () => {
+  render(<Logos />);
+  const classifyLogo = screen.getByRole('presentation', { name: "scan"});
+  fireEvent.click(classifyLogo);
+  expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
+});
+
+test('do not click select images button and error on download', () => {
+  render(<Logos />);
   const downloadLogo = screen.getByRole('presentation', { name: "download"});
   fireEvent.click(downloadLogo);
   expect(screen.getByText("You have not completed the select images step. Please make sure to complete that first.")).toBeInTheDocument();
