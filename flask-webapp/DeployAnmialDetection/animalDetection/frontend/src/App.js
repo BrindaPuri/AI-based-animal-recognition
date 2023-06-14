@@ -19,7 +19,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
       <div className='big_circle' style={{background: "#000000"}}>
         <div className='small_circle'>
           {console.log({disableFactor})}
-          <img src={image} alt="logo-logo" className={imageName} onClick={disableErrorFunction}>
+          <img src={image} alt="logo-logo" className={imageName} aria-label={imageName} onClick={disableErrorFunction}>
           </img>
         </div>
       </div>
@@ -31,7 +31,7 @@ function Logos({image, imageName, buttonFunction, disableFactor, disableErrorFun
       <div className='big_circle' style={{background: "#0047BA"}}>
         <div className='small_circle'>
           {console.log({disableFactor})}
-          <img src={image} alt="logo-logo" className={imageName} onClick={buttonFunction}>
+          <img src={image} alt="logo-logo" className={imageName} aria-label={imageName} onClick={buttonFunction}>
           </img>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function App(){
           <div className='setting'>
             <div className='setting_outline' style={{background : "black"}}>
               <div className='setting_inline'>
-                <img className='settingbutton' alt="logo-logo" src={document_logo}></img>
+                <img className='settingbutton' alt="logo-logo" aria-label='settingbutton' src={document_logo}></img>
               </div>
             </div>
             <p className='setting_text' id='setting_text'>Setting</p>
@@ -169,7 +169,7 @@ export default function App(){
         <div className='setting'>
           <div className='setting_outline'>
             <div className='setting_inline'>
-              <img className='settingbutton' alt="logo-logo" src={document_logo} onClick={()=>{renderSettingPageRender()}}></img>
+              <img className='settingbutton' alt="logo-logo" aria-label='settingbutton' src={document_logo} onClick={()=>{renderSettingPageRender()}}></img>
             </div>
           </div>
           <p className='setting_text' id='setting_text'>Setting</p>
