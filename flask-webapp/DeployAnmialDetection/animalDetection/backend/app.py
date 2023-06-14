@@ -322,9 +322,9 @@ def graphTime():
     for value in image_data.values():
         timestamp = str(value['metadata']['DateTime'])
         timestamp = timestamp.split(" ")[1]
-        print(f'timestamp: {timestamp}\n', file=sys.stderr)
+        # print(f'timestamp: {timestamp}\n', file=sys.stderr)
         hour = int(timestamp.split(":")[0])
-        print(f'hour: {hour}\n', file=sys.stderr)
+        # print(f'hour: {hour}\n', file=sys.stderr)
         if hour >=5 and hour<13:
             counter["05_12"] += 1
         if hour >=13 and hour < 21:
@@ -361,9 +361,9 @@ def graphResnetClass():
             if label == '0':
                 label = "no classification"
             else:
-                print(label, file=sys.stderr)
+                # print(label, file=sys.stderr)
                 label = label.split("'")[1]
-                print(label, file=sys.stderr)
+                # print(label, file=sys.stderr)
             if label in counter:
                 counter[label] += 1
             else:
@@ -373,11 +373,17 @@ def graphResnetClass():
     for label, count in counter.items():
         labels.append(label)
         values.append(count)
+    sorted_values = []
+    sorted_labels = []
+    for (v,l) in sorted(zip(values,labels), key=lambda x:x[0], reverse=True):
+        sorted_labels.append(l)
+        sorted_values.append(v)
 
     df = pd.DataFrame({
-        "count": values,
-        "label": labels,
+        "count": sorted_values,
+        "label": sorted_labels,
     })
+
     fig = px.bar(df, y="count", x="label", title="Resnet Classification Population", color="label")
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
