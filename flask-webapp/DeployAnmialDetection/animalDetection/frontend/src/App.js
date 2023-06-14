@@ -5,7 +5,7 @@ import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
 import document_logo from "./assets/logo/document_logo.jpg"
-import React, {Component, useEffect, useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import ImageUploading from "react-images-uploading";
 import Plot from 'react-plotly.js';
@@ -102,7 +102,6 @@ export default function App(){
 
 
   //button function trigger
-  const [finishSelectImages, setFinishSelectImages] = React.useState(false)
   const [finishDetect, setFinishDetect] = React.useState(false)
   const [finishClassification, setFinishClassification] = React.useState(false)
   const [onProgress, setOnProgress] = React.useState(false)
@@ -141,7 +140,6 @@ export default function App(){
   }
 
   const removeAllButtonFlags = () => {
-    setFinishSelectImages(false)
     setFinishDetect(false)
     setFinishClassification(false)
   }
@@ -158,7 +156,7 @@ export default function App(){
           <div className='setting'>
             <div className='setting_outline' style={{background : "black"}}>
               <div className='setting_inline'>
-                <img className='settingbutton' src={document_logo}></img>
+                <img className='settingbutton' alt="logo-logo" src={document_logo}></img>
               </div>
             </div>
             <p className='setting_text' id='setting_text'>Setting</p>
@@ -171,7 +169,7 @@ export default function App(){
         <div className='setting'>
           <div className='setting_outline'>
             <div className='setting_inline'>
-              <img className='settingbutton' src={document_logo} onClick={()=>{renderSettingPageRender()}}></img>
+              <img className='settingbutton' alt="logo-logo" src={document_logo} onClick={()=>{renderSettingPageRender()}}></img>
             </div>
           </div>
           <p className='setting_text' id='setting_text'>Setting</p>
@@ -309,7 +307,7 @@ export default function App(){
         headers: {
             'Content-Type': 'application/json',
         }
-    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result=="true")})]
+    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result==="true")})]
     )
   }
 
@@ -367,7 +365,7 @@ export default function App(){
         axios.post("/ifResnetWeightWorks", resnetWeightfile,)
         .then(res=>{setResnetWeightInUse(JSON.parse(JSON.stringify(res)).data.result)})
         .then(()=>console.log(resnetWeightInUse))
-        .then(()=>{resnetWeightInUse=="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#000000")})
+        .then(()=>{resnetWeightInUse==="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#000000")})
       ])
     }
     setOnProgress(false)
@@ -536,7 +534,7 @@ export default function App(){
     }
     if(graphPageRender) {
       console.log(ifHasMetadata)
-      if(ifHasMetadata==true) {
+      if(ifHasMetadata===true) {
         return (
           <>
           <div className='graphContent'>
