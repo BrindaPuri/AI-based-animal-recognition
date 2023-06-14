@@ -263,3 +263,50 @@ img:hover{
   font-size: 80px;
 }
 .percent {}
+
+.setting_outline {
+  background: #0047BA;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  top: 8px;
+  left: -70px;
+  position: relative;
+}
+
+.setting_inline {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 50%;
+  /*
+   Put top edge and left edge in the center
+  */
+  top: 12.5%;
+  left: 12.5%;
+  height: 75%;
+  width: 75%;
+
+}
+
+.settingbutton {
+  display: block;
+  position: relative;
+  top: 25%;
+  left: 25%;
+  height: 50%;
+  width: 50%;
+}
+
+.setting_text {
+  position: relative;
+  top: 8px;
+  left: -65px;
+  height: 0%;
+  width: 75%;
+}
+
+#setting_text {
+  color: black;
+  font-weight: 500;
+  font-size: 10px;
+}

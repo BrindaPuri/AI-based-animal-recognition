@@ -4,6 +4,7 @@ import image_logo from "./assets/logo/image.png"
 import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
+import document_logo from "./assets/logo/document_logo.jpg"
 import React, {Component, useEffect, useState} from 'react';
 import axios from 'axios';
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -88,8 +89,7 @@ export default function App(){
   const [progressInfoColor, setProgressInfoColor] = React.useState("#000000")
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
-  const [plot, setPlot] = useState("");
-  const [plotUrl, setPlotUrl] = useState("/graphPie")
+  const [ifHasMetadata, setIfHasMetadata] = useState(false)
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -135,6 +135,28 @@ export default function App(){
     setFinishSelectImages(false)
     setFinishDetect(false)
     setFinishClassification(false)
+  }
+
+  const ifAllButtonFlagFalse = () => {
+    return !(finishDetect|finishClassification)
+  }
+
+  const renderSettingButton = (ifrender) => {
+    if (ifrender) {
+      return (
+        <>
+        <div className='setting'>
+          <div className='setting_outline'>
+            <div className='setting_inline'>
+              <img className='settingbutton' src={document_logo}></img>
+            </div>
+          </div>
+          <p className='setting_text' id='setting_text'>Change Setting</p>
+        </div>
+        </>
+      );
+    }
+    return (<></>)
   }
 
   const renderImageUpload = () => {
@@ -236,6 +258,17 @@ export default function App(){
       <p className='percent' id='percent'>{percentage}%</p>
       </>
     );
+  }
+
+  const checkIfHasMetadata = async () => {
+    await Promise.allSettled([
+      axios.get("/ifHasMetadata",{
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    },).then((res)=>{setIfHasMetadata(JSON.parse(JSON.stringify(res)).data.result)})
+    .then(()=>{console.log(ifHasMetadata)})]
+    )
   }
 
   const progressInfo = (message) => {
@@ -430,13 +463,27 @@ export default function App(){
       return renderPercentage("Image Uploading")
     }
     if(graphPageRender) {
-      return (
-        <div className='graphContent'>
-          <button className='graphButton' onClick={()=>{getGraph("/graphPie")}}>Detection Pie Graph</button>
-          <button className='graphButton'onClick={()=>{getGraph("/graphTime")}}>Time VS Detection</button>
-        <Plot data={plotData} layout={plotLayout}/>
+      console.log(ifHasMetadata)
+      if(ifHasMetadata==true) {
+        return (
+          <>
+          <div className='graphContent'>
+            <button className='graphButton' onClick={()=>{getGraph("/graphPie")}}>Detection Pie Graph</button>
+            <button className='graphButton'onClick={()=>{getGraph("/graphTime")}}>Time VS Detection</button>
+          <Plot data={plotData} layout={plotLayout}/>
+          </div>
+          </>
+        );
+      } else {
+        return (
+          <>
+          <div className='graphContent'>
+             <Plot data={plotData} layout={plotLayout}/>
         </div>
-      );
+          </>
+        );
+      }
+      
     }
     if(classificationRender) {
       console.log("pick classification")
@@ -450,6 +497,7 @@ export default function App(){
 
     if(downloadPageRender) {
       console.log("get to download page")
+      checkIfHasMetadata()
       return (
         <>
         <div className='downloadpageclass'>
@@ -491,6 +539,7 @@ export default function App(){
       </div>
       <div className='container' id="bottomscreen">
         {/*  */}
+        {renderSettingButton(()=>{ifAllButtonFlagFalse()})}
         <div className='Step1'>
           <ImageUploading
             multiple

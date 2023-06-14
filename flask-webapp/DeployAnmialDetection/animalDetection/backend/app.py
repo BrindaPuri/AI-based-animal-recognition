@@ -233,6 +233,15 @@ def graphPie():
     graphJSON = plotly.io.to_json(fig, pretty=True)
     return graphJSON
 
+@app.route('/ifHasMetadata', methods = ['GET'])
+def ifhasMetadata():
+    with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
+        image_data = json.load(file)
+    for _, data in image_data.items():
+        if len(dict(data['metadata'])) == 0:
+            return jsonify({"result": "false"})
+    return jsonify({"result": "true"})
+
 @app.route('/graphTime', methods = ['GET'])
 def graphTime():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
