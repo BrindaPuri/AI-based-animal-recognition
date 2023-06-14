@@ -310,3 +310,15 @@ img:hover{
   font-weight: 500;
   font-size: 10px;
 }
+/* "#0047BA" */
+#conTitle {
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#conText {
+  color: #3DAE2B;
+  font-weight: 500;
+  font-size: 14px;
+}

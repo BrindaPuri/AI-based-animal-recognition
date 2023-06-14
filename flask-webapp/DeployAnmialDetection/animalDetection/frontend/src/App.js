@@ -119,7 +119,7 @@ export default function App(){
   const [graphPageRender, setGraphPageRender] = React.useState(false)
   const [settingButtonRender, setSettingButtonRender] = React.useState(true)
   const [settingPageRender, setSettingPageRender] = React.useState(false)
-  const [settingResnetWeightError, setSettingResnetWeightError] = React.useState("#000000")
+  const [settingResnetWeightError, setSettingResnetWeightError] = React.useState("#3DAE2B")
 
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -346,7 +346,8 @@ export default function App(){
   };
 
   const handleModelConfidentValue = (event, setupfunct) => {
-    const value = Math.max(0.05, Math.min(0.99, Number(event.target.value)));
+    var value = Math.max(0.05, Math.min(0.99, Number(event.target.value)));
+    value = Math.round(value*1000)/1000
     setupfunct(value)
   }
 
@@ -361,14 +362,14 @@ export default function App(){
 
   const handleResnetWeightFileUpload = async () => {
     console.log(resnetWeightfile)
-    setSettingResnetWeightError("#000000")
+    setSettingResnetWeightError("#3DAE2B")
     setOnProgress(true)
     if (resnetWeightfile) {
       await Promise.allSettled([
         axios.post("/ifResnetWeightWorks", resnetWeightfile,)
         .then(res=>{setResnetWeightInUse(JSON.parse(JSON.stringify(res)).data.result)})
         .then(()=>console.log(resnetWeightInUse))
-        .then(()=>{resnetWeightInUse==="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#000000")})
+        .then(()=>{resnetWeightInUse==="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#3DAE2B")})
       ])
     }
     setOnProgress(false)
@@ -575,20 +576,20 @@ export default function App(){
         <>
         <div className='settingInput'>
           {/* yolov8 */}
-          <p>Yolov8 Confident Value (default: 0.25) :</p>
-          <p>Currently Using: {yolov8ConValue} </p>
-          <input type='number'   min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setYolov8ConValue)}}></input>
+          <p className='conTitle' id='conTitle'>Yolov8 Confident Value (default: 0.25) :</p>
+          <p className='conText' id='conText'>Currently Using: {yolov8ConValue} </p>
+          <input type='number'  maxLength="4"  min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setYolov8ConValue)}}></input>
           {/* resnet */}
-          <p>ResNet Confident Value (default: 0.25) :</p>
-          <p>Currently Using: {resnetConValue} </p>
-          <input type='number'  min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setResnetConValue)}}></input>
+          <p className='conTitle' id='conTitle'>ResNet Confident Value (default: 0.25) :</p>
+          <p className='conText' id='conText'>Currently Using: {resnetConValue} </p>
+          <input type='number' maxLength="4" min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setResnetConValue)}}></input>
           {/* vit */}
-          <p>VIT Confident Value (default: 0.25) :</p>
-          <p>Currently Using: {vitConValue} </p>
-          <input type='number'  min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setVitConValue)}}></input>
+          <p className='conTitle' id='conTitle'>VIT Confident Value (default: 0.25) :</p>
+          <p className='conText' id='conText'>Currently Using: {vitConValue} </p>
+          <input type='number' maxLength="4" min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setVitConValue)}}></input>
           {/* resnet weight file */}
-        <p>ResNet Weight File :</p>
-        <p style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
+        <p className='conTitle' id='conTitle'>ResNet Weight File :</p>
+        <p className='conText' id='conText' style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
           <input type="file" id="newFile" disabled={onProgress} accept=".pth" onChange={(e)=>handleResnetWeightFileChange(e)} />
           <button className='resnetweightbutton' disabled={onProgress} onClick={()=>handleResnetWeightFileUpload()}>Upload</button>
         </div>
