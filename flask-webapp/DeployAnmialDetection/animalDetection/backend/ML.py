@@ -49,7 +49,7 @@ def Resnet_predict(model, image, conf):
     img_tensor = torch.unsqueeze(img_preprocessed, 0)
     out = model(img_tensor)
 
-    with open(os.path.join(WEIGHTS_PATH,'imagenet1000Classes.txt')) as f:
+    with open(os.path.join(WEIGHTS_PATH,'resnetClasses.txt')) as f:
         labels = [line.strip() for line in f.readlines()]
 
     _, index = torch.max(out, 1)
