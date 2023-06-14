@@ -1,7 +1,13 @@
 import './mockJsdom'
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import ReactDOM from "react-dom"
 import { unmountComponentAtNode } from "react-dom";
+
+test('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<App />, div);
+});
 
 let container = null;
 beforeEach(() => {
@@ -18,7 +24,6 @@ afterEach(() => {
 });
 
 test('renders app', () => {
-  window.URL.createObjectURL = jest.fn();
   render(<App />);
   expect(screen.getByText("Animal Recognition AI Pipeline")).toBeInTheDocument();
   expect(screen.getByText("Identify animal species by uploading your own dataset.")).toBeInTheDocument();
@@ -27,7 +32,6 @@ test('renders app', () => {
 });
 
 test("check for top container", async () => {
-  window.URL.createObjectURL = jest.fn();
   const { container } = render(<App/>);
   // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
   const boxes = container.getElementsByClassName('topcontainer');
@@ -36,10 +40,17 @@ test("check for top container", async () => {
 })
 
 test("check for bottom container", async () => {
-  window.URL.createObjectURL = jest.fn();
   const { container } = render(<App/>);
   // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
   const boxes = container.getElementsByClassName('container');
   console.log(boxes.length); 
   expect(boxes.length).toBe(1);
 })
+
+test('renders logo', () => {
+  const {container} = render(<App />);
+  // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+  const boxes = container.getElementsByClassName('big_circle');
+  console.log(boxes.length); 
+  expect(boxes.length).toBe(4);
+});
