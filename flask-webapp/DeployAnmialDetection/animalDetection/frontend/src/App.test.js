@@ -1,5 +1,5 @@
 import './mockJsdom'
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 import ReactDOM from "react-dom"
 import { unmountComponentAtNode } from "react-dom";
@@ -53,4 +53,18 @@ test('renders logo', () => {
   const boxes = container.getElementsByClassName('big_circle');
   console.log(boxes.length); 
   expect(boxes.length).toBe(4);
+});
+
+test('button must have src = "document_logo.jpg" and alt = "logo-logo"', () => {
+  render(<App />);
+  const logo = screen.getByRole('presentation', { name: "settingbutton"});
+  expect(logo).toHaveAttribute('src', 'document_logo.jpg');
+  expect(logo).toHaveAttribute('alt', 'logo-logo');
+});
+
+test('click settings button', () => {
+  render(<App />);
+  const logo = screen.getByRole('presentation', { name: "settingbutton"});
+  fireEvent.click(logo);
+  expect(screen.getByText("Yolov8 Confident Value (default: 0.25) :")).toBeInTheDocument();
 });
