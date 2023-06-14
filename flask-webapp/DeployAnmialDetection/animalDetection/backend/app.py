@@ -99,10 +99,12 @@ def allowed_image(filename):
     else:
         return False
     
-@app.route('/yolov8Predict', methods = ['GET'])
+@app.route('/yolov8Predict', methods = ['POST'])
 def yolov8Predict():
     dict = {}
     count = 0
+    jsondata = request.get_json()
+    conf = float(jsondata.get("conf"))
     yolov8Model = initalize_yolov8()
     for image in os.listdir(app.config["IMAGE_UPLOADS"]):
         filename = image
@@ -116,7 +118,7 @@ def yolov8Predict():
                 data = data.decode()
             if not isinstance(data, TiffImagePlugin.IFDRational):
                 metadata[str(tag)] = data
-        yolo_res = YoloPredict(yolov8Model,image, 0.25)
+        yolo_res = YoloPredict(yolov8Model,image, conf)
         if yolo_res[4]!=0:
             dict[filename] = {
                 'detected' : 1,
@@ -129,52 +131,61 @@ def yolov8Predict():
                 'yolo_res' : yolo_res
             }
         dict[filename]["metadata"] = metadata
+        dict[filename]["yolov8_conf"] = conf
         image.close()
 
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(dict, file)
     return jsonify({"detected":count, "total": len(dict), "image_data":dict})
 
-@app.route('/resnetPredict', methods = ['GET', "POST"])
+@app.route('/resnetPredict', methods = ["POST"])
 def resnetPredict():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
     weightInUse = "resnet.pth"
-    if request.method == "POST":
-        data = request.get_json()
-        weightInUse = data.get('name')
-        resnetModel = intialize_resnet(os.path.join(TEMPDIR, weightInUse))
-    else:
+
+    data = request.get_json()
+    weightInUse = data.get('name')
+    conf = float(data.get('conf'))
+    if weightInUse == "resnet.pth":
         resnetModel = intialize_resnet(None)
+    else:
+        resnetModel = intialize_resnet(os.path.join(TEMPDIR, weightInUse))
+
+    resnetModel = intialize_resnet(None)
     for key, value in image_data.items():
         if value['detected'] == 1:
             filename = str(key)
             image = Image.open(os.path.join(IMAGEDIR,filename))
             image = image.convert('RGB')
-            resnet_res = Resnet_predict(resnetModel,image,0.25)
+            resnet_res = Resnet_predict(resnetModel,image,conf)
             image_data[filename]['resnet_res'] = {"confident" : resnet_res[1]}
             if len(resnet_res) > 2:
                 image_data[filename]['resnet_res']["label"] = resnet_res[2]
             else:
                 image_data[filename]['resnet_res']["label"] = 0
             image_data[filename]['resnet_res']["resnet_weight_filename"] = weightInUse
+            image_data[filename]['resnet_res']["resnet_conf"] = conf
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(image_data, file)
     return jsonify(image_data)
 
-@app.route('/vitPredict', methods = ['GET'])
+@app.route('/vitPredict', methods = ['POST'])
 def vitPredict():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
+    jsondata = request.get_json()
+    conf = float(jsondata.get("conf"))
     vitModel = initialize_vit()
     for key, value in image_data.items():
         if value['detected'] == 1:
             filename = str(key)
             image = Image.open(os.path.join(IMAGEDIR,filename))
             image = image.convert('RGB')
-            vit_res = ViTPredict(vitModel,image,0.25)
+            vit_res = ViTPredict(vitModel,image,conf)
             image_data[filename]['vit_res'] = vit_res
+            image_data[filename]['vit_conf'] = conf
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(image_data, file)
@@ -184,24 +195,29 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    d = {"image_name":[],"animal_detected":[], "metadata":[], "yolov8_result":[], "resnet_weight_filename":[],"resnet_label":[],"resnet_confident":[], "vit_result":[]}
+    d = {"image_name":[],"animal_detected":[], "yolov8_result":[], "yolov8_conf":[], "resnet_label":[],"resnet_confident":[], "resnet_weight_filename":[], "resnet_conf":[],"vit_result":[],"vit_conf":[], "metadata":[]}
     for key, value in image_data.items():
         d["image_name"].append(str(key))
         d["metadata"].append(value['metadata'])
         d["animal_detected"].append(value["detected"])
         d["yolov8_result"].append(value["yolo_res"])
+        d["yolov8_conf"].append(value["yolov8_conf"])
         if "vit_res" in value:
             d["vit_result"].append(value["vit_res"])
+            d["vit_conf"].append(value["vit_conf"])
         else:
             d["vit_result"].append("N/A")
+            d["vit_conf"].append("N/A")
         if "resnet_res" in value:
             d['resnet_label'].append(value['resnet_res']['label'])
             d["resnet_confident"].append(value['resnet_res']['confident'])
             d["resnet_weight_filename"].append(value['resnet_res']["resnet_weight_filename"])
+            d['resnet_conf'].append(value['resnet_res']["resnet_conf"])
         else:
             d['resnet_label'].append("N/A")
             d["resnet_confident"].append("N/A")
             d["resnet_weight_filename"].append("N/A")
+            d['resnet_conf'].append("N/A")
     df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):
         os.makedirs(DOWNLOADDIR)

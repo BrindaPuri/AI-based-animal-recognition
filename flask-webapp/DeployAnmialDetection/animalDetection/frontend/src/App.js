@@ -89,10 +89,12 @@ export default function App(){
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
   const [ifHasMetadata, setIfHasMetadata] = useState(false)
-  const [confidentValue, setConfidentValue] = useState(0.25)
   const [resnetWeightfile, setResnetWeightFile] = useState()
   const [resnetWeightInUse, setResnetWeightInUse] = useState("resnet.pth")
-  
+  const [yolov8ConValue, setYolov8ConValue] = useState(0.25)
+  const [resnetConValue, setResnetConValue] = useState(0.25)
+  const [vitConValue, setVitConValue] = useState(0.25)
+
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
   const [curProgress, setCurProgress] = React.useState(0)
@@ -342,6 +344,11 @@ export default function App(){
 
   };
 
+  const handleModelConfidentValue = (event, setupfunct) => {
+    const value = Math.max(0.05, Math.min(0.99, Number(event.target.value)));
+    setupfunct(value)
+  }
+
   const handleResnetWeightFileChange = (event) => {
     let input = event.target.files[0];
     if (!input) return;
@@ -406,7 +413,7 @@ export default function App(){
     .then(async ()=>{await uploadImage()})
     .then(()=>{setProgressInfoColor("#000000")})
     .then(()=>{renderProgressInfo("Running Yolov8 Model")})
-    .then(async ()=>{await allPromiseGet(url)})
+    .then(async ()=>{await allPromisePost(url, {conf : yolov8ConValue})})
     .then((r)=>{console.log(r)})
     .then(()=>{setFinishDetect(true)})
     .then(()=>{console.log("finished detecting")})
@@ -421,27 +428,17 @@ export default function App(){
     setOnProgress(true)
     setProgressInfoColor("#000000")
     renderProgressInfo("Running ResNet")
-    if (resnetWeightInUse == "resnet.pth") {
-      allPromiseGet(url)
-      .then((r)=>{console.log(r)})
-      .then(()=>{setFinishClassification(true)})
-      .then(()=>{console.log("finished resnet detecting")})
-      .then(()=>{setProgressInfoColor("#0047BA")})
-      .then(()=>{renderProgressInfo("Finished ResNet Classification")})
-      .then(()=>{setOnProgress(false)})
-      .then(()=>{setProgressInfoColor("#000000")})
-      .then(()=>{renderClassification()})
-    } else {
-      allPromisePost(url,{name: resnetWeightInUse})
-      .then((r)=>{console.log(r)})
-      .then(()=>{setFinishClassification(true)})
-      .then(()=>{console.log("finished resnet detecting")})
-      .then(()=>{setProgressInfoColor("#0047BA")})
-      .then(()=>{renderProgressInfo("Finished ResNet Classification")})
-      .then(()=>{setOnProgress(false)})
-      .then(()=>{setProgressInfoColor("#000000")})
-      .then(()=>{renderClassification()})
-    }
+
+    allPromisePost(url,{name : resnetWeightInUse, conf : resnetConValue})
+    .then((r)=>{console.log(r)})
+    .then(()=>{setFinishClassification(true)})
+    .then(()=>{console.log("finished resnet detecting")})
+    .then(()=>{setProgressInfoColor("#0047BA")})
+    .then(()=>{renderProgressInfo("Finished ResNet Classification")})
+    .then(()=>{setOnProgress(false)})
+    .then(()=>{setProgressInfoColor("#000000")})
+    .then(()=>{renderClassification()})
+  
   }
 
   const vit = async () => {
@@ -450,7 +447,7 @@ export default function App(){
     setOnProgress(true)
     setProgressInfoColor("#000000")
     renderProgressInfo("Running Vit")
-    await allPromiseGet(url)
+    await allPromisePost(url, {conf : vitConValue})
     .then((r)=>{console.log(r)})
     .then(()=>{console.log("finished vit detecting")})
     .then(()=>{setFinishClassification(true)})
@@ -575,9 +572,19 @@ export default function App(){
       return (
         <>
         <div className='settingInput'>
-          <p>Confident Value (default: 0.25) :</p>
-          <p>Currently Using: </p>
-        <input type='text' value={confidentValue} disabled={onProgress} onChange={(i)=>setConfidentValue(i.target.value)}></input>
+          {/* yolov8 */}
+          <p>Yolov8 Confident Value (default: 0.25) :</p>
+          <p>Currently Using: {yolov8ConValue} </p>
+          <input type='number'   min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setYolov8ConValue)}}></input>
+          {/* resnet */}
+          <p>ResNet Confident Value (default: 0.25) :</p>
+          <p>Currently Using: {resnetConValue} </p>
+          <input type='number'  min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setResnetConValue)}}></input>
+          {/* vit */}
+          <p>VIT Confident Value (default: 0.25) :</p>
+          <p>Currently Using: {vitConValue} </p>
+          <input type='number'  min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setVitConValue)}}></input>
+          {/* resnet weight file */}
         <p>ResNet Weight File :</p>
         <p style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
           <input type="file" id="newFile" disabled={onProgress} accept=".pth" onChange={(e)=>handleResnetWeightFileChange(e)} />
