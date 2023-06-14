@@ -368,8 +368,6 @@ export default function App(){
       await Promise.allSettled([
         axios.post("/ifResnetWeightWorks", resnetWeightfile,)
         .then(res=>{setResnetWeightInUse(JSON.parse(JSON.stringify(res)).data.result)})
-        .then(()=>console.log(resnetWeightInUse))
-        .then(()=>{resnetWeightInUse==="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#3DAE2B")})
       ])
     }
     setOnProgress(false)
@@ -589,8 +587,8 @@ export default function App(){
           <input type='number' maxLength="4" min="0.05" max="0.99" disabled={onProgress} onChange={(e)=>{handleModelConfidentValue(e,setVitConValue)}}></input>
           {/* resnet weight file */}
         <p className='conTitle' id='conTitle'>ResNet Weight File :</p>
-        <p className='conText' id='conText' style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
-          <input type="file" id="newFile" disabled={onProgress} accept=".pth" onChange={(e)=>handleResnetWeightFileChange(e)} />
+        {resnetWeightInUse==="resnet.pth"?<p className='conText' id='conText' style={{color: "red"}}>Currently Using: {resnetWeightInUse}</p>:<p className='conText' id='conText' style={{color: "#3DAE2B"}}>Currently Using: {resnetWeightInUse}</p>}
+          <input type="file" id="newFile" accept=".pth" disabled={onProgress} onChange={(e)=>handleResnetWeightFileChange(e)} />
           <button className='resnetweightbutton' disabled={onProgress} onClick={()=>handleResnetWeightFileUpload()}>Upload</button>
         </div>
         </>

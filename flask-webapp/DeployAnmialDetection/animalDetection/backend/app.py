@@ -300,12 +300,14 @@ def ifResnetWeightWorks():
                 count += 1
             file.save(os.path.join(TEMPDIR, weightname))
             model = intialize_resnet(os.path.join(TEMPDIR, weightname))
+            image = Image.open(os.path.join(WEIGHTDIR,"test.jpg")).convert("RGB")
+            resnet_res = Resnet_predict(model,image,0.25)
+            image.close()
         except:
             if os.path.isfile(os.path.join(TEMPDIR, weightname)):
-                os.rmove(os.path.join(TEMPDIR, weightname))
+                os.remove(os.path.join(TEMPDIR, weightname))
             return jsonify({"result": "resnet.pth"})
-        finally:
-            return jsonify({"result": weightname})
+        return jsonify({"result": weightname, "dummy_res" : resnet_res})
     return jsonify({"result": "resnet.pth"})
 
 @app.route('/graphTime', methods = ['GET'])
