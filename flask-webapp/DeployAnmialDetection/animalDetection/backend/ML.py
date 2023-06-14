@@ -18,13 +18,15 @@ def initalize_yolov8():
     #YOLOv8 Declaration
     return YOLO(WEIGHTS_PATH + 'yolov8.pt')
 
-def intialize_resnet():
+def intialize_resnet(weight_path):
     #Resnet model Declaration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     resnet = torchvision.models.resnet50(weights=True)
     resnet = torch.nn.DataParallel(resnet)
     resnet = resnet.to(device)
-    resnet.load_state_dict(torch.load(WEIGHTS_PATH + 'resnet.pth', 
+    if weight_path == None:
+        weight_path = os.path.join(WEIGHTS_PATH , 'resnet.pth')
+    resnet.load_state_dict(torch.load(weight_path, 
                                     map_location=device))
     resnet.eval()
     return resnet

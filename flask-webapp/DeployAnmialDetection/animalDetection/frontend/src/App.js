@@ -5,9 +5,8 @@ import out_logo from "./assets/logo/out.png"
 import scan_logo from "./assets/logo/scan.png"
 import download_logo from "./assets/logo/download.png"
 import document_logo from "./assets/logo/document_logo.jpg"
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component, useEffect, useCallback, useState} from 'react';
 import axios from 'axios';
-import ProgressBar from "@ramonak/react-progress-bar";
 import ImageUploading from "react-images-uploading";
 import Plot from 'react-plotly.js';
 
@@ -90,6 +89,9 @@ export default function App(){
   const [plotData, setPlotData] = useState(0);
   const [plotLayout, setPlotLayout] = useState(0);
   const [ifHasMetadata, setIfHasMetadata] = useState(false)
+  const [confidentValue, setConfidentValue] = useState(0.25)
+  const [resnetWeightfile, setResnetWeightFile] = useState()
+  const [resnetWeightInUse, setResnetWeightInUse] = useState("resnet.pth")
   
   //counters
   const [maxProgress, setMaxProgress] = React.useState(0)
@@ -114,6 +116,8 @@ export default function App(){
   const [downloadPageRender, setDownloadPageRender] = React.useState(false)
   const [graphPageRender, setGraphPageRender] = React.useState(false)
   const [settingButtonRender, setSettingButtonRender] = React.useState(true)
+  const [settingPageRender, setSettingPageRender] = React.useState(false)
+  const [settingResnetWeightError, setSettingResnetWeightError] = React.useState("#000000")
 
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -140,9 +144,9 @@ export default function App(){
     setFinishClassification(false)
   }
 
-  const ifAllButtonFlagFalse = () => {
-    return !(finishDetect|finishClassification)
-  }
+  // const ifAllButtonFlagFalse = () => {
+  //   return !(finishDetect|finishClassification)
+  // }
 
   const renderSettingButton = () => {
     if (settingButtonRender) {
@@ -151,7 +155,7 @@ export default function App(){
         <div className='setting'>
           <div className='setting_outline'>
             <div className='setting_inline'>
-              <img className='settingbutton' src={document_logo}></img>
+              <img className='settingbutton' src={document_logo} onClick={()=>{renderSettingPageRender()}}></img>
             </div>
           </div>
           <p className='setting_text' id='setting_text'>Setting</p>
@@ -171,6 +175,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderStartMessage = () => {
@@ -182,6 +187,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderProgressBar = () => {
@@ -193,6 +199,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderClassification = () => {
@@ -204,6 +211,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderPrintError = () => {
@@ -215,6 +223,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderProgressInfo = (message) => {
@@ -227,6 +236,7 @@ export default function App(){
     setProgressInfoMessage(message);
     setDownloadPageRender(false);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderDownloadPage = () => {
@@ -238,6 +248,7 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(true);
     setGraphPageRender(false);
+    setSettingPageRender(false);
   }
 
   const renderGraphPageRender = () => {
@@ -249,6 +260,19 @@ export default function App(){
     setProgressInfoRender(false);
     setDownloadPageRender(false);
     setGraphPageRender(true);
+    setSettingPageRender(false);
+  }
+
+  const renderSettingPageRender = () => {
+    setUploadImageRender(false);
+    setStartMessageRender(false);
+    setProgressBarRender(false);
+    setClassificationRender(false);
+    setPrintErrorRender(false);
+    setProgressInfoRender(false);
+    setDownloadPageRender(false);
+    setGraphPageRender(false);
+    setSettingPageRender(true);
   }
 
   const renderPercentage = (message) =>{
@@ -305,6 +329,30 @@ export default function App(){
 
   };
 
+  const handleResnetWeightFileChange = (event) => {
+    let input = event.target.files[0];
+    if (!input) return;
+    let data = new FormData();
+    data.append("fileToUpload", input);
+    console.log(input)
+    setResnetWeightFile(data);
+  };
+
+  const handleResnetWeightFileUpload = async () => {
+    console.log(resnetWeightfile)
+    setSettingResnetWeightError("#000000")
+    setOnProgress(true)
+    if (resnetWeightfile) {
+      await Promise.allSettled([
+        axios.post("/ifResnetWeightWorks", resnetWeightfile,)
+        .then(res=>{setResnetWeightInUse(JSON.parse(JSON.stringify(res)).data.result)})
+        .then(()=>console.log(resnetWeightInUse))
+        .then(()=>{resnetWeightInUse=="resnet.pth"?setSettingResnetWeightError("red"):setSettingResnetWeightError("#000000")})
+      ])
+    }
+    setOnProgress(false)
+  }
+
   const showHide = () => {
     var div = document.getElementById("info");
     div.classList.toggle('hidden'); 
@@ -325,7 +373,6 @@ export default function App(){
       promises.push(postAxios(url,form_data))
     });
     const data = await Promise.allSettled(countProgress(promises));
-    // const data = Promise.all(promises)
     console.log(data)
   }
 
@@ -361,15 +408,27 @@ export default function App(){
     setOnProgress(true)
     setProgressInfoColor("#000000")
     renderProgressInfo("Running ResNet")
-    allPromiseGet(url)
-    .then((r)=>{console.log(r)})
-    .then(()=>{setFinishClassification(true)})
-    .then(()=>{console.log("finished resnet detecting")})
-    .then(()=>{setProgressInfoColor("#0047BA")})
-    .then(()=>{renderProgressInfo("Finished ResNet Classification")})
-    .then(()=>{setOnProgress(false)})
-    .then(()=>{setProgressInfoColor("#000000")})
-    .then(()=>{renderClassification()})
+    if (resnetWeightInUse == "resnet.pth") {
+      allPromiseGet(url)
+      .then((r)=>{console.log(r)})
+      .then(()=>{setFinishClassification(true)})
+      .then(()=>{console.log("finished resnet detecting")})
+      .then(()=>{setProgressInfoColor("#0047BA")})
+      .then(()=>{renderProgressInfo("Finished ResNet Classification")})
+      .then(()=>{setOnProgress(false)})
+      .then(()=>{setProgressInfoColor("#000000")})
+      .then(()=>{renderClassification()})
+    } else {
+      allPromisePost(url,{name: resnetWeightInUse})
+      .then((r)=>{console.log(r)})
+      .then(()=>{setFinishClassification(true)})
+      .then(()=>{console.log("finished resnet detecting")})
+      .then(()=>{setProgressInfoColor("#0047BA")})
+      .then(()=>{renderProgressInfo("Finished ResNet Classification")})
+      .then(()=>{setOnProgress(false)})
+      .then(()=>{setProgressInfoColor("#000000")})
+      .then(()=>{renderClassification()})
+    }
   }
 
   const vit = async () => {
@@ -495,6 +554,21 @@ export default function App(){
           <button className='buttonClassify' onClick={()=>vit()} disabled={onProgress}>ViT</button>
           <button className='buttonClassify' onClick={async ()=>resnet()} disabled={onProgress}>Resnet</button>
         </div>
+      );
+    }
+
+    if(settingPageRender) {
+      return (
+        <>
+        <div className='settingInput'>
+          <p>Confident Value (default: 0.25) :</p>
+        <input type='text' value={confidentValue} disabled={onProgress} onChange={(i)=>setConfidentValue(i.target.value)}></input>
+        <p>ResNet Weight File :</p>
+        <p style={{color: settingResnetWeightError}}>Currently Using: {resnetWeightInUse}</p>
+          <input type="file" id="newFile" disabled={onProgress} accept=".pth" onChange={(e)=>handleResnetWeightFileChange(e)} />
+          <button className='resnetweightbutton' disabled={onProgress} onClick={()=>handleResnetWeightFileUpload()}>Upload</button>
+        </div>
+        </>
       );
     }
 

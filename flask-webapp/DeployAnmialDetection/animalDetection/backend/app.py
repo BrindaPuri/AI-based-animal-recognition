@@ -20,16 +20,20 @@ from flask import jsonify, request
 import shutil
 import plotly
 import plotly.express as px
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 BASEDIR = os.getcwd()
 BACKENDDIR = os.path.join(BASEDIR,"animalDetection/backend")
 STATSDIR = os.path.join(BACKENDDIR,"stats")
 IMAGEDIR = os.path.join(BACKENDDIR,"images")
 DOWNLOADDIR = os.path.join(BASEDIR, "output")
+WEIGHTDIR = os.path.join(BACKENDDIR, "weights")
 NOANIMALDIR = os.path.join(DOWNLOADDIR,"no_animals")
 ANIMALDIR = os.path.join(DOWNLOADDIR,"animals")
+TEMPDIR = os.path.join(BACKENDDIR,"temp")
 app.config["IMAGE_UPLOADS"] = IMAGEDIR
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPG", "JPEG"]
 
@@ -131,11 +135,17 @@ def yolov8Predict():
         json.dump(dict, file)
     return jsonify({"detected":count, "total": len(dict), "image_data":dict})
 
-@app.route('/resnetPredict', methods = ['GET'])
+@app.route('/resnetPredict', methods = ['GET', "POST"])
 def resnetPredict():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    resnetModel = intialize_resnet()
+    weightInUse = "resnet.pth"
+    if request.method == "POST":
+        data = request.get_json()
+        weightInUse = data.get('name')
+        resnetModel = intialize_resnet(os.path.join(TEMPDIR, weightInUse))
+    else:
+        resnetModel = intialize_resnet(None)
     for key, value in image_data.items():
         if value['detected'] == 1:
             filename = str(key)
@@ -147,6 +157,7 @@ def resnetPredict():
                 image_data[filename]['resnet_res']["label"] = resnet_res[2]
             else:
                 image_data[filename]['resnet_res']["label"] = 0
+            image_data[filename]['resnet_res']["resnet_weight_filename"] = weightInUse
             image.close()
     with open (os.path.join(STATSDIR,'image_data.json'), 'w') as file:
         json.dump(image_data, file)
@@ -173,7 +184,7 @@ def vitPredict():
 def download():
     with open (os.path.join(STATSDIR,'image_data.json'), 'r') as file:
         image_data = json.load(file)
-    d = {"image_name":[],"animal_detected":[], "metadata":[], "yolov8_result":[], "resnet_label":[],"resnet_confident":[], "vit_result":[]}
+    d = {"image_name":[],"animal_detected":[], "metadata":[], "yolov8_result":[], "resnet_weight_filename":[],"resnet_label":[],"resnet_confident":[], "vit_result":[]}
     for key, value in image_data.items():
         d["image_name"].append(str(key))
         d["metadata"].append(value['metadata'])
@@ -186,9 +197,11 @@ def download():
         if "resnet_res" in value:
             d['resnet_label'].append(value['resnet_res']['label'])
             d["resnet_confident"].append(value['resnet_res']['confident'])
+            d["resnet_weight_filename"].append(value['resnet_res']["resnet_weight_filename"])
         else:
             d['resnet_label'].append("N/A")
             d["resnet_confident"].append("N/A")
+            d["resnet_weight_filename"].append("N/A")
     df = pd.DataFrame(data=d)
     if not os.path.exists(DOWNLOADDIR):
         os.makedirs(DOWNLOADDIR)
@@ -241,6 +254,32 @@ def ifhasMetadata():
         if len(dict(data['metadata'])) == 0:
             return jsonify({"result": "false"})
     return jsonify({"result": "true"})
+
+@app.route('/ifResnetWeightWorks', methods = ['POST'])
+def ifResnetWeightWorks():
+    file = request.files.get('fileToUpload')
+    
+    if file:
+        filename = secure_filename(file.filename)
+        if filename == "resnet.pth":
+            filename = f"0{str(filename)}"
+        try:
+            count = 0
+            weightname = filename
+            if not os.path.exists(TEMPDIR):
+                os.mkdir(TEMPDIR)
+            if os.path.isfile(os.path.join(TEMPDIR, weightname)):
+                weightname = f"{count}{str(filename)}"
+                count += 1
+            file.save(os.path.join(TEMPDIR, weightname))
+            model = intialize_resnet(os.path.join(TEMPDIR, weightname))
+        except:
+            if os.path.isfile(os.path.join(TEMPDIR, weightname)):
+                os.rmove(os.path.join(TEMPDIR, weightname))
+            return jsonify({"result": "resnet.pth"})
+        finally:
+            return jsonify({"result": weightname})
+    return jsonify({"result": "resnet.pth"})
 
 @app.route('/graphTime', methods = ['GET'])
 def graphTime():
